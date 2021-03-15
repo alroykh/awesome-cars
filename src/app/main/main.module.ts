@@ -30,7 +30,7 @@ import { HeaderModule } from '../shared/modules/header/header.module';
     DealersComponent
 ],
   imports: [
-    // BrowserModule, 
+    // BrowserModule,
     CommonModule,
     FormsModule,
     MainRoutingModule,
