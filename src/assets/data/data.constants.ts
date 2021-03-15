@@ -1,4 +1,4 @@
-import { CarItem } from '../../app/shared/modules/car-item/car-item';
+import { CarItem } from '../../app/shared/modules/car-item/car-item.interface';
 
 export const CARS: CarItem[] = [
   {

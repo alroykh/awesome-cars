@@ -1,0 +1,51 @@
+.example-card {
+    max-width: 300px;
+}
+  
+.example-header-image {
+    background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+    background-size: cover;
+}
+
+.mat-icon{
+    font-size: 30px;
+    position: absolute;
+    right: 10px;
+    color: rgb(163, 27, 27);
+}
+
+// .cars-container {
+//     position: relative;
+//     top: 100px;
+// }
+
+.example-card{
+    max-width: 225px;
+    max-height: 300px;
+}
+
+// .car-card{
+//     display: flex;
+//     flex-wrap: wrap;
+//     justify-content: space-around;
+// }
+
+.mat-card{
+    align-self: center;
+    margin: 0 auto;
+}
+
+.mat-card-title{
+    font-size: 16px;
+}
+
+.mat-card-image{
+    max-height: 160px;
+    object-fit: cover;
+    height: 100%;
+    min-height: 160px;
+}
+
+.mat-button{
+    width: 45%;
+}

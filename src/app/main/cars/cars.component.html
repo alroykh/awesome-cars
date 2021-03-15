@@ -1,12 +1,53 @@
-<p>cars doesn't work properly!</p>
+<section class="cars-settings">
+    
+    <!-- <div class="filter-div"> -->
+        <!-- <mat-form-field> -->
+            <!-- <mat-label></mat-label> -->
+            <input *ngIf="!carsCategoryView" matInput type="text" placeholder="Filter">
+          <!-- </mat-form-field> -->
+    <!-- </div>  -->
+
+    <!-- <mat-form-field class="filter-div" appearance="fill">
+        <mat-label>Input</mat-label>
+        <input matInput>
+    </mat-form-field> -->
+    
+    <div class="toggle-div">
+        <mat-slide-toggle [(ngModel)]="carsCategoryView">View by category</mat-slide-toggle>
+    </div>
+    
+</section>
+
+<section  *ngIf="!carsCategoryView" class="cars-container">
+    <div class="car-card">
+        <app-car-item *ngFor='let car of cars' [car]="car"></app-car-item>  
+    </div>
+</section>
+
+<section *ngIf="carsCategoryView" class="cars-category-container">
+    <mat-tab-group mat-align-tabs="start">
+        <mat-tab label="Coupe">
+            <app-car-category></app-car-category>
+        </mat-tab>
+        <mat-tab label="Roadster">
+            <app-car-category></app-car-category>
+        </mat-tab>
+        <mat-tab label="Sedan">
+            <app-car-category></app-car-category>
+        </mat-tab>
+        <mat-tab label="Offroader">
+            <app-car-category></app-car-category>
+        </mat-tab>
+        <mat-tab label="Pickup truck">
+            <app-car-category></app-car-category>
+        </mat-tab>
+        <mat-tab label="Other">
+            <app-car-category></app-car-category>
+        </mat-tab>
+      </mat-tab-group>
+</section>
 
 
- <h3> {{ carItem.brand | uppercase }} {{ carItem.model }} </h3>
-<img src="{{carItem.image}}"> 
 
-<!-- <h2>My Cars</h2>
-<ul> 
-    <li *ngFor='let car of cars'>
-        <span> {{ carItem.id }} </span> 
-    </li>
-</ul> -->
+
+

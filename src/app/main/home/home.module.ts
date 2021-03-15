@@ -1,14 +1,18 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+
 // import { CarsSectionComponent } from './components/cars-section/cars-section.component';
 import { HomeComponent } from './home.component';
+import {MatButtonModule} from '@angular/material/button';
+
 
 @NgModule({
   declarations: [
-    // CarsSectionComponent
+    HomeComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    MatButtonModule
   ],
   exports: [
     // HomeComponent

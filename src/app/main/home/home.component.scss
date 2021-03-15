@@ -1,0 +1,42 @@
+.container {
+    padding-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+.home-column-container {
+    flex: 0 1 25%;
+
+    hr{
+        // margin-top: 36px;
+        // width: 30px;               
+        background-color: purple;
+        height: 2px;
+        border: none;
+    }
+}
+.favorite-cars {
+    
+}
+.my-added-cars {
+}
+.my-added-dealers {
+}
+.home-button-container {
+    flex: 0 1 5%;
+
+    :nth-child(1){
+        background-color: yellow;
+        color: #000;
+    }
+
+    :nth-child(2){
+        background-color: green;
+    }
+}
+
+.mat-raised-button{
+    background-color: purple;
+    margin-top: 10px;
+    width: 100%;
+}

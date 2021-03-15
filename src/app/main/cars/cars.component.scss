@@ -1,0 +1,58 @@
+// .cars-settings{
+//     position: absolute;
+//     top: 10px;
+// }
+.filter-div {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+
+
+.toggle-div{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+
+.cars-container {
+    position: relative;
+    top: -50px;
+//     display: flex;
+//     flex-wrap: wrap;
+}
+
+.example-card{
+    // max-width: 250px;
+    // flex: 0 1 100%;
+}
+
+.car-card{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-content: space-evenly;
+}
+
+.ng-star-inserted{
+    flex: 0 1 21.5%;
+    // align-self: center;
+    margin: 40px 0;
+}
+
+
+.mat-tab-group{
+    position: absolute;
+    left: 50px;
+}
+
+// .mat-tab-group.mat-primary .mat-ink-bar, 
+// .mat-tab-nav-bar.mat-primary .mat-ink-bar {
+//     background-color: green;
+// }
+
+// .mat-ink-bar{
+//     background-color: green;
+// }
+

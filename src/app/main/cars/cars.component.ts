@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { CarItem } from '../../shared/modules/car-item/car-item';
+import { CarItem } from '../../shared/modules/car-item/car-item.interface';
 import { CARS } from '../../../assets/data/data.constants';
 
 @Component({
@@ -11,18 +11,9 @@ import { CARS } from '../../../assets/data/data.constants';
 
 export class CarsComponent implements OnInit {
 
-  // cars: CarItem[] = CARS;
+  cars: CarItem[] = CARS;
 
-  carItem: CarItem = {
-    id: '0776681260',
-    brand: 'Kenworth',
-    model: 'T700',
-    year: null,
-    color: 'black',
-    image: './assets/images/kenworth-t700.jpg',
-    liked: false,
-    newItem: false
-  };
+  carsCategoryView = false;
 
   constructor() { }
 

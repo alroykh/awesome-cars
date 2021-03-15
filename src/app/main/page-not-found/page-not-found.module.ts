@@ -13,7 +13,7 @@ import { MatButtonModule } from '@angular/material/button';
     MatButtonModule
   ],
   exports: [
-    PageNotFoundComponent
+    // PageNotFoundComponent
   ]
 })
 export class PageNotFoundModule { }

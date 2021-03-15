@@ -1,0 +1,8 @@
+
+<ul *ngFor="let car of cars" >
+    <li *ngIf="car.category==='coupe'">       
+    <!-- <li *ngFor="let car of cars | myfilter:type"> -->
+    <!-- <li *ngFor="let car of filter(cars)"> -->
+        <div>{{car.brand}} {{car.model}} {{car.category}}</div> 
+    </li>
+</ul>
