@@ -3,8 +3,8 @@
     <div class="home-column-container">
         <h3>Cars I like</h3>
         <hr>
-        <div class="favorite-cars">
-            
+        <div class="favorite-cars" *ngIf="!carsCategoryView">
+            <app-car-item *ngFor='let car of cars' [car]="car" [smallView]="true"></app-car-item> 
         </div>
     </div>
 

@@ -1,16 +1,6 @@
 <section class="cars-settings">
     
-    <!-- <div class="filter-div"> -->
-        <!-- <mat-form-field> -->
-            <!-- <mat-label></mat-label> -->
-            <input *ngIf="!carsCategoryView" matInput type="text" placeholder="Filter">
-          <!-- </mat-form-field> -->
-    <!-- </div>  -->
-
-    <!-- <mat-form-field class="filter-div" appearance="fill">
-        <mat-label>Input</mat-label>
-        <input matInput>
-    </mat-form-field> -->
+    <app-cars-filter *ngIf="!carsCategoryView" (filterValue)="filterCars($event)"></app-cars-filter>
     
     <div class="toggle-div">
         <mat-slide-toggle [(ngModel)]="carsCategoryView">View by category</mat-slide-toggle>
@@ -20,7 +10,7 @@
 
 <section  *ngIf="!carsCategoryView" class="cars-container">
     <div class="car-card">
-        <app-car-item *ngFor='let car of cars' [car]="car"></app-car-item>  
+        <app-car-item *ngFor='let car of cars' [car]="car" [smallView]="false"></app-car-item>  
     </div>
 </section>
 

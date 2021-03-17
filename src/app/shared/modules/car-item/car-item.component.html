@@ -1,6 +1,43 @@
-<mat-card *ngIf="car" class="example-card">
+<mat-card *ngIf="car" [class.small]="smallView" class="example-card">
+  <!-- [ngClass]="{ small: smallView }" -->
+  <mat-card-header>
+    <mat-card-title>{{ car.model }}</mat-card-title>
+    <mat-card-subtitle>{{ car.brand }}</mat-card-subtitle>
+
+    <div *ngIf="!smallView">
+
+      <mat-icon
+        aria-label="Like icon"
+      >
+        {{!car.liked ? 'favorite_border' : 'favorite'}}
+      </mat-icon>
+
+    </div>
+  </mat-card-header>
+  <img
+    mat-card-image
+    *ngIf="car.image"
+    [src]="car.image"
+    alt="Photo of the {{ car.brand }} {{ car.model }} car"
+  />
+  <img
+    mat-card-image
+    *ngIf="!car.image"
+    src="../../../../assets/images/mock-image.jpg"
+    alt="Photo of the {{ car.brand }} {{ car.model }} car"
+  />
+
+  <mat-card-actions *ngIf="!smallView">
+    <button mat-button color="accent" (click)="doLikeToggle()">
+      {{ car.liked ? "Dislike" : "Like" }}
+    </button>
+
+    <button mat-button color="primary">Details</button>
+  </mat-card-actions>
+</mat-card>
+
+<!-- <mat-card *ngIf="car" class="example-card">
     <mat-card-header>
-      <!-- <div mat-card-avatar class="example-header-image"></div> -->
       <mat-card-title>{{car.model}}</mat-card-title>
       <mat-card-subtitle>{{car.brand}}</mat-card-subtitle>
 
@@ -18,11 +55,7 @@
     >
    
     <mat-card-actions>
-        <!-- <button mat-button color="accent" >Like</button> -->
-        <!-- <button mat-button color="accent" (click)="doLikeToggle()" [(ngModel)]="likedToggleButton"></button>{{toggle ? 'Like':'Dislike'}}</button> -->
-        <button mat-button color="accent" (click)="doLikeToggle()">{{toggle ? 'Dislike':'Like'}}</button>
-        <!-- <button mat-button class="like-button">LIKE</button> -->
+        <button mat-button color="accent" (click)="doLikeToggle()">{{likeToggle ? 'Dislike':'Like'}}</button>
         <button mat-button color="primary">Details</button>
-        <!-- <button mat-button class="detail-button">DETAILS</button> -->
     </mat-card-actions>
-</mat-card>
+</mat-card> -->

@@ -1,0 +1,33 @@
+<!-- <div class="filter-component">
+    <label for="search-box">Filter</label>
+    <input #searchBox id="search-box" (input)="search(searchBox.value)" />
+  
+    <ul>
+      <li *ngFor="let car of cars$ | async" >
+        <a routerLink="{{cars$}}">
+          {{car.model}}
+        </a>
+      </li>
+    </ul>
+  </div> -->
+
+<form class="filter-component">
+  <mat-form-field>
+    <mat-label>Filter car</mat-label>
+    <input
+      matInput
+      #filterInput
+      placeholder="Filter"
+      value=""
+      (input)="search(filterInput.value)"
+    />
+    <!-- <ul class="filtered-list">
+      <li *ngFor="let car of cars$ | async">
+        <span>
+          {{car.brand}} {{ car.model }}
+        </span>
+      </li>
+    </ul> -->
+
+  </mat-form-field>
+</form>

@@ -15,13 +15,12 @@ import { CarsModule } from './cars/cars.module';
 import { HomeModule } from './home/home.module';
 import { DealersModule } from './dealers/dealers.module';
 import { PageNotFoundModule } from './page-not-found/page-not-found.module';
+// import { CarsFilterComponent } from './cars-filter/cars-filter.component';
 
 @NgModule({
   declarations:  [
     MainComponent,
-    // HomeComponent,
-    // CarsComponent,
-    // DealersComponent
+    // CarsFilterComponent,
 ],
   imports: [
     CommonModule,

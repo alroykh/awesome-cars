@@ -1,22 +1,37 @@
-// .cars-settings{
-//     position: absolute;
-//     top: 10px;
+.cars-settings{
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    box-sizing: border-box;
+    height: 50px;
+    z-index: 2;
+}
+
+// .mat-form-field-appearance-legacy,
+//  .mat-form-field-infix{
+//     padding: 0;
 // }
+
+
+.mat-form-field-appearance-legacy[_ngcontent-ait-c116],
+ .mat-form-field-infix[_ngcontent-ait-c116]{
+     padding: 0;
+ }
+
 .filter-div {
-    position: absolute;
-    top: 10px;
-    left: 10px;
+    position: relative;
+    top: -50px;
 }
 
 
 .toggle-div{
-    position: absolute;
-    top: 10px;
-    right: 10px;
+    
 }
 
 
 .cars-container {
+    z-index: 1;
+
     position: relative;
     top: -50px;
 //     display: flex;
@@ -29,6 +44,8 @@
 }
 
 .car-card{
+    z-index: 1;
+
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
@@ -45,14 +62,8 @@
 .mat-tab-group{
     position: absolute;
     left: 50px;
+    // top: -50px;
 }
 
-// .mat-tab-group.mat-primary .mat-ink-bar, 
-// .mat-tab-nav-bar.mat-primary .mat-ink-bar {
-//     background-color: green;
-// }
 
-// .mat-ink-bar{
-//     background-color: green;
-// }
 

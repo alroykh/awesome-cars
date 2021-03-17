@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-// import { CarsSectionComponent } from './components/cars-section/cars-section.component';
+import { MatButtonModule } from '@angular/material/button';
+
 import { HomeComponent } from './home.component';
-import {MatButtonModule} from '@angular/material/button';
+import { CarItemModule } from 'src/app/shared/modules/car-item/car-item.module';
 
 
 @NgModule({
@@ -12,10 +13,9 @@ import {MatButtonModule} from '@angular/material/button';
   ],
   imports: [
     CommonModule,
-    MatButtonModule
+    MatButtonModule,
+    CarItemModule
   ],
-  exports: [
-    // HomeComponent
-  ]
+  exports: []
 })
 export class HomeModule { }

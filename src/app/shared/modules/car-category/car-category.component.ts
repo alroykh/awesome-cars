@@ -15,27 +15,7 @@ export class CarCategoryComponent implements OnInit {
   cars: CarItem[] = CARS;
   type = {category: 'coupe'};
 
-  // filter(cars: CarItem[]): CarItem[] {
-  //   let result: CarItem[] = [];
-  //   // tslint:disable-next-line:forin
-  //   for (const car in cars) {
-  //       result.push(car);
-  //       }
-  //   return result;
-  // }
-
-
-  // getBookByTitle(title: string): IBook {
-  //   const books = this._books;
-
-  //   const bookByTitle: IBook[] = books.filter((book: IBook) => {
-  //     return book.title === title;
-  //   });
-
-  //   return bookByTitle[0];
-  // }
-
-
+ 
   constructor() { }
 
   ngOnInit(): void {

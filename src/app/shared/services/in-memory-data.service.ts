@@ -7,7 +7,8 @@ import { CARS } from '../../../assets/data/data.constants';
 })
 
 export class InMemoryDataService implements InMemoryDbService {
-  createDb() {
+  // tslint:disable-next-line:typedef
+  public createDb() {
     const cars = CARS;
     return { cars };
   }

@@ -4,8 +4,6 @@ import { CarCategoryComponent } from './car-category.component';
 // import { Pipe, PipeTransform } from '@angular/core';
 
 
-
-
 @NgModule({
   declarations: [CarCategoryComponent],
   imports: [
