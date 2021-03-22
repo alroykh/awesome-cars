@@ -1,31 +1,19 @@
-<mat-card *ngIf="car" [class.small]="smallView" class="example-card">
-  <!-- [ngClass]="{ small: smallView }" -->
-  <mat-card-header>
-    <mat-card-title>{{ car.model }}</mat-card-title>
-    <mat-card-subtitle>{{ car.brand }}</mat-card-subtitle>
+<mat-card *ngIf="car" [ngClass]="{ 'small-view': smallView }" class="example-card">
+  <!-- [class.small]="smallView" -->
+  <mat-card-header [class.small]="smallView">
+    <mat-card-title [class.small]="smallView">{{ car.model }}</mat-card-title>
+    <mat-card-subtitle [class.small]="smallView">{{ car.brand }}</mat-card-subtitle>
 
     <div *ngIf="!smallView">
-
-      <mat-icon
-        aria-label="Like icon"
-      >
-        {{!car.liked ? 'favorite_border' : 'favorite'}}
+      <mat-icon aria-label="Like icon">
+        {{ !car.liked ? "favorite_border" : "favorite" }}
       </mat-icon>
-
     </div>
   </mat-card-header>
-  <img
-    mat-card-image
-    *ngIf="car.image"
-    [src]="car.image"
-    alt="Photo of the {{ car.brand }} {{ car.model }} car"
-  />
-  <img
-    mat-card-image
-    *ngIf="!car.image"
-    src="../../../../assets/images/mock-image.jpg"
-    alt="Photo of the {{ car.brand }} {{ car.model }} car"
-  />
+  <img mat-card-image *ngIf="car.image" [src]="car.image" [class.small]="smallView"
+    alt="Photo of the {{ car.brand }} {{ car.model }} car" />
+  <img mat-card-image *ngIf="!car.image" [class.small]="smallView" src="../../../../assets/images/mock-image.jpg"
+    alt="Photo of the {{ car.brand }} {{ car.model }} car" />
 
   <mat-card-actions *ngIf="!smallView">
     <button mat-button color="accent" (click)="doLikeToggle()">
@@ -35,27 +23,3 @@
     <button mat-button color="primary">Details</button>
   </mat-card-actions>
 </mat-card>
-
-<!-- <mat-card *ngIf="car" class="example-card">
-    <mat-card-header>
-      <mat-card-title>{{car.model}}</mat-card-title>
-      <mat-card-subtitle>{{car.brand}}</mat-card-subtitle>
-
-      <mat-icon *ngIf="!likeToggle" aria-label="Not liked icon" [inline]="true">favorite_border</mat-icon>
-      <mat-icon *ngIf="likeToggle" aria-label="Liked icon" [inline]="true">favorite</mat-icon>
-    
-    </mat-card-header>
-    <img mat-card-image 
-      *ngIf="car.image" [src]="car.image"     
-      alt="Photo of the {{car.brand}} {{car.model}} car" 
-    >
-    <img mat-card-image 
-      *ngIf="!car.image" src="../../../../assets/images/mock-image.jpg"
-      alt="Photo of the {{car.brand}} {{car.model}} car" 
-    >
-   
-    <mat-card-actions>
-        <button mat-button color="accent" (click)="doLikeToggle()">{{likeToggle ? 'Dislike':'Like'}}</button>
-        <button mat-button color="primary">Details</button>
-    </mat-card-actions>
-</mat-card> -->

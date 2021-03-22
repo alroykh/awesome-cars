@@ -7,21 +7,32 @@
 .home-column-container {
     flex: 0 1 25%;
 
-    hr{
-        // margin-top: 36px;
-        // width: 30px;               
+    hr{             
         background-color: purple;
         height: 2px;
         border: none;
     }
 }
-.favorite-cars {
+
+.favorite-cars-container {
+    display: flex;
+    flex-wrap: wrap;    
+}
+.favorite-cars{
+    display: flex;
+    flex-wrap: wrap; 
+    padding: 11px;
+    justify-content: flex-start;
+    align-content: space-evenly;
     
 }
+
 .my-added-cars {
 }
 .my-added-dealers {
 }
+
+
 .home-button-container {
     flex: 0 1 5%;
 

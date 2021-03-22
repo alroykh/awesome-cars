@@ -93,4 +93,10 @@ export class CarsService {
   //     catchError(this.handleError<CarItem[]>(`searchCars`, []))
   //   );
   // }
+
+  getCars(): Observable<CarItem[]> {
+    return this.http
+      .get<CarItem[]>(this.carsUrl)
+      .pipe(catchError(this.handleError<CarItem[]>('getCars', [])));
+  }
 }

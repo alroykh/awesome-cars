@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { CarItem } from './../car-item/car-item.interface';
+import { Component, OnInit, Input } from '@angular/core';
+
 
 @Component({
   selector: 'app-car-details',
@@ -6,6 +8,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./car-details.component.scss']
 })
 export class CarDetailsComponent implements OnInit {
+
+  @Input() car: CarItem;
 
   constructor() { }
 

@@ -1,69 +1,128 @@
-.cars-settings{
-    padding: 20px;
-    display: flex;
-    justify-content: space-between;
-    box-sizing: border-box;
-    height: 50px;
-    z-index: 2;
+.cars-settings {
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  box-sizing: border-box;
+  height: 50px;
+  z-index: 2;
 }
 
-// .mat-form-field-appearance-legacy,
-//  .mat-form-field-infix{
-//     padding: 0;
+.mat-form-field-appearance-legacy[_ngcontent-ait-c116],
+.mat-form-field-infix[_ngcontent-ait-c116] {
+  padding: 0;
+}
+
+// .mat-tab-body-content, .mat-tab-body, .mat-tab-body-wrapper { 
+//   transition: none !important;
+//   transform: none !important; 
+//   animation-duration: 0ms !important; 
 // }
 
 
-.mat-form-field-appearance-legacy[_ngcontent-ait-c116],
- .mat-form-field-infix[_ngcontent-ait-c116]{
-     padding: 0;
- }
 
 .filter-div {
-    position: relative;
-    top: -50px;
+  position: relative;
+  top: -50px;
 }
 
-
-.toggle-div{
-    
+.toggle-div {
+  position: absolute;
+  top: 10px;
+  right: 10px;
 }
 
 
 .cars-container {
-    z-index: 1;
+  z-index: 1;
 
-    position: relative;
-    top: -50px;
+  // position: relative;
+  // top: -50px;
+
+}
+
+.example-card {}
+
+.car-card {
+  z-index: 1;
+
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-content: space-evenly;
+}
+
+.ng-star-inserted {
+  flex: 0 1 21.5%;
+  // align-self: center;
+  margin: 40px 0;
+}
+
+
+.mat-tab-group {
+  position: absolute;
+  left: 50px;
+  // top: -50px;
+}
+
+.cars-category-container{
+  position: absolute;
+  top: -40px;
+}
+
+
+.mat-selection-list{
+  width: 300px;
+}
+
+.mat-list-option{
+  // background-color: green;
+  margin: 5px;
+}
+
+.car-image-inside-category {
+  position: absolute;
+  right: 0;
+  top: 100px;
+  // max-width: 200px;
+  // max-height: 150px;
+  width: 200px;
+  height: 150px;
+}
+
+.app-car-details,
+.car-detail-container {
+  position: absolute ;
+  top: 0;
+  right: 0;
+}
+
+// .mat-tab-body-content{
+//   display: flex;
+// }
+
+// .mat-tab-body{
+//   div{
 //     display: flex;
-//     flex-wrap: wrap;
-}
+//   }
+// }
 
-.example-card{
-    // max-width: 250px;
-    // flex: 0 1 100%;
-}
+// .mat-tab{
+//   display: flex;
+// }
 
-.car-card{
-    z-index: 1;
+// .mat-tab-cars{
+//   display: flex;
+// }
 
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
-    align-content: space-evenly;
-}
+// .mat-tab-body-content {
+//   height: 100%;
+//   overflow: auto;
+//   display: flex;
+// }
 
-.ng-star-inserted{
-    flex: 0 1 21.5%;
-    // align-self: center;
-    margin: 40px 0;
-}
-
-
-.mat-tab-group{
-    position: absolute;
-    left: 50px;
-    // top: -50px;
-}
-
-
-
+// .mat-tab-body-content,
+// .ng-tns-c105-3,
+// .ng-trigger,
+// .ng-trigger-translateTab{
+//   display: flex;
+// }

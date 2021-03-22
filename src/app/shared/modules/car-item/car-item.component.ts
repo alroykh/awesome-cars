@@ -12,7 +12,7 @@ import { CarItem } from './car-item.interface';
 export class CarItemComponent implements OnInit {
   // likeToggle = false;
   likedToggleButton = false;
-  
+
   @Input() car: CarItem;
   @Input() smallView = false;
 

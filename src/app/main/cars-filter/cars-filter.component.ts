@@ -36,7 +36,6 @@ export class CarsFilterComponent implements OnInit, OnDestroy {
     this.filterSubsription = this.searchTerms.pipe(
       debounceTime(300),
       distinctUntilChanged(),
-      // switchMap((term: string) => this.carsService.searchCars(term))
     )
     .subscribe((term: string) => {
       this.filterValue.emit(term);

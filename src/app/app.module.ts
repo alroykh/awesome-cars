@@ -9,6 +9,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { InMemoryDataServiceDealers } from './shared/services/in-memory-data.service-dealers';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { AppComponent } from './app.component';
     BrowserModule,
     HttpClientModule,
     HttpClientInMemoryWebApiModule.forRoot(
-      InMemoryDataService, {dataEncapsulation: false}
+      InMemoryDataService,  {dataEncapsulation: false}
+      // InMemoryDataServiceDealers
     ),
     AppRoutingModule,
     BrowserAnimationsModule

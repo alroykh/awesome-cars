@@ -12,6 +12,7 @@ import { CarsService } from '../cars/cars.service';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
+  @Input() smallView = true;
 
   cars: CarItem[] = [];
 

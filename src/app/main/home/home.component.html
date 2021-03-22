@@ -1,38 +1,39 @@
 <div class="container">
+  <div class="home-column-container">
+    <h3>Cars I like</h3>
+    <hr />
+    <!-- < class="favorite-cars-container"> -->
+    <div class="favorite-cars-container">
+      <div class="favorite-cars">
+        <app-car-item *ngFor="let car of cars" [car]="car" [smallView]="true"></app-car-item>
+      </div>
 
-    <div class="home-column-container">
-        <h3>Cars I like</h3>
-        <hr>
-        <div class="favorite-cars" *ngIf="!carsCategoryView">
-            <app-car-item *ngFor='let car of cars' [car]="car" [smallView]="true"></app-car-item> 
-        </div>
     </div>
+  </div>
 
-    <div class="home-column-container">
-        <h3>My cars</h3>
-        <hr>
-        <div class="my-added-cars">
-            <p>You haven't add any car yet</p>
-            
-        </div>
+  <div class="home-column-container">
+    <h3>My cars</h3>
+    <hr />
+    <div class="my-added-cars">
+      <p>You haven't add any car yet</p>
     </div>
+  </div>
 
-    <div class="home-column-container">
-        <h3>My dealers</h3>
-        <hr>
-        <div class="my-added-dealers">
-            
-            <p>You haven't add any dealer yet</p>
-        </div>
+  <div class="home-column-container">
+    <h3>My dealers</h3>
+    <hr />
+    <div class="my-added-dealers">
+      <p>You haven't add any dealer yet</p>
     </div>
+  </div>
 
-    <div class="home-button-container">
-        <button mat-raised-button color="primary">Add car</button>
-        <button mat-raised-button color="primary">Add dealer</button>
+  <div class="home-button-container">
+    <button mat-raised-button color="primary">Add car</button>
+    <button mat-raised-button color="primary">Add dealer</button>
 
-        <!-- <button mat-raised-button>Add car</button> -->
-    </div>
+    <!-- <button mat-raised-button>Add car</button> -->
+  </div>
 
-    <!-- <div class="home-button-container">
+  <!-- <div class="home-button-container">
     </div> -->
 </div>

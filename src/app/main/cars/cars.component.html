@@ -1,43 +1,68 @@
 <section class="cars-settings">
-    
-    <app-cars-filter *ngIf="!carsCategoryView" (filterValue)="filterCars($event)"></app-cars-filter>
-    
-    <div class="toggle-div">
-        <mat-slide-toggle [(ngModel)]="carsCategoryView">View by category</mat-slide-toggle>
-    </div>
-    
+
+  <app-cars-filter *ngIf="!carsCategoryView" (filterValue)="filterCars($event)"></app-cars-filter>
+
+  <div class="toggle-div">
+    <mat-slide-toggle [(ngModel)]="carsCategoryView" color="primary">View by category</mat-slide-toggle>
+  </div>
+
 </section>
 
-<section  *ngIf="!carsCategoryView" class="cars-container">
-    <div class="car-card">
-        <app-car-item *ngFor='let car of cars' [car]="car" [smallView]="false"></app-car-item>  
-    </div>
+<section *ngIf="!carsCategoryView" class="cars-container">
+  <div class="car-card">
+    <app-car-item *ngFor='let car of cars' [car]="car" [smallView]="false"></app-car-item>
+  </div>
 </section>
 
 <section *ngIf="carsCategoryView" class="cars-category-container">
     <mat-tab-group mat-align-tabs="start">
-        <mat-tab label="Coupe">
-            <app-car-category></app-car-category>
-        </mat-tab>
-        <mat-tab label="Roadster">
-            <app-car-category></app-car-category>
-        </mat-tab>
-        <mat-tab label="Sedan">
-            <app-car-category></app-car-category>
-        </mat-tab>
-        <mat-tab label="Offroader">
-            <app-car-category></app-car-category>
-        </mat-tab>
-        <mat-tab label="Pickup truck">
-            <app-car-category></app-car-category>
-        </mat-tab>
-        <mat-tab label="Other">
-            <app-car-category></app-car-category>
+        <mat-tab *ngFor="let category of carsCategories" label="{{category | titlecase }}" >
+            <mat-selection-list #categoryCars [multiple]="false" class="">
+                <mat-list-option 
+                *ngFor="let car of getCarsByCategory(category)" 
+                [value]="car" 
+                [selected]="car"
+                (click)="selectCar(car)">
+                    <!-- <span>{{car.category}}</span> -->
+                    <span><strong>{{car.brand}}</strong></span>
+                    <span>{{car.model}}</span>
+
+                 
+                </mat-list-option>
+              </mat-selection-list>
         </mat-tab>
       </mat-tab-group>
+
+   
+      <app-car-details *ngIf="selectedCar != null" [car]="defaultCar || selectedCar"></app-car-details>   
+      <!-- <app-car-details *ngIf="selectedCar != null" [car]="selectedCar"></app-car-details>    -->
+
 </section>
 
 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <section class="cars-by-category" *ngIf="carsCategoryView && selectedCarsOnCategory">
+  <div class="cars-list" *ngIf="carsCategoryView && selectedCarsOnCategory">
+    <mat-selection-list #cars [multiple]="false" id="selectedCars">
+      <mat-list-option *ngFor="let car of selectedCarsOnCategory" (click)="selectCar(car)">
+        <h3>{{ car.model }}</h3>
+        <p>{{ car.brand }}</p>
+      </mat-list-option>
+    </mat-selection-list>
+  </div>
+  <app-car-details [car]="defaultCar || selectedCar"></app-car-details>
+</section>  -->
