@@ -3,11 +3,11 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MainRoutingModule } from './main-routing.module';
 
-
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 import { MainComponent } from './main.component';
 import { HeaderModule } from '../shared/modules/header/header.module';
@@ -15,13 +15,15 @@ import { CarsModule } from './cars/cars.module';
 import { HomeModule } from './home/home.module';
 import { DealersModule } from './dealers/dealers.module';
 import { PageNotFoundModule } from './page-not-found/page-not-found.module';
+import { MyDealersModule } from './my-dealers/my-dealers.module';
+import { DealerDialogModule } from '../shared/modules/dealer-dialog/dealer-dialog.module';
 // import { CarsFilterComponent } from './cars-filter/cars-filter.component';
 
 @NgModule({
-  declarations:  [
+  declarations: [
     MainComponent,
     // CarsFilterComponent,
-],
+  ],
   imports: [
     CommonModule,
     FormsModule,
@@ -35,6 +37,9 @@ import { PageNotFoundModule } from './page-not-found/page-not-found.module';
     MatButtonModule,
     MatButtonToggleModule,
     HeaderModule,
-  ]
+    MatFormFieldModule,
+    MyDealersModule,
+    // DealerDialogModule
+  ],
 })
-export class MainModule { }
+export class MainModule {}

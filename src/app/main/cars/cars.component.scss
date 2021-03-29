@@ -12,17 +12,14 @@
   padding: 0;
 }
 
-// .mat-tab-body-content, .mat-tab-body, .mat-tab-body-wrapper { 
-//   transition: none !important;
-//   transform: none !important; 
-//   animation-duration: 0ms !important; 
+// .filter-div {
+//   position: relative;
+//   top: -70px;
 // }
 
-
-
-.filter-div {
+.filter-input{
   position: relative;
-  top: -50px;
+  top: 15px;
 }
 
 .toggle-div {
@@ -34,95 +31,87 @@
 
 .cars-container {
   z-index: 1;
-
-  // position: relative;
-  // top: -50px;
-
 }
 
 .example-card {}
 
 .car-card {
   z-index: 1;
-
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
   align-content: space-evenly;
+  margin-top: -20px;
 }
 
 .ng-star-inserted {
   flex: 0 1 21.5%;
   // align-self: center;
-  margin: 40px 0;
+  margin: 15px 0;
 }
 
 
 .mat-tab-group {
   position: absolute;
-  left: 50px;
-  // top: -50px;
+  left: 30px;
+  top: 0px;
 }
 
-.cars-category-container{
-  position: absolute;
-  top: -40px;
+mat-selection-list{
+  .option-car{
+    font-size: 14px;
+    line-height: 1.2;
+    padding: 0;
+    height: 40px;
+    // .mat-list-option{
+    //   div{
+    //     div{
+    //       padding-right: 0;
+    //     }
+    //   }
+    // }
+    .mat-list-item-content{
+      padding: 0;
+    }
+
+    .no-cars-message{
+
+    }
+    
+    
+  }
 }
 
 
-.mat-selection-list{
-  width: 300px;
-}
+// .cars-category-container {
+//   position: absolute;
+//   top: -40px;
+// }
 
-.mat-list-option{
+.body-of-mat-tab{
   // background-color: green;
-  margin: 5px;
+  display: flex;
+  // position: absolute;
+  // top: 10px;
+  margin-top: 0;
 }
 
-.car-image-inside-category {
-  position: absolute;
-  right: 0;
-  top: 100px;
-  // max-width: 200px;
-  // max-height: 150px;
-  width: 200px;
-  height: 150px;
+.mat-selection-list {
+  width: 250px;
 }
 
-.app-car-details,
-.car-detail-container {
-  position: absolute ;
-  top: 0;
-  right: 0;
+.mat-list-option {
+  // background-color: green;
+  margin: 0;
+  padding: 0;
 }
 
-// .mat-tab-body-content{
-//   display: flex;
-// }
+.no-cars-message{
+  text-align: center; 
+}
 
-// .mat-tab-body{
-//   div{
-//     display: flex;
-//   }
-// }
+.button-load-more-section{
+  text-align: center; 
+}
 
-// .mat-tab{
-//   display: flex;
-// }
 
-// .mat-tab-cars{
-//   display: flex;
-// }
-
-// .mat-tab-body-content {
-//   height: 100%;
-//   overflow: auto;
-//   display: flex;
-// }
-
-// .mat-tab-body-content,
-// .ng-tns-c105-3,
-// .ng-trigger,
-// .ng-trigger-translateTab{
-//   display: flex;
-// }

@@ -1,28 +1,26 @@
-import {
-  AfterViewInit,
-  Component,
-  ElementRef,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
+import { AfterViewInit, Component, ViewChild, OnInit, Input } from '@angular/core';
+
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { ActivatedRoute } from '@angular/router';
-import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
-import { DealerItem } from 'src/app/shared/modules/dealer-item/dealer-item.interface';
-// import { DEALERS } from 'src/assets/data/data.constants';
-import { DealersDataSource } from './dealers.datasource';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatDialog } from '@angular/material/dialog';
+
+import { ConfirmDialogComponent } from './../../shared/modules/confirm-dialog/confirm-dialog.component';
+import { DealerDialogComponent } from './../../shared/modules/dealer-dialog/dealer-dialog.component';
 import { DealersService } from './dealers.service';
-import { merge, fromEvent } from 'rxjs';
+import { DealerItem } from 'src/app/shared/modules/dealer-item/dealer-item.interface';
+
 
 @Component({
   selector: 'app-dealers',
   templateUrl: './dealers.component.html',
   styleUrls: ['./dealers.component.scss'],
 })
-export class DealersComponent implements AfterViewInit, OnInit {
-  dealer: DealerItem;
-  dataSource: DealersDataSource;
+export class DealersComponent implements OnInit {
+  // @Input(newDealersList) = new DealerItem;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+
   displayedColumns: string[] = [
     'name',
     'amountOfCars',
@@ -30,62 +28,80 @@ export class DealersComponent implements AfterViewInit, OnInit {
     'country',
     'foundedIn',
     'editDealer',
-    'deleteDealer'
+    'deleteDealer',
   ];
-  // dataSource = new ExampleDataSource();
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
-  @ViewChild('input') input: ElementRef;
+  dataSource: MatTableDataSource<DealerItem>;
+  dealers: DealerItem[];
+  action: boolean;
 
-  // displayedColumns = ['name', 'amountOfCars', 'headquarters', 'country', 'foundedIn', 'editDealer'];
-  // dealers = DEALERS;
+  passedData: DealerItem;
 
   constructor(
-    private dealersService: DealersService,
-    private route: ActivatedRoute
+    private dealerService: DealersService,
+    public dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
-    // tslint:disable-next-line:no-string-literal
-    this.dealer = this.route.snapshot.data['dealer'];
-    this.dataSource = new DealersDataSource(this.dealersService);
-    this.dataSource.loadDealers(this.dealer.name, '', 'asc', 0, 10);
+    this.dealerService.getDealers().subscribe((dealers) => {
+      this.dealers = dealers;
+      this.dataSource = new MatTableDataSource(this.dealers);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    });
   }
 
-  ngAfterViewInit(): void {
-    fromEvent(this.input.nativeElement, 'keyup')
-      .pipe(
-        debounceTime(150),
-        distinctUntilChanged(),
-        tap(() => {
-          this.paginator.pageIndex = 0;
-          this.loadDealersPage();
-        })
-      )
-      .subscribe();
-
-    // reset the paginator after sorting
-    // this.dataSource.sort = this.sort;
-    this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
-
-    // on sort or paginate events, load a new page
-    merge(this.sort.sortChange, this.paginator.page)
-      .pipe(tap(() => this.loadDealersPage()))
-      .subscribe();
+  updateTable(): void {
+    this.dealerService.getDealers().subscribe((dealers) => {
+      this.dealers = dealers;
+      this.dataSource = new MatTableDataSource(this.dealers);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    });
   }
 
-  loadDealersPage(): void {
-    this.dataSource.loadDealers(
-      this.dealer.name,
-      this.input.nativeElement.value,
-      this.sort.direction,
-      this.paginator.pageIndex,
-      this.paginator.pageSize
-    );
-    // console.log(this.dataSource)
+  filterDealers(event: Event): void {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 
-  // onRowClicked(row): void {
-  //   console.log('Row clicked: ', row);
+  openDealerDialog(obj = null): void {
+    const dialogRef = this.dialog.open(DealerDialogComponent, {
+      width: '300px',
+      data: obj,
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result.data.newRecord === true) {
+        this.passedData = result.data;
+        this.dealerService.addDealer(this.passedData).subscribe();
+      } else if (result.data.newRecord === false) {
+        this.dealerService.updateDealer(this.passedData).subscribe();
+      }
+      this.updateTable();
+    });
+    console.log(this.dealers);
+  }
+
+  deleteDealer(dealer: DealerItem): void {
+    const confirmDialog = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        title: 'Confirm Remove Dealer',
+        message: 'Are you sure, you want to remove ' + dealer.name + ' dealer?',
+      },
+    });
+    confirmDialog.afterClosed().subscribe((result) => {
+      if (result === true) {
+        this.dealerService.deleteDealer(dealer).subscribe();
+        this.updateTable();
+      }
+    });
+  }
+
+  // pushNewDealerToTheList(dealer:  DealerItem): void {
+  //   this.newAddedDealers.push(dealer);
   // }
 }

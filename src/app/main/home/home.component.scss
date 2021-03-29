@@ -1,53 +1,61 @@
 .container {
-    padding-top: 20px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
+  padding-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
 }
-.home-column-container {
-    flex: 0 1 25%;
 
-    hr{             
-        background-color: purple;
-        height: 2px;
-        border: none;
-    }
+.home-column-container {
+  flex: 0 1 25%;
+
+  hr {
+    background-color: purple;
+    height: 2px;
+    border: none;
+  }
 }
 
 .favorite-cars-container {
-    display: flex;
-    flex-wrap: wrap;    
-}
-.favorite-cars{
-    display: flex;
-    flex-wrap: wrap; 
-    padding: 11px;
-    justify-content: flex-start;
-    align-content: space-evenly;
-    
+  display: flex;
+  flex-wrap: wrap;
 }
 
-.my-added-cars {
+.favorite-cars {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 11px;
+  justify-content: flex-start;
+  align-content: space-evenly;
 }
+
+.my-added-cars {}
+
 .my-added-dealers {
+  .mat-list {
+    .dealer-list-item {
+      .mat-list-item-content {
+        padding: 0;
+      }
+    }
+  }
 }
 
 
 .home-button-container {
-    flex: 0 1 5%;
+  flex: 0 1 5%;
 
-    :nth-child(1){
-        background-color: yellow;
-        color: #000;
-    }
+  :nth-child(1) {
+    background-color: yellow;
+    color: #000;
+  }
 
-    :nth-child(2){
-        background-color: green;
-    }
+  :nth-child(2) {
+    background-color: green;
+  }
 }
 
-.mat-raised-button{
-    background-color: purple;
-    margin-top: 10px;
-    width: 100%;
+.mat-raised-button {
+  background-color: purple;
+  margin-top: 10px;
+  width: 100%;
 }

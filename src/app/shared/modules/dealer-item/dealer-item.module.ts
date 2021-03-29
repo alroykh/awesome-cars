@@ -1,13 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+
 import { DealerItemComponent } from './dealer-item.component';
-
-
 
 @NgModule({
   declarations: [DealerItemComponent],
-  imports: [
-    CommonModule
-  ]
+  imports: [CommonModule],
 })
-export class DealerItemModule { }
+export class DealerItemModule {}

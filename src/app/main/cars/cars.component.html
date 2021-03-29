@@ -1,68 +1,82 @@
 <section class="cars-settings">
-
-  <app-cars-filter *ngIf="!carsCategoryView" (filterValue)="filterCars($event)"></app-cars-filter>
+  <app-cars-filter
+    [val]="filterValue"
+    *ngIf="!carsCategoryView"
+    (filterValue)="filterCars($event)"
+    class="filter-input"
+  ></app-cars-filter>
 
   <div class="toggle-div">
-    <mat-slide-toggle [(ngModel)]="carsCategoryView" color="primary">View by category</mat-slide-toggle>
+    <mat-slide-toggle
+      [(ngModel)]="carsCategoryView"
+      color="primary"
+      [ngModelOptions]="{ standalone: true }"
+      >View by category</mat-slide-toggle
+    >
   </div>
-
 </section>
 
 <section *ngIf="!carsCategoryView" class="cars-container">
   <div class="car-card">
-    <app-car-item *ngFor='let car of cars' [car]="car" [smallView]="false"></app-car-item>
+    <app-car-item
+      *ngFor="let car of cars"
+      [car]="car"
+      [smallView]="false"
+    ></app-car-item>
+  </div>
+
+  <div *ngIf="!cars.length && !isLoading" class="no-cars-message">
+    <h2>There is no cars with such name</h2>
   </div>
 </section>
 
-<section *ngIf="carsCategoryView" class="cars-category-container">
-    <mat-tab-group mat-align-tabs="start">
-        <mat-tab *ngFor="let category of carsCategories" label="{{category | titlecase }}" >
-            <mat-selection-list #categoryCars [multiple]="false" class="">
-                <mat-list-option 
-                *ngFor="let car of getCarsByCategory(category)" 
-                [value]="car" 
-                [selected]="car"
-                (click)="selectCar(car)">
-                    <!-- <span>{{car.category}}</span> -->
-                    <span><strong>{{car.brand}}</strong></span>
-                    <span>{{car.model}}</span>
+<section *ngIf="carsCategoryView">
+  <mat-tab-group
+    mat-align-tabs="start"
+    animationDuration="0ms"
+    class="car-list-and-details-container"
+    (selectedTabChange)="tabChanged($event)"
+  >
+    <mat-tab
+      *ngFor="let category of carsCategories"
+      label="{{ category | titlecase }}"
+    >
+      <ng-template matTabContent>
+        <div class="body-of-mat-tab">
+          <mat-selection-list #categoryCars [multiple]="false" class="">
+            <mat-list-option
+              *ngFor="let car of getCarsByCategory(category); let i = index"
+              [value]="car"
+              [selected]="car && i === 0"
+              (click)="selectCar(car, category)"
+              class="option-car"
+            >
+              <span
+                ><strong>{{ car.brand }}</strong></span
+              >
+              <p>
+                <span>{{ car.model }}</span>
+              </p>
+            </mat-list-option>
+          </mat-selection-list>
 
-                 
-                </mat-list-option>
-              </mat-selection-list>
-        </mat-tab>
-      </mat-tab-group>
-
-   
-      <app-car-details *ngIf="selectedCar != null" [car]="defaultCar || selectedCar"></app-car-details>   
-      <!-- <app-car-details *ngIf="selectedCar != null" [car]="selectedCar"></app-car-details>    -->
-
+          <app-car-details
+            class="car-details-app"
+            [car]="selectedCar ? selectedCar : getCarsByCategory(category)[0]"
+          ></app-car-details>
+        </div>
+      </ng-template>
+    </mat-tab>
+  </mat-tab-group>
 </section>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- <section class="cars-by-category" *ngIf="carsCategoryView && selectedCarsOnCategory">
-  <div class="cars-list" *ngIf="carsCategoryView && selectedCarsOnCategory">
-    <mat-selection-list #cars [multiple]="false" id="selectedCars">
-      <mat-list-option *ngFor="let car of selectedCarsOnCategory" (click)="selectCar(car)">
-        <h3>{{ car.model }}</h3>
-        <p>{{ car.brand }}</p>
-      </mat-list-option>
-    </mat-selection-list>
-  </div>
-  <app-car-details [car]="defaultCar || selectedCar"></app-car-details>
-</section>  -->
+<section class="button-load-more-section"> 
+  <button
+    mat-raised-button
+    *ngIf="!isLastPage && !carsCategoryView && !isLoading"
+    color="primary"
+    (click)="loadMore()"
+  >
+    Load more cars
+  </button>
+</section>

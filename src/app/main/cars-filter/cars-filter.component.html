@@ -1,33 +1,24 @@
-<!-- <div class="filter-component">
-    <label for="search-box">Filter</label>
-    <input #searchBox id="search-box" (input)="search(searchBox.value)" />
-  
-    <ul>
-      <li *ngFor="let car of cars$ | async" >
-        <a routerLink="{{cars$}}">
-          {{car.model}}
-        </a>
-      </li>
-    </ul>
-  </div> -->
-
 <form class="filter-component">
   <mat-form-field>
     <mat-label>Filter car</mat-label>
     <input
       matInput
+      [(ngModel)]="value"
+      type="text"
       #filterInput
       placeholder="Filter"
-      value=""
       (input)="search(filterInput.value)"
+      [ngModelOptions]="{ standalone: true }"
     />
-    <!-- <ul class="filtered-list">
-      <li *ngFor="let car of cars$ | async">
-        <span>
-          {{car.brand}} {{ car.model }}
-        </span>
-      </li>
-    </ul> -->
-
+    <button
+      mat-button
+      *ngIf="value"
+      matSuffix
+      mat-icon-button
+      aria-label="Clear"
+      (click)="resetValue()"
+    >
+      <mat-icon>close</mat-icon>
+    </button>
   </mat-form-field>
 </form>

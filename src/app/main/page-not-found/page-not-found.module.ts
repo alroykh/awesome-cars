@@ -1,19 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { PageNotFoundComponent } from './page-not-found.component';
 import { MatButtonModule } from '@angular/material/button';
-
-
+import { PageNotFoundComponent } from './page-not-found.component';
 
 @NgModule({
   declarations: [PageNotFoundComponent],
-  imports: [
-    CommonModule,
-    MatButtonModule
-  ],
+  imports: [CommonModule, MatButtonModule],
   exports: [
     // PageNotFoundComponent
-  ]
+  ],
 })
-export class PageNotFoundModule { }
+export class PageNotFoundModule {}

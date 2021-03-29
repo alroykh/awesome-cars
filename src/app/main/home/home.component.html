@@ -2,12 +2,14 @@
   <div class="home-column-container">
     <h3>Cars I like</h3>
     <hr />
-    <!-- < class="favorite-cars-container"> -->
     <div class="favorite-cars-container">
       <div class="favorite-cars">
-        <app-car-item *ngFor="let car of cars" [car]="car" [smallView]="true"></app-car-item>
+        <app-car-item
+          *ngFor="let car of cars"
+          [car]="car"
+          [smallView]="true"
+        ></app-car-item>
       </div>
-
     </div>
   </div>
 
@@ -22,18 +24,22 @@
   <div class="home-column-container">
     <h3>My dealers</h3>
     <hr />
-    <div class="my-added-dealers">
-      <p>You haven't add any dealer yet</p>
+    <p *ngIf="newAddedDealers.length === 0">You haven't add any dealer yet</p>
+    <div class="my-added-dealers" *ngFor="let newD of newAddedDealers">
+      <mat-list role="list">
+        <mat-list-item class="dealer-list-item" role="listitem">{{
+          newD.name
+        }}</mat-list-item>
+      </mat-list>
     </div>
+
+    <!-- <app-my-dealers></app-my-dealers> -->
   </div>
 
   <div class="home-button-container">
     <button mat-raised-button color="primary">Add car</button>
-    <button mat-raised-button color="primary">Add dealer</button>
-
-    <!-- <button mat-raised-button>Add car</button> -->
+    <button mat-raised-button color="primary" (click)="openDealerDialog()">
+      Add dealer
+    </button>
   </div>
-
-  <!-- <div class="home-button-container">
-    </div> -->
 </div>

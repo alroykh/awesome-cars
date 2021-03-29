@@ -17,8 +17,6 @@ import { CarItemComponent } from './car-item.component';
     MatIconModule,
     MatButtonModule,
   ],
-  exports: [
-    CarItemComponent
-  ]
+  exports: [CarItemComponent],
 })
-export class CarItemModule { }
+export class CarItemModule {}

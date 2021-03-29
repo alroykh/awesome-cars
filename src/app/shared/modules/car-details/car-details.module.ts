@@ -5,10 +5,7 @@ import { CarDetailsComponent } from './car-details.component';
 
 @NgModule({
   declarations: [CarDetailsComponent],
-  imports: [
-    CommonModule
-  ],
-  exports: [CarDetailsComponent]
+  imports: [CommonModule],
+  exports: [CarDetailsComponent],
 })
-export class CarDetailsModule { }
-
+export class CarDetailsModule {}

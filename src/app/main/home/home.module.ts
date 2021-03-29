@@ -1,21 +1,28 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 
 import { MatButtonModule } from '@angular/material/button';
+import { MatListModule } from '@angular/material/list';
+import { MatTreeModule } from '@angular/material/tree';
+import { MatIconModule } from '@angular/material/icon';
 
-import { HomeComponent } from './home.component';
 import { CarItemModule } from 'src/app/shared/modules/car-item/car-item.module';
-
+import { DealersModule } from '../dealers/dealers.module';
+import { MyDealersModule } from '../my-dealers/my-dealers.module';
+import { HomeComponent } from './home.component';
 
 @NgModule({
-  declarations: [
-    HomeComponent
-  ],
+  declarations: [HomeComponent],
   imports: [
     CommonModule,
     MatButtonModule,
-    CarItemModule
+    CarItemModule,
+    DealersModule,
+    MyDealersModule,
+    MatListModule,
+    MatTreeModule,
+    MatIconModule,
   ],
-  exports: []
+  exports: [],
 })
-export class HomeModule { }
+export class HomeModule {}
