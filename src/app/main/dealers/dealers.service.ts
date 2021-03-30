@@ -1,3 +1,4 @@
+import { FormControl } from '@angular/forms';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
@@ -5,10 +6,18 @@ import { catchError, map, tap } from 'rxjs/operators';
 
 import { DealerItem } from 'src/app/shared/modules/dealer-item/dealer-item.interface';
 
+export interface DealerParams {
+  [key: string]: any;
+}
+
 @Injectable({
   providedIn: 'root',
 })
 export class DealersService {
+  filterControl = new FormControl();
+  dealers: DealerItem[] = new Array<DealerItem>();
+  newDealers: DealerItem[] = new Array<DealerItem>();
+
   private dealersUrl = 'api/dealers'; // url to web api
   private httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -60,4 +69,31 @@ export class DealersService {
       .delete<DealerItem>(url, this.httpOptions)
       .pipe(catchError(this.handleError<DealerItem>('deleteDealer')));
   }
+
+  // public getDealersByParams(queryParams: DealerParams = null): Observable<DealerItem[]> {
+  //   let params = new HttpParams();
+
+  //   if (queryParams) {
+  //     Object.keys(queryParams).forEach((key: string) => {
+  //       params = params.append(key, queryParams[key]);
+  //     });
+  //   }
+
+  //   return this.http
+  //     .get<DealerItem[]>(`${this.dealersUrl}`, { params })
+  //     .pipe(
+  //       catchError(this.handleError<DealerItem[]>(`Get dealers by parameters`, []))
+  //     );
+  // }
+
+  // public getDealersByNewRecord(): void {
+  //   this.filterControl.value.subscribe(
+  //     (value) =>
+  //       (this.newDealers = this.dealers.filter(
+  //         (dealer) => dealer.newRecord === true
+  //       ))
+  //   );
+  // }
+
+ 
 }

@@ -24,9 +24,10 @@ export class HomeComponent implements OnInit {
 
   newAddedDealers: Array<DealerItem> = new Array<DealerItem>();
 
-  filterControl = new FormControl();
   carsCategoryView = false;
   passedData: DealerItem;
+
+  isLoading = false;
 
   constructor(
     private carsService: CarsService,
@@ -35,12 +36,21 @@ export class HomeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.isLoading = true;
     this.getCars();
+    this.getNewAddedDealers();
   }
 
   getCars(): void {
     this.carsService.getCarsByParams({ liked: true }).subscribe((cars) => {
       this.cars = cars;
+    });
+  }
+
+  getNewAddedDealers(): void {
+    this.dealerService.getDealers().subscribe((dealers) => {
+      this.newAddedDealers = dealers.filter((dealer) => dealer.newRecord);
+      this.isLoading = false;
     });
   }
 
