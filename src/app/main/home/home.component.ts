@@ -60,9 +60,11 @@ export class HomeComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      this.passedData = result.data;
-      this.dealerService.addDealer(this.passedData).subscribe();
-      this.newAddedDealers.push(this.passedData);
+      if (result) {
+        this.passedData = result.data;
+        this.dealerService.addDealer(this.passedData).subscribe();
+        this.newAddedDealers.push(this.passedData);
+      }
     });
   }
 }

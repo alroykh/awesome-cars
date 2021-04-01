@@ -10,6 +10,7 @@ import { CarItemModule } from 'src/app/shared/modules/car-item/car-item.module';
 import { DealersModule } from '../dealers/dealers.module';
 import { MyDealersModule } from '../my-dealers/my-dealers.module';
 import { HomeComponent } from './home.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [HomeComponent],
@@ -22,6 +23,7 @@ import { HomeComponent } from './home.component';
     MatListModule,
     MatTreeModule,
     MatIconModule,
+    MatProgressSpinnerModule,
   ],
   exports: [],
 })

@@ -13,7 +13,6 @@ import { InMemoryDataService } from './shared/services/in-memory-data.service';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ConfirmDialogComponent } from './shared/modules/confirm-dialog/confirm-dialog.component';
-import { DealerDialogModule } from './shared/modules/dealer-dialog/dealer-dialog.module';
 
 @NgModule({
   declarations: [AppComponent, ConfirmDialogComponent],
@@ -22,6 +21,7 @@ import { DealerDialogModule } from './shared/modules/dealer-dialog/dealer-dialog
     HttpClientModule,
     HttpClientInMemoryWebApiModule.forRoot(InMemoryDataService, {
       dataEncapsulation: false,
+      delay: 1000
     }),
     AppRoutingModule,
     BrowserAnimationsModule,
@@ -29,7 +29,6 @@ import { DealerDialogModule } from './shared/modules/dealer-dialog/dealer-dialog
     MatButtonModule,
     FormsModule,
     MyDealersModule,
-    // DealerDialogModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

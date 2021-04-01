@@ -17,6 +17,9 @@
 </section>
 
 <section *ngIf="!carsCategoryView" class="cars-container">
+  
+  <mat-spinner *ngIf="isLoading" class="loading"></mat-spinner>
+
   <div class="car-card">
     <app-car-item
       *ngFor="let car of cars"
@@ -70,7 +73,7 @@
   </mat-tab-group>
 </section>
 
-<section class="button-load-more-section"> 
+<section class="button-load-more-section">
   <button
     mat-raised-button
     *ngIf="!isLastPage && !carsCategoryView && !isLoading"

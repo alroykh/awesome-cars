@@ -16,6 +16,7 @@ import { CarCategoryModule } from 'src/app/shared/modules/car-category/car-categ
 import { CarDetailsModule } from 'src/app/shared/modules/car-details/car-details.module';
 import { CarsComponent } from './cars.component';
 import { CarsFilterComponent } from '../cars-filter/cars-filter.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [CarsComponent, CarsFilterComponent],
@@ -33,6 +34,7 @@ import { CarsFilterComponent } from '../cars-filter/cars-filter.component';
     CarDetailsModule,
     MatIconModule,
     MatButtonModule,
+    MatProgressSpinnerModule,
   ],
   exports: [
     // CarsComponent

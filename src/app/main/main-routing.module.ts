@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { MainComponent } from './main.component';
 import { HomeComponent } from './home/home.component';
 import { CarsComponent } from './cars/cars.component';
+import { CarInfoComponent } from './../shared/modules/car-info/car-info.component';
 import { DealersComponent } from './dealers/dealers.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
@@ -20,6 +21,8 @@ const routes: Routes = [
         path: 'cars',
         component: CarsComponent,
       },
+      { path: 'cars/:id',
+        component: CarInfoComponent },
       {
         path: 'dealers',
         component: DealersComponent,

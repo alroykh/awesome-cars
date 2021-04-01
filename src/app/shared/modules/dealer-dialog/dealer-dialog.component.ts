@@ -46,7 +46,7 @@ export class DealerDialogComponent implements OnInit {
     const editedDealer = {
       ...this.dealer,
       id: this.dealer.id.toUpperCase(),
-      newRecord: true,
+      registrationDate: this.action ? this.dealer.registrationDate : new Date(),
     };
     this.dialogRef.close({
       event: 'close',
@@ -59,8 +59,8 @@ export class DealerDialogComponent implements OnInit {
   }
 
   check(): void {
-    if (this.dealers.find((elem) => elem.id === this.dealer.id.toUpperCase())) {
-      this.showError = true;
-    }
+    this.showError = !!this.dealers.find(
+      (elem) => elem.id === this.dealer.id.toUpperCase()
+    );
   }
 }

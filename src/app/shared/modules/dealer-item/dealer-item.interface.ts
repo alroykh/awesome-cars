@@ -6,6 +6,7 @@ export interface DealerItem {
   foundedIn: number;
   newRecord?: boolean;
   headquarters: string;
+  registrationDate?: Date;
 }
 
 export const initDealer = (): DealerItem => ({
@@ -16,4 +17,5 @@ export const initDealer = (): DealerItem => ({
   foundedIn: null,
   newRecord: true,
   headquarters: null,
+  registrationDate: null,
 });

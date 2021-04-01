@@ -107,4 +107,8 @@ export class CarsComponent implements OnInit {
   selectCar(car: CarItem, category?): void {
     this.selectedCar = car;
   }
+
+  // getCarById(id: number) {
+  //   return this.cars.find(p => +p.id === id);
+  // }
 }

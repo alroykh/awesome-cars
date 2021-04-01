@@ -18,6 +18,8 @@ export interface CarsTrimmed {
   providedIn: 'root',
 })
 export class CarsService {
+  cars: CarItem[] = new Array<CarItem>();
+
   private carsUrl = 'api/cars'; // url to web api
   private httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -121,5 +123,14 @@ export class CarsService {
       isLastPage: carList.length - 1 <= endIndex,
     };
     return carsTrimmed;
+  }
+
+  getCarById(id: string): Observable<CarItem> {
+    const url = `${this.carsUrl}/${id}`;
+
+    return this.http.get<CarItem>(url)
+      .pipe(
+          tap((_) => this.log(`fetched car id=${id}`)),
+    catchError(this.handleError<CarItem>(`getCat id = ${id}`)));
   }
 }

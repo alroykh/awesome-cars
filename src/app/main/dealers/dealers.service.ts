@@ -56,7 +56,7 @@ export class DealersService {
 
   updateDealer(dealer: DealerItem): Observable<any> {
     return this.http
-      .put(this.dealersUrl, dealer, this.httpOptions)
+      .put<DealerItem>(this.dealersUrl, dealer, this.httpOptions)
       .pipe(catchError(this.handleError<any>('updateDealer')));
   }
 
@@ -69,31 +69,4 @@ export class DealersService {
       .delete<DealerItem>(url, this.httpOptions)
       .pipe(catchError(this.handleError<DealerItem>('deleteDealer')));
   }
-
-  // public getDealersByParams(queryParams: DealerParams = null): Observable<DealerItem[]> {
-  //   let params = new HttpParams();
-
-  //   if (queryParams) {
-  //     Object.keys(queryParams).forEach((key: string) => {
-  //       params = params.append(key, queryParams[key]);
-  //     });
-  //   }
-
-  //   return this.http
-  //     .get<DealerItem[]>(`${this.dealersUrl}`, { params })
-  //     .pipe(
-  //       catchError(this.handleError<DealerItem[]>(`Get dealers by parameters`, []))
-  //     );
-  // }
-
-  // public getDealersByNewRecord(): void {
-  //   this.filterControl.value.subscribe(
-  //     (value) =>
-  //       (this.newDealers = this.dealers.filter(
-  //         (dealer) => dealer.newRecord === true
-  //       ))
-  //   );
-  // }
-
- 
 }

@@ -18,6 +18,7 @@
         <mat-error *ngIf="dealer.id === '' || dealer.id === null">
           Please enter ID
         </mat-error>
+        
         <mat-hint *ngIf="showError" class="exist-message"
           >ID is already exist</mat-hint
         >
@@ -71,7 +72,7 @@
 
   <div mat-dialog-actions>
     <button
-      [disabled]="!dealer.id || !dealer.name || showError"
+      [disabled]="!dealer.id || !dealer.name || showError || dealer.name.length < 3"
       mat-button
       (click)="saveAction()"
     >

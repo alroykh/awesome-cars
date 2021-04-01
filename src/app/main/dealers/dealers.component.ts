@@ -1,4 +1,10 @@
-import { AfterViewInit, Component, ViewChild, OnInit, Input } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ViewChild,
+  OnInit,
+  Input,
+} from '@angular/core';
 
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -9,7 +15,7 @@ import { ConfirmDialogComponent } from './../../shared/modules/confirm-dialog/co
 import { DealerDialogComponent } from './../../shared/modules/dealer-dialog/dealer-dialog.component';
 import { DealersService } from './dealers.service';
 import { DealerItem } from 'src/app/shared/modules/dealer-item/dealer-item.interface';
-
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-dealers',
@@ -34,6 +40,8 @@ export class DealersComponent implements OnInit {
   dealers: DealerItem[];
   action: boolean;
 
+  loading = false;
+
   passedData: DealerItem;
 
   constructor(
@@ -42,12 +50,17 @@ export class DealersComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.dealerService.getDealers().subscribe((dealers) => {
-      this.dealers = dealers;
-      this.dataSource = new MatTableDataSource(this.dealers);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-    });
+    this.loading = true;
+    this.dealerService
+      .getDealers()
+      .pipe(finalize(() => (this.loading = false)))
+      .subscribe((dealers) => {
+        this.dealers = dealers;
+        this.dataSource = new MatTableDataSource(this.dealers);
+        //
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      });
   }
 
   updateTable(): void {
@@ -75,8 +88,9 @@ export class DealersComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
+      console.log(result);
+      this.passedData = result.data;
       if (result.data.newRecord === true) {
-        this.passedData = result.data;
         this.dealerService.addDealer(this.passedData).subscribe();
       } else if (result.data.newRecord === false) {
         this.dealerService.updateDealer(this.passedData).subscribe();

@@ -7,6 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 
 import { CarItemComponent } from './car-item.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [CarItemComponent],
@@ -16,6 +17,7 @@ import { CarItemComponent } from './car-item.component';
     MatCardModule,
     MatIconModule,
     MatButtonModule,
+    RouterModule,
   ],
   exports: [CarItemComponent],
 })

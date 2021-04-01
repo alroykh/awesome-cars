@@ -50,7 +50,7 @@ export class CarsFilterComponent implements OnInit, OnDestroy, OnChanges {
       this.value = this.val;
     }
   }
-
+  
   resetValue(): void {
     this.value = '';
     this.filterValue.emit(this.value);
