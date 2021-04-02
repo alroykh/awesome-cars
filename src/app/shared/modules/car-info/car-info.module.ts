@@ -12,7 +12,7 @@ import { MatIconModule } from '@angular/material/icon';
   declarations: [CarInfoComponent],
   imports: [
     CommonModule,
-    BrowserModule,
+    // BrowserModule,
     FormsModule,
     MatProgressSpinnerModule,
     MatButtonModule,

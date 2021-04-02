@@ -1,30 +1,15 @@
-<div class="car-info-container">
-  <div class="car-image-div">
-    <img
-      class="car-img"
-      [src]="car?.image"
-      alt="car-img"
-    />
-    <img *ngIf="car?.image == null"
-      class="car-img"
-      src="../../../../assets/images/mock-image.jpg"
-      alt="car-img"
-    />
+<div class="car-info-container" *ngIf="!isLoading">
+  <div class="car-image-div" *ngIf="car?.image">
+    <img class="car-img" [src]="car?.image" alt="car-img" />
   </div>
 
-  <!-- <div class="car__img" >
-    <img  [src]="car?.image" [alt]="car?.id">
-    <img *ngIf="!car?.image" src="../../../../assets/images/mock-image.jpg" alt="trolool">
-  </div> -->
-
-  <!-- <div class="car-image-div" *ngIf="!car?.image">
-    <img 
-      ngDefaultControl
-      class="selected-car-img"
+  <div class="car-image-div" *ngIf="!car?.image">
+    <img
+      class="car-img"
       src="../../../../assets/images/mock-image.jpg"
       alt="selected-car-img"
     />
-  </div> -->
+  </div>
 
   <div class="car-info-div">
     <div class="header-div">
@@ -33,22 +18,22 @@
       </div>
       <div class="ud-div">
         <button class="edit-car-button">
-          <!-- <mat-icon
+          <mat-icon
             aria-hidden="false"
             class="edit-icon"
             aria-label="Edit car icon"
             >edit</mat-icon
-          > -->
+          >
         </button>
 
         <button class="delete-car-button">
-          <!-- <mat-icon
+          <mat-icon
             aria-hidden="false"
             class="delete-icon"
             aria-label="Delete car icon"
+            (click)="deleteCar(car)"
             >delete</mat-icon
-          > -->
-          <!-- <mat-icon></mat-icon> -->
+          >
         </button>
       </div>
     </div>
@@ -57,14 +42,14 @@
         <li>
           Dealer: <span>{{ car?.brand }}</span>
         </li>
-        <li>
+        <li *ngIf="car?.class">
           Class: <span>{{ car?.class }}</span>
         </li>
-        <!-- <li *ngIf="!car?.class">Class: <span>unknown</span></li> -->
-        <li>
+        <li *ngIf="!car?.class">Class: <span>unknown</span></li>
+        <li *ngIf="car?.year">
           Year: <span>{{ car?.year }}</span>
         </li>
-        <!-- <li *ngIf="!car?.year">Year: <span>unknown</span></li> -->
+        <li *ngIf="!car?.year">Year: <span>unknown</span></li>
         <li>
           Color: <span>{{ car?.color }}</span>
         </li>
@@ -72,13 +57,23 @@
           Category: <span>{{ car?.category }}</span>
         </li>
         <li>
-          Wikipedia link: <a href="{{ car?.wikilink }}"><span>{{ car?.wikilink }}</span></a>
+          Wikipedia link:
+          <a href="{{ car?.wikilink }}"
+            ><span>{{ car?.wikilink }}</span></a
+          >
         </li>
       </ul>
     </div>
 
-    <div class="description-div">{{ car?.description }}</div>
+    <div class="description-div" *ngIf='car?.description'>{{ car?.description }}</div>
+    <div class="description-div" *ngIf='!car?.description'>No description yet...</div>
   </div>
 </div>
 
-<!-- <mat-spinner *ngIf="!isLoading"></mat-spinner> -->
+<div class="back-button" *ngIf="!isLoading">
+  <button mat-raised-button color="primary" (click)="onBack()">
+    Back to cars
+  </button>
+</div>
+
+<mat-spinner *ngIf="isLoading" class="loading"></mat-spinner>

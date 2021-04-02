@@ -39,6 +39,6 @@ import { DealerDialogModule } from 'src/app/shared/modules/dealer-dialog/dealer-
   ],
   entryComponents: [DealerDialogComponent],
   exports: [DealersComponent],
-  providers: [DealersService],
+  // providers: [DealersService],
 })
 export class DealersModule {}

@@ -9,6 +9,7 @@ import { CarItem } from '../../shared/modules/car-item/car-item.interface';
 import { DealerItem } from 'src/app/shared/modules/dealer-item/dealer-item.interface';
 import { DealerDialogComponent } from '../../shared/modules/dealer-dialog/dealer-dialog.component';
 import { MyDealersComponent } from '../my-dealers/my-dealers.component';
+import { CarDialogComponent } from 'src/app/shared/modules/car-dialog/car-dialog.component';
 
 @Component({
   selector: 'app-home',
@@ -23,9 +24,11 @@ export class HomeComponent implements OnInit {
   dealer: DealerItem;
 
   newAddedDealers: Array<DealerItem> = new Array<DealerItem>();
+  newAddedCars: Array<CarItem> = new Array<CarItem>();
 
   carsCategoryView = false;
   passedData: DealerItem;
+  passedCar: CarItem;
 
   isLoading = false;
 
@@ -39,6 +42,7 @@ export class HomeComponent implements OnInit {
     this.isLoading = true;
     this.getCars();
     this.getNewAddedDealers();
+    this.getNewAddedCars();
   }
 
   getCars(): void {
@@ -54,6 +58,13 @@ export class HomeComponent implements OnInit {
     });
   }
 
+  getNewAddedCars(): void {
+    this.carsService.getAllCars().subscribe((cars) => {
+      this.newAddedCars = cars.filter((car) => car.newItem);
+      this.isLoading = false;
+    });
+  }
+
   openDealerDialog(): void {
     const dialogRef = this.dialog.open(DealerDialogComponent, {
       width: '300px',
@@ -64,6 +75,21 @@ export class HomeComponent implements OnInit {
         this.passedData = result.data;
         this.dealerService.addDealer(this.passedData).subscribe();
         this.newAddedDealers.push(this.passedData);
+      }
+    });
+  }
+
+  openCarDialog(): void {
+    const dialogRef = this.dialog.open(CarDialogComponent, {
+      width: '350px',
+      height: '650px',
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.passedCar = result.data;
+        this.carsService.addCar(this.passedCar).subscribe();
+        this.newAddedCars.push(this.passedCar);
       }
     });
   }

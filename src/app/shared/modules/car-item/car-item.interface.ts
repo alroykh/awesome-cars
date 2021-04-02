@@ -11,6 +11,7 @@ export interface CarItem {
   newItem: boolean;
   description?: string;
   wikilink?: string;
+  registrationDate?: Date;
 }
 
 export const initCar = (): CarItem => ({
@@ -26,4 +27,6 @@ export const initCar = (): CarItem => ({
   newItem: true,
   description: null,
   wikilink: null,
+  registrationDate: null,
+
 });

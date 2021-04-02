@@ -33,14 +33,17 @@
 
     .ud-div {
       flex: 0 1 20%;
-      background-color: green;
+      // background-color: green;
+      display: flex;
+      justify-content: flex-end;
 
       .edit-car-button,
       .delete-car-button {
-        background-color: white;
+        background-color: #FFC0CB;
         border: none;
         cursor: pointer;
         outline: none;
+        margin: 5px;
       }
 
       .delete-icon {
@@ -74,9 +77,6 @@
 
   }
 
-
-
-
   .description-div {
     flex: 0 1 100%;
     border: 1px solid #572757;
@@ -86,4 +86,18 @@
     line-height: 1.5;
   }
 
+}
+
+.back-button {
+  margin-top: 50px;
+
+  button {
+    margin: 0 auto;
+    display: block;
+  }
+
+}
+
+.loading{
+  margin: 100px auto;
 }

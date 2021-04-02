@@ -17,29 +17,34 @@
   <div class="home-column-container">
     <h3>My cars</h3>
     <hr />
-    <div class="my-added-cars">
-      <p>You haven't add any car yet</p>
-    </div>
-  </div>
-
-  <!-- <div class="home-column-container">
-    <h3>My dealers</h3>
-    <hr />
-    <p *ngIf="newAddedDealers.length === 0">You haven't add any dealer yet</p>
-    <div class="my-added-dealers" *ngFor="let newD of newAddedDealers">
+  
+    <div class="my-added-dealers" *ngIf="newAddedCars.length > 0">
       <mat-list role="list">
-        <mat-list-item class="dealer-list-item" role="listitem">{{
-          newD.name
-        }}</mat-list-item>
+        <mat-list-item
+          class="dealer-list-item"
+          role="listitem"
+          *ngFor="let newC of newAddedCars"
+          ><p matLine class="dealer-name">
+            <strong>{{ newC.model }}</strong>
+          </p>
+          <div matLine class="dealer-details">
+            <span>
+              {{ newC.registrationDate | date: "d/M/YYYY" }}
+            </span>
+          </div>
+        </mat-list-item>
       </mat-list>
-    </div> -->
+    </div>
+    <p *ngIf="newAddedCars.length === 0 && !isLoading">
+      You haven't add any dealer yet
+    </p>
+  </div>
 
   <div class="home-column-container">
     <h3>My dealers</h3>
     <hr />
 
     <div class="my-added-dealers" *ngIf="newAddedDealers.length > 0">
-      <!-- <div class="my-added-dealers" > -->
       <mat-list role="list">
         <mat-list-item
           class="dealer-list-item"
@@ -64,7 +69,9 @@
   </div>
 
   <div class="home-button-container">
-    <button mat-raised-button color="primary">Add car</button>
+    <button mat-raised-button color="primary" (click)="openCarDialog()">
+      Add car
+    </button>
     <button mat-raised-button color="primary" (click)="openDealerDialog()">
       Add dealer
     </button>

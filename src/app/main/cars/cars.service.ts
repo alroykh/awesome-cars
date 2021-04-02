@@ -92,11 +92,11 @@ export class CarsService {
     );
   }
 
-  // getCars(): Observable<CarItem[]> {
-  //   return this.http
-  //     .get<CarItem[]>(this.carsUrl)
-  //     .pipe(catchError(this.handleError<CarItem[]>('getCars', [])));
-  // }
+  getAllCars(): Observable<CarItem[]> {
+    return this.http
+      .get<CarItem[]>(this.carsUrl)
+      .pipe(catchError(this.handleError<CarItem[]>('getCars', [])));
+  }
 
   public getCars(page: number, size: number = 8): Observable<any> {
     return this.http.get<CarItem[]>(this.carsUrl).pipe(
@@ -132,5 +132,20 @@ export class CarsService {
       .pipe(
           tap((_) => this.log(`fetched car id=${id}`)),
     catchError(this.handleError<CarItem>(`getCat id = ${id}`)));
+  }
+
+  deleteCar(car: CarItem | string): Observable<CarItem> {
+    const id: string = typeof car === 'string' ? car : car.id;
+    const url: string = `${this.carsUrl}/${id}`;
+
+    return this.http
+      .delete<CarItem>(url, this.httpOptions)
+      .pipe(catchError(this.handleError<CarItem>('deleteCar')));
+  }
+
+  addCar(dealer: CarItem): Observable<CarItem> {
+    return this.http
+      .post<CarItem>(this.carsUrl, dealer, this.httpOptions)
+      .pipe(catchError(this.handleError<CarItem>('addDealer')));
   }
 }
