@@ -21,6 +21,7 @@ export class CarDialogComponent implements OnInit {
   action: boolean;
   localData: any;
   myForm: FormGroup;
+  fileName: '';
 
   selectedValue: string;
   showError: boolean = false;
@@ -103,12 +104,21 @@ export class CarDialogComponent implements OnInit {
   }
 
   uniqueId(): any {
-    return '2345678904';
+    let result = '';
+    const symbols = '0123456789';
+    const maxPosition = symbols.length - 1;
+    for (let i = 0; i < 10; ++i) {
+      const position = Math.floor(Math.random() * maxPosition);
+      result = result + symbols.substring(position, position + 1);
+    }
+
+    const found = this.cars.some((el) => el.id === result);
+
+    result ? !found : this.uniqueId();
+    return result;
   }
 
   saveAction(): void {
- 
-
     const selectedDealer = this.dealers.find(
       (el) => el.name.toLowerCase() === this.myForm.value.dealer.toLowerCase()
     );
@@ -126,7 +136,12 @@ export class CarDialogComponent implements OnInit {
     });
   }
 
-  uploadFileEvt($event): void {
-    console.log($event);
-  }
+  // uploadFileEvt(e: File[]) {
+  //   // console.log($event);
+  //   const fileName = e[0].name;
+  //   console.log(fileName);
+    // return fileName;
+  // }
+
+
 }

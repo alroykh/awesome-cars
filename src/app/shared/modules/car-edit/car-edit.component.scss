@@ -1,0 +1,83 @@
+.car-info-container {
+  display: flex;
+  margin: 20px auto;
+  padding: 0 20px;
+  flex-wrap: wrap;
+
+  .car-image-div {
+    flex: 0 1 50%;
+    margin: 0 10px 0 0;
+
+    .car-img {
+      max-width: 600px;
+      min-width: 600px
+    }
+  }
+
+  .car-info-div {
+    flex: 0 1 45%;
+    margin: 0 0 0 10px;
+
+
+
+    .mat-form-field {
+      display: block;
+      padding-left: 50px;
+      width: 400px;
+    }
+
+    .form {
+      width: 80%;
+
+      .field {
+        display: block;
+
+      }
+    }
+
+  }
+
+  .actions-div {
+    margin-top: 50px;
+    flex: 1 1 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    padding-right: 100px;
+
+    div {
+      margin: 20px;
+
+      button {
+        width: 100px;
+      }
+
+    }
+  }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+// .back-button {
+//   margin-top: 50px;
+
+//   button {
+//     margin: 0 auto;
+//     display: block;
+//   }
+
+// }
+
+// .loading {
+//   margin: 100px auto;
+// }

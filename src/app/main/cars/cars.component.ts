@@ -3,7 +3,6 @@ import { Component, Input, OnInit } from '@angular/core';
 // import { concat, forkJoin } from 'rxjs';
 // import { map } from 'rxjs/operators';
 
-// import { CARS } from '../../../assets/data/data.constants';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { CarsService } from './cars.service';
 import { CarItem } from './../../shared/modules/car-item/car-item.interface';
@@ -92,7 +91,9 @@ export class CarsComponent implements OnInit {
         this.cars = [...this.cars, ...list];
         this.isLoading = false;
         this.isLastPage = isLastPage;
+        console.log(this.cars);
       });
+
   }
 
   loadMore(): void {

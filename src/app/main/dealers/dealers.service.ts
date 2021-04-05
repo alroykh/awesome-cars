@@ -48,13 +48,13 @@ export class DealersService {
       .pipe(catchError(this.handleError<DealerItem[]>('getDealers', [])));
   }
 
-  addDealer(dealer: DealerItem): Observable<DealerItem> {
+  public addDealer(dealer: DealerItem): Observable<DealerItem> {
     return this.http
       .post<DealerItem>(this.dealersUrl, dealer, this.httpOptions)
       .pipe(catchError(this.handleError<DealerItem>('addDealer')));
   }
 
-  updateDealer(dealer: DealerItem): Observable<any> {
+  public updateDealer(dealer: DealerItem): Observable<any> {
     return this.http
       .put<DealerItem>(this.dealersUrl, dealer, this.httpOptions)
       .pipe(catchError(this.handleError<any>('updateDealer')));
@@ -68,5 +68,14 @@ export class DealersService {
     return this.http
       .delete<DealerItem>(url, this.httpOptions)
       .pipe(catchError(this.handleError<DealerItem>('deleteDealer')));
+  }
+
+  getDealerById(id: string): Observable<DealerItem> {
+    const url = `${this.dealersUrl}/${id}`;
+
+    return this.http.get<DealerItem>(url).pipe(
+      tap((_) => this.log(`fetched dealer id=${id}`)),
+      catchError(this.handleError<DealerItem>(`getDealer id = ${id}`))
+    );
   }
 }

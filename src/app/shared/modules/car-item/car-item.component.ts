@@ -2,6 +2,8 @@ import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { switchMap } from 'rxjs/operators';
 
 import { CarsService } from 'src/app/main/cars/cars.service';
+import { DealersService } from 'src/app/main/dealers/dealers.service';
+import { DealerItem } from '../dealer-item/dealer-item.interface';
 import { CarItem } from './car-item.interface';
 
 @Component({
@@ -14,10 +16,27 @@ export class CarItemComponent implements OnInit {
 
   @Input() car: CarItem;
   @Input() smallView = false;
+  @Input() dealer: DealerItem;
+  cars: Array<CarItem> = new Array<CarItem>();
 
-  constructor(private carsService: CarsService) {}
+  carName = '';
 
-  ngOnInit(): void {}
+  constructor(
+    private carsService: CarsService,
+    private dealerService: DealersService
+  ) {}
+
+  ngOnInit(): void {
+    // this.compareCarName();
+  }
+
+  // compareCarName() {
+  //   this.cars.forEach((elem) => {
+  //     if (elem.brand === this.dealer.id) {
+  //       this.carName = this.dealer.name;
+  //     }
+  //   });
+  // }
 
   doLikeToggle(): void {
     this.addToFavorite();

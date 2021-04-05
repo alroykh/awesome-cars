@@ -19,7 +19,7 @@
     <h2>{{ car.model }}</h2>
     <ul class="car-details">
       <li>
-        Dealer: <span>{{ car.brand }}</span>
+        Dealer: <span>{{ car.dealerName || car.brand }}</span>
       </li>
       <li *ngIf="car.class">
         Class: <span>{{ car.class | titlecase }}</span>

@@ -1,29 +1,29 @@
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatDialogModule } from '@angular/material/dialog';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CarDialogComponent } from './car-dialog.component';
+import { CarEditComponent } from './car-edit.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
+
+
 
 @NgModule({
-  declarations: [CarDialogComponent],
+  declarations: [CarEditComponent],
   imports: [
     CommonModule,
     FormsModule,
-    ReactiveFormsModule,
     MatFormFieldModule,
+    MatAutocompleteModule,
+    ReactiveFormsModule,
     MatToolbarModule,
     MatSelectModule,
     MatButtonModule,
-    MatDialogModule,
     MatInputModule,
-    MatAutocompleteModule,
   ],
-  exports: [CarDialogComponent],
+  exports: [CarEditComponent]
 })
-export class CarDialogModule {}
+export class CarEditModule { }

@@ -5,7 +5,7 @@
 >
   <mat-card-header>
     <mat-card-title>{{ car.model }}</mat-card-title>
-    <mat-card-subtitle>{{ car.brand }}</mat-card-subtitle>
+    <mat-card-subtitle>{{ car.dealerName || car.brand }}</mat-card-subtitle>
 
     <div *ngIf="!smallView">
       <mat-icon aria-label="Like icon">

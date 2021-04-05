@@ -17,11 +17,12 @@
         <h2>{{ car?.model }}</h2>
       </div>
       <div class="ud-div">
-        <button class="edit-car-button">
+        <button class="edit-car-button" [routerLink]="['/cars', car?.id, 'edit']">
           <mat-icon
             aria-hidden="false"
             class="edit-icon"
             aria-label="Edit car icon"
+            
             >edit</mat-icon
           >
         </button>
@@ -40,7 +41,7 @@
     <div class="details-div">
       <ul class="details-list">
         <li>
-          Dealer: <span>{{ car?.brand }}</span>
+          Dealer: <span>{{ car?.dealerName || car?.brand }}</span>
         </li>
         <li *ngIf="car?.class">
           Class: <span>{{ car?.class }}</span>

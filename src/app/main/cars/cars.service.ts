@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 import { forkJoin, Observable, of } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { catchError, map, tap } from 'rxjs/operators';
+import { catchError, map, mapTo, switchMap, tap } from 'rxjs/operators';
 
 import { CarItem } from 'src/app/shared/modules/car-item/car-item.interface';
+import { DealersService } from '../dealers/dealers.service';
+import { DealerItem } from 'src/app/shared/modules/dealer-item/dealer-item.interface';
 
 export interface CarParams {
   [key: string]: any;
@@ -25,7 +27,10 @@ export class CarsService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
   };
 
-  public constructor(private http: HttpClient) {}
+  public constructor(
+    private http: HttpClient,
+    private dealersService: DealersService
+  ) {}
 
   // tslint:disable-next-line:typedef
   private handleError<T>(operation = 'operation', result?: T) {
@@ -61,6 +66,7 @@ export class CarsService {
     return this.http
       .get<CarItem[]>(`${this.carsUrl}`, { params })
       .pipe(
+        switchMap((cars: CarItem[]) => this.getCarsWithMarka(cars)),
         catchError(this.handleError<CarItem[]>(`Get cars by parameters`, []))
       );
   }
@@ -86,29 +92,34 @@ export class CarsService {
         for (const val of uniqueCarsMap.values()) {
           uniqueCars.push(val);
         }
+        console.log(uniqueCars);
         return uniqueCars;
       }),
+      switchMap((cars: CarItem[]) => this.getCarsWithMarka(cars)),
       map((res: CarItem[]) => this.getTrimmedCars(res, page, size))
     );
   }
 
   getAllCars(): Observable<CarItem[]> {
-    return this.http
-      .get<CarItem[]>(this.carsUrl)
-      .pipe(catchError(this.handleError<CarItem[]>('getCars', [])));
+    return this.http.get<CarItem[]>(this.carsUrl).pipe(
+      switchMap((cars: CarItem[]) => this.getCarsWithMarka(cars)),
+      catchError(this.handleError<CarItem[]>('getCars', []))
+    );
   }
 
   public getCars(page: number, size: number = 8): Observable<any> {
     return this.http.get<CarItem[]>(this.carsUrl).pipe(
       catchError(this.handleError<CarItem[]>('getCars', [])),
+      switchMap((cars: CarItem[]) => this.getCarsWithMarka(cars)),
       map((res: CarItem[]) => this.getTrimmedCars(res, page, size))
     );
   }
 
   public getCategorizedCars(): Observable<CarItem[]> {
-    return this.http
-      .get<CarItem[]>(this.carsUrl)
-      .pipe(catchError(this.handleError<CarItem[]>('getCars', [])));
+    return this.http.get<CarItem[]>(this.carsUrl).pipe(
+      switchMap((cars: CarItem[]) => this.getCarsWithMarka(cars)),
+      catchError(this.handleError<CarItem[]>('getCars', []))
+    );
   }
 
   private getTrimmedCars(
@@ -128,24 +139,61 @@ export class CarsService {
   getCarById(id: string): Observable<CarItem> {
     const url = `${this.carsUrl}/${id}`;
 
-    return this.http.get<CarItem>(url)
-      .pipe(
-          tap((_) => this.log(`fetched car id=${id}`)),
-    catchError(this.handleError<CarItem>(`getCat id = ${id}`)));
+    return this.http.get<CarItem>(url).pipe(
+      tap((_) => this.log(`fetched car id=${id}`)),
+      switchMap((car: CarItem) => this.getCarsWithMarka([car])),
+      map((res: CarItem[]) => res[0]),
+      catchError(this.handleError<CarItem>(`getCat id = ${id}`))
+    );
   }
 
-  deleteCar(car: CarItem | string): Observable<CarItem> {
-    const id: string = typeof car === 'string' ? car : car.id;
-    const url: string = `${this.carsUrl}/${id}`;
+  deleteCar(car: CarItem): Observable<CarItem> {
+    // const id: string = typeof car === 'string' ? car : car.id;
+    const url = `${this.carsUrl}/${car.id}`;
 
-    return this.http
-      .delete<CarItem>(url, this.httpOptions)
-      .pipe(catchError(this.handleError<CarItem>('deleteCar')));
+    return this.http.delete<CarItem>(url, this.httpOptions).pipe(
+      switchMap(() => this.dealersService.getDealerById(car.brand)),
+      switchMap((dealer: DealerItem) =>
+        this.dealersService.updateDealer({
+          ...dealer,
+          amountOfCars: dealer.amountOfCars - 1,
+        })
+      ),
+      catchError(this.handleError<CarItem>('deleteCar'))
+    );
   }
 
-  addCar(dealer: CarItem): Observable<CarItem> {
-    return this.http
-      .post<CarItem>(this.carsUrl, dealer, this.httpOptions)
-      .pipe(catchError(this.handleError<CarItem>('addDealer')));
+  addCar(car: CarItem): Observable<void> {
+    return this.http.post<CarItem>(this.carsUrl, car, this.httpOptions).pipe(
+      switchMap(() => this.dealersService.getDealerById(car.brand)),
+      switchMap((dealer: DealerItem) =>
+        this.dealersService.updateDealer({
+          ...dealer,
+          amountOfCars: dealer.amountOfCars + 1,
+        })
+      ),
+      catchError(this.handleError<CarItem>('addCar'))
+    );
+  }
+
+  getCarsWithMarka(cars: CarItem[]): Observable<CarItem[]> {
+    return this.dealersService.getDealers().pipe(
+      map((dealers: DealerItem[]) => {
+        const dealersMap: Map<string, DealerItem> = new Map();
+        dealers.forEach((dealer: DealerItem) =>
+          dealersMap.set(dealer.id, dealer)
+        );
+        return dealersMap;
+      }),
+      map((res: Map<string, DealerItem>) => {
+        return cars.map((car) => {
+          return {
+            ...car,
+            dealerName: res.get(car.brand) ? res.get(car.brand).name : car.brand,
+          };
+        });
+      }),
+      catchError((err) => of([]))
+    );
   }
 }

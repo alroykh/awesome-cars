@@ -12,6 +12,7 @@ export interface CarItem {
   description?: string;
   wikilink?: string;
   registrationDate?: Date;
+  dealerName?: string;
 }
 
 export const initCar = (): CarItem => ({
@@ -28,5 +29,5 @@ export const initCar = (): CarItem => ({
   description: null,
   wikilink: null,
   registrationDate: null,
-
+  dealerName: null,
 });

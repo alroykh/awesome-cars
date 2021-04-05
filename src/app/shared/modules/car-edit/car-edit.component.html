@@ -1,20 +1,21 @@
-<div class="car-dialog-container">
-  <div class="title-div">
-    <h1 mat-dialog-title>
-      <strong>{{ action ? "" : "Add Cars" }}</strong>
-    </h1>
+<div class="car-info-container">
+  <div class="car-image-div" *ngIf="car?.image">
+    <img class="car-img" [src]="car?.image" alt="car-img" />
   </div>
 
-  <div class="mat-dialog-content" class="content-div">
+  <div class="car-image-div" *ngIf="!car?.image">
+    <img
+      class="car-img"
+      src="../../../../assets/images/mock-image.jpg"
+      alt="selected-car-img"
+    />
+  </div>
+
+  <div class="car-info-div">
     <form [formGroup]="myForm">
-      <mat-form-field>
+      <mat-form-field class="field">
         <mat-label>Model</mat-label>
-        <input
-          matInput
-          required
-          type="text"
-          formControlName="model"
-        />
+        <input matInput required type="text" formControlName="model" />
         <mat-error
           *ngIf="
             myForm.get('model').hasError('required') &&
@@ -25,7 +26,7 @@
         </mat-error>
       </mat-form-field>
 
-      <mat-form-field>
+      <mat-form-field class="field">
         <mat-label>Dealer</mat-label>
         <input
           matInput
@@ -59,22 +60,22 @@
         </mat-autocomplete>
       </mat-form-field>
 
-      <mat-form-field>
+      <mat-form-field class="field">
         <mat-label>Class</mat-label>
         <input matInput type="text" formControlName="class" />
       </mat-form-field>
 
-      <mat-form-field>
+      <mat-form-field class="field">
         <mat-label>Year</mat-label>
         <input matInput type="number" formControlName="year" />
       </mat-form-field>
 
-      <mat-form-field>
+      <mat-form-field class="field">
         <mat-label>Color</mat-label>
         <input matInput type="text" formControlName="color" />
       </mat-form-field>
 
-      <mat-form-field>
+      <mat-form-field class="field">
         <mat-label>Link</mat-label>
         <input matInput type="text" formControlName="wikilink" />
         <mat-error
@@ -87,30 +88,14 @@
         </mat-error>
       </mat-form-field>
 
-      <mat-form-field appearance="fill">
+      <mat-form-field appearance="fill" class="field">
         <mat-label>Description</mat-label>
         <textarea matInput formControlName="description"></textarea>
       </mat-form-field>
 
-      <mat-form-field>
+      <mat-form-field class="field">
         <mat-label>Image</mat-label>
         <div>
-          <!-- <mat-toolbar>
-            <input matInput readonly formControlName="image" />
-
-            <button mat-flat-button color="primary">Browse File</button>
-          </mat-toolbar> -->
-
-          <!-- Fetch selected filed on change -->
-          <!-- <input
-            type="file"
-            #fileInput
-            id="uploadFile"
-            (change)="uploadFileEvt($event.target.files)"
-            name="uploadFile"
-            multiple="multiple"
-            accept="image/*"
-          /> -->
           <input matInput type="text" formControlName="image" />
         </div>
       </mat-form-field>
@@ -118,11 +103,19 @@
   </div>
 
   <div mat-dialog-actions class="actions-div">
-    <button mat-button [disabled]="showError || myForm.invalid" (click)="saveAction()">
-      Save
-    </button>
-    <button mat-button (click)="closeDialog()" mat-flat-button color="warn">
-      Cancel
-    </button>
+    <div>
+      <button
+        mat-button
+        [disabled]="showError || myForm.invalid"
+        (click)="saveAction()"
+      >
+        Save
+      </button>
+    </div>
+    <div>
+      <button mat-button (click)="closeDialog()" mat-flat-button color="warn">
+        Cancel
+      </button>
+    </div>
   </div>
 </div>

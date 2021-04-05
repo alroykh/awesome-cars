@@ -7,6 +7,7 @@ import { CarInfoComponent } from './car-info.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [CarInfoComponent],
@@ -17,6 +18,7 @@ import { MatIconModule } from '@angular/material/icon';
     MatProgressSpinnerModule,
     MatButtonModule,
     MatIconModule,
+    RouterModule,
   ],
   exports: [CarInfoComponent],
   entryComponents: [],
