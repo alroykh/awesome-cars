@@ -6,10 +6,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { CarsService } from '../cars/cars.service';
 import { DealersService } from '../dealers/dealers.service';
 import { CarItem } from '../../shared/modules/car-item/car-item.interface';
-import { DealerItem } from 'src/app/shared/modules/dealer-item/dealer-item.interface';
 import { DealerDialogComponent } from '../../shared/modules/dealer-dialog/dealer-dialog.component';
 import { MyDealersComponent } from '../my-dealers/my-dealers.component';
 import { CarDialogComponent } from 'src/app/shared/modules/car-dialog/car-dialog.component';
+import { DealerItem } from 'src/app/shared/modules/dealer-item/dealer-item.interface';
 
 @Component({
   selector: 'app-home',

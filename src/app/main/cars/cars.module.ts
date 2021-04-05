@@ -1,6 +1,4 @@
-import { CarEditModule } from './../../shared/modules/car-edit/car-edit.module';
 import { CarInfoModule } from './../../shared/modules/car-info/car-info.module';
-import { CarDialogComponent } from './../../shared/modules/car-dialog/car-dialog.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -41,8 +39,6 @@ import { CarDialogModule } from 'src/app/shared/modules/car-dialog/car-dialog.mo
     MatProgressSpinnerModule,
     CarDialogModule,
     CarInfoModule,
-    CarEditModule,
-    
   ],
   exports: [
     // CarsComponent

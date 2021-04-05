@@ -18,6 +18,7 @@ import { PageNotFoundModule } from './page-not-found/page-not-found.module';
 import { MyDealersModule } from './my-dealers/my-dealers.module';
 import { DealerDialogModule } from '../shared/modules/dealer-dialog/dealer-dialog.module';
 // import { CarsFilterComponent } from './cars-filter/cars-filter.component';
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { DealerDialogModule } from '../shared/modules/dealer-dialog/dealer-dialo
     HeaderModule,
     MatFormFieldModule,
     MyDealersModule,
-    // DealerDialogModule
+    MatDialogModule,
   ],
+  
 })
 export class MainModule {}

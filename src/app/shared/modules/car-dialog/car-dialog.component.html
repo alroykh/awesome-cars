@@ -1,7 +1,7 @@
 <div class="car-dialog-container">
   <div class="title-div">
     <h1 mat-dialog-title>
-      <strong>{{ action ? "" : "Add Cars" }}</strong>
+      <strong>{{ action ? "Edit Car" : "Add Car" }}</strong>
     </h1>
   </div>
 
@@ -95,22 +95,6 @@
       <mat-form-field>
         <mat-label>Image</mat-label>
         <div>
-          <!-- <mat-toolbar>
-            <input matInput readonly formControlName="image" />
-
-            <button mat-flat-button color="primary">Browse File</button>
-          </mat-toolbar> -->
-
-          <!-- Fetch selected filed on change -->
-          <!-- <input
-            type="file"
-            #fileInput
-            id="uploadFile"
-            (change)="uploadFileEvt($event.target.files)"
-            name="uploadFile"
-            multiple="multiple"
-            accept="image/*"
-          /> -->
           <input matInput type="text" formControlName="image" />
         </div>
       </mat-form-field>

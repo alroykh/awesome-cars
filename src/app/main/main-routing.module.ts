@@ -7,7 +7,7 @@ import { CarsComponent } from './cars/cars.component';
 import { CarInfoComponent } from './../shared/modules/car-info/car-info.component';
 import { DealersComponent } from './dealers/dealers.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { CarEditComponent } from '../shared/modules/car-edit/car-edit.component';
+// import { CarEditComponent } from '../shared/modules/car-edit/car-edit.component';
 
 const routes: Routes = [
   {
@@ -22,8 +22,11 @@ const routes: Routes = [
         path: 'cars',
         component: CarsComponent,
       },
-      { path: 'cars/:id', component: CarInfoComponent },
-      { path: 'cars/:id/edit', component: CarEditComponent },
+      {
+        path: 'cars/:id',
+        component: CarInfoComponent,
+      },
+      { path: 'cars/:id/edit', component: CarInfoComponent },
       {
         path: 'dealers',
         component: DealersComponent,

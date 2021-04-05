@@ -1,16 +1,16 @@
-
 .car-dialog-container {
   // width: 370px;
   width: 100%;
 }
+
 .mat-dialog-content {
   width: 100%;
   // height: 500px;
   // max-height: 60%;
 
 }
-.cancel-btn {
-}
+
+.cancel-btn {}
 
 .mat-form-field {
   width: 100%;
@@ -34,6 +34,9 @@ button {
   width: 200px;
 }
 
+.mat-hint {
+  color: red;
+}
 
 // #uploadFile {
 //   top: 0px;

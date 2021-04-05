@@ -14,8 +14,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from './../../shared/modules/confirm-dialog/confirm-dialog.component';
 import { DealerDialogComponent } from './../../shared/modules/dealer-dialog/dealer-dialog.component';
 import { DealersService } from './dealers.service';
-import { DealerItem } from 'src/app/shared/modules/dealer-item/dealer-item.interface';
 import { finalize } from 'rxjs/operators';
+import { DealerItem } from 'src/app/shared/modules/dealer-item/dealer-item.interface';
 
 @Component({
   selector: 'app-dealers',

@@ -1,5 +1,5 @@
 import { CarsService } from './../../../main/cars/cars.service';
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, Injector, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CarItem, initCar } from '../car-item/car-item.interface';
 import { DealerItem } from '../dealer-item/dealer-item.interface';
@@ -27,14 +27,26 @@ export class CarDialogComponent implements OnInit {
   showError: boolean = false;
   dealerChange$: Observable<any>;
 
+  // constructor(
+  //   public carService: CarsService,
+  //   private dialogRef: MatDialogRef<CarDialogComponent>,
+  //   @Inject(MAT_DIALOG_DATA) public data: any,
+  //   private formBuilder: FormBuilder,
+  //   public dealerService: DealersService
+  // ) {
+  //   dialogRef.disableClose = true;
+  // }
+
+  private data: CarItem;
+  private dialogRef = null;
   constructor(
+    private injector: Injector,
     public carService: CarsService,
-    private dialogRef: MatDialogRef<CarDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any,
     private formBuilder: FormBuilder,
     public dealerService: DealersService
   ) {
-    dialogRef.disableClose = true;
+    this.dialogRef = this.injector.get(MatDialogRef, null);
+    this.data = this.injector.get(MAT_DIALOG_DATA, null);
   }
 
   ngOnInit(): void {
@@ -135,13 +147,4 @@ export class CarDialogComponent implements OnInit {
       data: updatedCar,
     });
   }
-
-  // uploadFileEvt(e: File[]) {
-  //   // console.log($event);
-  //   const fileName = e[0].name;
-  //   console.log(fileName);
-    // return fileName;
-  // }
-
-
 }
