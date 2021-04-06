@@ -79,30 +79,7 @@ export class CarInfoComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {}
 
-  // ngOnDestroy() {}
-
-  // formBuild(): void {
-  //   this.myForm = this.formBuilder.group({
-  //     id: [this.car.id],
-  //     model: [this.car.model, [Validators.required]],
-  //     dealer: [this.car.brand, [Validators.required]],
-  //     class: [this.car.class],
-  //     year: [this.car.year],
-  //     color: [this.car.color],
-  //     wikilink: [
-  //       this.car.wikilink,
-  //       [
-  //         Validators.pattern(
-  //           /^((ftp|http|https):\/\/)?(www\.)?([A-Za-z0-9]{1}[A-Za-z0-9\-]*\.?)*\.{1}[A-Za-z0-9-]{2,8}(\/([\w#!:.?+=&%@!\-\/])*)?/
-  //         ),
-  //       ],
-  //     ],
-  //     description: [this.car.description],
-  //     image: [this.car.image],
-  //   });
-  // }
-
-  deleteCar(car: CarItem): void {
+   deleteCar(car: CarItem): void {
     const confirmDialog = this.dialog.open(ConfirmDialogComponent, {
       data: {
         title: 'Confirm Remove Car',
@@ -124,7 +101,9 @@ export class CarInfoComponent implements OnInit, OnChanges {
   onEdit(): void {
     // this.router.navigate([`/cars/${this.id}/edit`]);
     this.isEdit = true;
-    this.location.replaceState(`/cars/${this.id}/edit`);
+    this.router.navigate(['/cars', `${this.id}`, 'edit']);
+
+    // this.location.replaceState(`/cars/${this.id}/edit`);
   }
 
   formData(data: FormDataOutput): void {
@@ -144,13 +123,15 @@ export class CarInfoComponent implements OnInit, OnChanges {
 
     this.carsService.updateCar(this.editFormData.data).subscribe(() => {
       this.isEdit = false;
-      this.location.replaceState(`/cars/${this.id}`);
+      // this.location.replaceState(`/cars/${this.id}`);
+      this.router.navigate(['cars/', `${this.id}`]);
       this.car = this.editFormData.data;
     });
   }
 
   cancelAction(): void {
     this.isEdit = false;
-    this.location.replaceState(`/cars/${this.id}`);
+    this.router.navigate(['cars/', `${this.id}`]);
+    // this.location.replaceState(`/cars/${this.id}`);
   }
 }

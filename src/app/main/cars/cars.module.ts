@@ -18,7 +18,7 @@ import { CarDetailsModule } from 'src/app/shared/modules/car-details/car-details
 import { CarsComponent } from './cars.component';
 import { CarsFilterComponent } from '../cars-filter/cars-filter.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { CarDialogModule } from 'src/app/shared/modules/car-dialog/car-dialog.module';
+// import { CarDialogModule } from 'src/app/shared/modules/car-dialog/car-dialog.module';
 
 @NgModule({
   declarations: [CarsComponent, CarsFilterComponent],
@@ -37,7 +37,6 @@ import { CarDialogModule } from 'src/app/shared/modules/car-dialog/car-dialog.mo
     MatIconModule,
     MatButtonModule,
     MatProgressSpinnerModule,
-    CarDialogModule,
     CarInfoModule,
   ],
   exports: [

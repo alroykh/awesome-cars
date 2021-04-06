@@ -105,11 +105,11 @@ export class CarFormComponent implements OnInit {
 
     this.formData.emit({
       isFormValid: this.myForm.valid,
-      data: { 
+      data: {
         ...this.myForm.getRawValue(),
         brand: selectedDealer ? selectedDealer.id : null,
         id: this.passedCar ? this.passedCar.id : null,
-        newItem: this.passedCar ? !!this.passedCar : null,
+        newItem: this.passedCar ? false : true,
         registrationDate: this.passedCar ? this.passedCar.registrationDate : new Date(),
         },
     });
