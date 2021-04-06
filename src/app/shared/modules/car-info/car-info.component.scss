@@ -103,3 +103,16 @@
 .loading{
   margin: 100px auto;
 }
+
+
+.edit-form-container{
+  width: 50%;
+  .app-car-form{
+    ::ng-deep {
+      mat-form-field:not(.textarea-container){
+        width: 80%;
+      }
+    }
+  }
+}
+

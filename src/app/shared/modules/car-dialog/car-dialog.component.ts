@@ -1,5 +1,5 @@
 import { CarsService } from './../../../main/cars/cars.service';
-import { Component, Inject, Injector, OnInit } from '@angular/core';
+import { Component, Inject, Injector, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CarItem, initCar } from '../car-item/car-item.interface';
 import { DealerItem } from '../dealer-item/dealer-item.interface';
@@ -26,6 +26,8 @@ export class CarDialogComponent implements OnInit {
   selectedValue: string;
   showError: boolean = false;
   dealerChange$: Observable<any>;
+
+  @Input() passedCar: CarItem = null;
 
   // constructor(
   //   public carService: CarsService,
@@ -60,7 +62,6 @@ export class CarDialogComponent implements OnInit {
     this.dealerService.getDealers().subscribe(
       (res) => {
         this.dealers = res;
-        console.log('Dealers:', this.dealers);
       },
       (error) => console.log(error)
     );
@@ -69,7 +70,9 @@ export class CarDialogComponent implements OnInit {
       ? // tslint:disable-next-line:no-unused-expression
         (this.car = { ...this.data }) && (this.action = true)
       : (this.car = initCar());
-    this.formBuild();
+    // this.formBuild(this.passedCar);
+    this.formBuild(this.passedCar);
+    
 
     this.myForm.controls.dealer.valueChanges
       .pipe(
@@ -80,29 +83,51 @@ export class CarDialogComponent implements OnInit {
             !this.dealers.find(
               (el) => el.name.toLowerCase() === value.toString().toLowerCase()
             );
-          console.log(value);
         })
       )
       .subscribe();
   }
 
-  formBuild(): void {
+ 
+
+  // formBuild(): void {
+  //   this.myForm = this.formBuilder.group({
+  //     model: [null, [Validators.required]],
+  //     dealer: [null, [Validators.required]],
+  //     class: [null],
+  //     year: [null],
+  //     color: [ null],
+  //     wikilink: [ null,
+  //       [
+  //         Validators.pattern(
+  //           /^https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)?/
+  //         ),
+  //       ],
+  //     ],
+  //     description: [ null],
+  //     image: [ null],
+  //   });
+  // }
+
+  
+
+  formBuild(carData: CarItem): void {
     this.myForm = this.formBuilder.group({
-      model: [null, [Validators.required]],
-      dealer: [null, [Validators.required]],
-      class: [null],
-      year: [null],
-      color: [null],
+      model: [carData && carData.model ? carData.model : null, [Validators.required]],
+      dealer: [carData && carData.dealerName ? carData.dealerName : null, [Validators.required]],
+      class: [carData && carData.class ? carData.class : null],
+      year: [carData && carData.year ? carData.year : null],
+      color: [carData && carData.color ? carData.color : null],
       wikilink: [
-        null,
+        carData && carData.wikilink ? carData.wikilink : null,
         [
           Validators.pattern(
             /^https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)?/
           ),
         ],
       ],
-      description: [null],
-      image: [null],
+      description: [carData && carData.description ? carData.description : null],
+      image: [carData && carData.image ? carData.image : null],
     });
   }
 

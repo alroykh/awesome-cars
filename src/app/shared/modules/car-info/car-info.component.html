@@ -73,20 +73,26 @@
     </div>
   </div>
 
-  <div *ngIf="isEdit">
-    <app-car-dialog></app-car-dialog>
-    
+  <div *ngIf="isEdit" class="edit-form-container">
+    <!-- <app-car-dialog [passedCar]="car"></app-car-dialog> -->
+    <app-car-form
+      [passedCar]="car"
+      (formData)="formData($event)"
+      class="app-car-form"
+    ></app-car-form>
+    <!-- <button type="button" (click)="saveAction()">Save</button> -->
+    <!-- <button mat-button [disabled]="showError || myForm.invalid" (click)="saveAction()"> -->
+    <button mat-button type="button" [disabled]="!editFormData?.isFormValid" (click)="saveAction()">
+      Save
+    </button>
+    <button mat-button (click)="cancelAction()" mat-flat-button color="warn">
+      Cancel
+    </button>
   </div>
-
-  
 </div>
 
 <div class="back-button" *ngIf="!isLoading">
-  <button
-    mat-raised-button
-    color="primary"
-    (click)="onBack()"
-  >
+  <button mat-raised-button color="primary" (click)="onBack()">
     Back to cars
   </button>
 </div>

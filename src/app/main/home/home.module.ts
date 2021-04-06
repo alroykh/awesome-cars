@@ -11,6 +11,7 @@ import { DealersModule } from '../dealers/dealers.module';
 import { MyDealersModule } from '../my-dealers/my-dealers.module';
 import { HomeComponent } from './home.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { AddNewCarDialogModule } from 'src/app/shared/modules/add-new-car-dialog/add-new-car-dialog.module';
 
 @NgModule({
   declarations: [HomeComponent],
@@ -24,6 +25,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatTreeModule,
     MatIconModule,
     MatProgressSpinnerModule,
+    AddNewCarDialogModule,
   ],
   exports: [],
 })

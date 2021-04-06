@@ -1,0 +1,21 @@
+<div class="car-dialog-container">
+    <div class="title-div">
+      <h1 mat-dialog-title>
+        <strong>Add Car</strong>
+      </h1>
+    </div>
+  
+    <div class="mat-dialog-content" class="content-div">
+      <app-car-form (formData)="formData($event)"></app-car-form>
+    </div>
+  
+    <div mat-dialog-actions class="actions-div">
+      <button mat-button [disabled]="!addNewCarData?.isFormValid || isSaving" (click)="saveAction()">
+        Save
+      </button>
+      <button mat-button (click)="closeDialog()" mat-flat-button color="warn">
+        Cancel
+      </button>
+    </div>
+  </div>
+  

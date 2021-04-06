@@ -8,8 +8,9 @@ import { DealersService } from '../dealers/dealers.service';
 import { CarItem } from '../../shared/modules/car-item/car-item.interface';
 import { DealerDialogComponent } from '../../shared/modules/dealer-dialog/dealer-dialog.component';
 import { MyDealersComponent } from '../my-dealers/my-dealers.component';
-import { CarDialogComponent } from 'src/app/shared/modules/car-dialog/car-dialog.component';
+// import { CarDialogComponent } from 'src/app/shared/modules/car-dialog/car-dialog.component';
 import { DealerItem } from 'src/app/shared/modules/dealer-item/dealer-item.interface';
+import { AddNewCarDialogComponent } from 'src/app/shared/modules/add-new-car-dialog/add-new-car-dialog.component';
 
 @Component({
   selector: 'app-home',
@@ -80,7 +81,7 @@ export class HomeComponent implements OnInit {
   }
 
   openCarDialog(): void {
-    const dialogRef = this.dialog.open(CarDialogComponent, {
+    const dialogRef = this.dialog.open(AddNewCarDialogComponent, {
       width: '350px',
       height: '650px',
     });

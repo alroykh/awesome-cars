@@ -18,6 +18,7 @@ import { Location } from '@angular/common';
 // import { CarDialogComponent } from '../car-dialog/car-dialog.component';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DealerItem } from '../dealer-item/dealer-item.interface';
+import { FormDataOutput } from '../car-form/car-form.component';
 
 @Component({
   selector: 'app-car-info',
@@ -34,7 +35,9 @@ export class CarInfoComponent implements OnInit, OnChanges {
   id: string;
   action: boolean;
   myForm: FormGroup;
+  showError = false;
   // sub: Subscription;
+  editFormData: FormDataOutput;
 
   @ViewChild('dialog') template: TemplateRef<HTMLElement>;
 
@@ -70,7 +73,7 @@ export class CarInfoComponent implements OnInit, OnChanges {
         // if (!this.action) {
         //   this.formBuild();
         // }
-        this.formBuild();
+        // this.formBuild();
       });
   }
 
@@ -78,26 +81,26 @@ export class CarInfoComponent implements OnInit, OnChanges {
 
   // ngOnDestroy() {}
 
-  formBuild(): void {
-    this.myForm = this.formBuilder.group({
-      id: [this.car.id],
-      model: [this.car.model, [Validators.required]],
-      dealer: [this.car.brand, [Validators.required]],
-      class: [this.car.class],
-      year: [this.car.year],
-      color: [this.car.color],
-      wikilink: [
-        this.car.wikilink,
-        [
-          Validators.pattern(
-            /^((ftp|http|https):\/\/)?(www\.)?([A-Za-z0-9]{1}[A-Za-z0-9\-]*\.?)*\.{1}[A-Za-z0-9-]{2,8}(\/([\w#!:.?+=&%@!\-\/])*)?/
-          ),
-        ],
-      ],
-      description: [this.car.description],
-      image: [this.car.image],
-    });
-  }
+  // formBuild(): void {
+  //   this.myForm = this.formBuilder.group({
+  //     id: [this.car.id],
+  //     model: [this.car.model, [Validators.required]],
+  //     dealer: [this.car.brand, [Validators.required]],
+  //     class: [this.car.class],
+  //     year: [this.car.year],
+  //     color: [this.car.color],
+  //     wikilink: [
+  //       this.car.wikilink,
+  //       [
+  //         Validators.pattern(
+  //           /^((ftp|http|https):\/\/)?(www\.)?([A-Za-z0-9]{1}[A-Za-z0-9\-]*\.?)*\.{1}[A-Za-z0-9-]{2,8}(\/([\w#!:.?+=&%@!\-\/])*)?/
+  //         ),
+  //       ],
+  //     ],
+  //     description: [this.car.description],
+  //     image: [this.car.image],
+  //   });
+  // }
 
   deleteCar(car: CarItem): void {
     const confirmDialog = this.dialog.open(ConfirmDialogComponent, {
@@ -122,5 +125,32 @@ export class CarInfoComponent implements OnInit, OnChanges {
     // this.router.navigate([`/cars/${this.id}/edit`]);
     this.isEdit = true;
     this.location.replaceState(`/cars/${this.id}/edit`);
+  }
+
+  formData(data: FormDataOutput): void {
+    // this.editFormData = { ...data, data: { ...data.data, id: this.car.id } };
+    this.editFormData = data;
+  }
+
+  saveAction(): void {
+    // debugger;
+    if (
+      !this.editFormData ||
+      !this.editFormData.isFormValid ||
+      !this.editFormData.data
+    ) {
+      return;
+    }
+
+    this.carsService.updateCar(this.editFormData.data).subscribe(() => {
+      this.isEdit = false;
+      this.location.replaceState(`/cars/${this.id}`);
+      this.car = this.editFormData.data;
+    });
+  }
+
+  cancelAction(): void {
+    this.isEdit = false;
+    this.location.replaceState(`/cars/${this.id}`);
   }
 }
