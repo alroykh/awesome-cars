@@ -1,12 +1,20 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnInit,
+  Output,
+  EventEmitter,
+  OnDestroy,
+} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { tap, debounceTime } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { tap, debounceTime, takeWhile } from 'rxjs/operators';
 import { DealersService } from 'src/app/main/dealers/dealers.service';
 import { CarItem } from '../car-item/car-item.interface';
 import { DealerItem } from '../dealer-item/dealer-item.interface';
 
 export interface FormDataOutput {
-  isFormValid: boolean;
+  action: 'save' | 'cancel';
   data: CarItem;
 }
 
@@ -15,12 +23,16 @@ export interface FormDataOutput {
   templateUrl: './car-form.component.html',
   styleUrls: ['./car-form.component.scss'],
 })
-export class CarFormComponent implements OnInit {
+export class CarFormComponent implements OnInit, OnDestroy {
   @Input() passedCar: CarItem = null;
-  @Output() formData: EventEmitter<FormDataOutput> = new EventEmitter<FormDataOutput>();
+  @Output()
+  formData: EventEmitter<FormDataOutput> = new EventEmitter<FormDataOutput>();
   myForm: FormGroup;
   showError = false;
   dealers: DealerItem[] = [];
+  dealers$: Observable<DealerItem[]>;
+  isSaving = false;
+  isWorking = true;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -29,10 +41,12 @@ export class CarFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.getDealers();
+
     this.formBuild(this.passedCar);
 
     this.myForm.controls.dealer.valueChanges
       .pipe(
+        takeWhile(() => this.isWorking),
         debounceTime(400),
         tap((value) => {
           this.showError =
@@ -42,15 +56,6 @@ export class CarFormComponent implements OnInit {
               (el) => el.name.toLowerCase() === value.toString().toLowerCase()
             );
           console.log(value);
-        })
-      )
-      .subscribe();
-
-    this.myForm.valueChanges
-      .pipe(
-        debounceTime(400),
-        tap(() => {
-          this.emitFormData();
         })
       )
       .subscribe();
@@ -89,29 +94,54 @@ export class CarFormComponent implements OnInit {
   }
 
   private getDealers(): void {
-    this.dealerService.getDealers().subscribe(
-      (res) => {
-        this.dealers = res;
-        console.log('Dealers:', this.dealers);
-      },
-      (error) => console.log(error)
+    this.dealers$ = this.dealerService.getDealers().pipe(
+      tap((dealers: DealerItem[]) => {
+        this.dealers = dealers;
+      })
     );
+    // .subscribe(
+    //   (res) => {
+    //     this.dealers = res;
+    //     // console.log('Dealers:', this.dealers);
+    //   },
+    //   (error) => console.log(error)
+    // );
   }
 
-  private emitFormData(): void {
+  private emitFormData(action: 'save' | 'cancel'): void {
     const selectedDealer = this.dealers.find(
-      (el) => el.name.toLowerCase() === (this.myForm.value.dealer || '').toLowerCase()
+      (el) =>
+        el.name.toLowerCase() === (this.myForm.value.dealer || '').toLowerCase()
     );
 
     this.formData.emit({
-      isFormValid: this.myForm.valid,
-      data: {
-        ...this.myForm.getRawValue(),
-        brand: selectedDealer ? selectedDealer.id : null,
-        id: this.passedCar ? this.passedCar.id : null,
-        newItem: this.passedCar ? false : true,
-        registrationDate: this.passedCar ? this.passedCar.registrationDate : new Date(),
-        },
+      action: action,
+      data:
+        action === 'cancel'
+          ? null
+          : {
+              ...this.myForm.getRawValue(),
+              brand: selectedDealer ? selectedDealer.id : null,
+              id: this.passedCar ? this.passedCar.id : null,
+              newItem: this.passedCar ? false : true,
+              registrationDate: this.passedCar
+                ? this.passedCar.registrationDate
+                : new Date(),
+            },
     });
+
+    console.log(this.formData.emit);
+  }
+
+  saveAction(): void {
+    this.emitFormData('save');
+  }
+
+  cancelAction(): void {
+    this.emitFormData('cancel');
+  }
+
+  ngOnDestroy(): void {
+    this.isWorking = false;
   }
 }

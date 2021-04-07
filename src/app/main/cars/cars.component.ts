@@ -46,7 +46,7 @@ export class CarsComponent implements OnInit {
   getCars(): void {
     this.carsService
       .getCars(this.activePage, this.pageSize)
-      .subscribe(({list, isLastPage}) => {
+      .subscribe(({ list, isLastPage }) => {
         this.cars = [...this.cars, ...list];
         this.isLoading = false;
         this.isLastPage = isLastPage;
@@ -73,7 +73,9 @@ export class CarsComponent implements OnInit {
   }
 
   tabChanged(evt: MatTabChangeEvent): void {
-    this.selectCar((this.getCarsByCategory(evt.tab.textLabel.toLowerCase()) || [])[0]);
+    this.selectCar(
+      (this.getCarsByCategory(evt.tab.textLabel.toLowerCase()) || [])[0]
+    );
   }
 
   filterCars(value: string): void {
@@ -81,19 +83,20 @@ export class CarsComponent implements OnInit {
     this.filterValue = value.trim();
     this.activePage = 1;
     this.cars = [];
+    console.log('List cars before: ', [...this.cars]);
     this.getFilteredCars();
   }
 
   getFilteredCars(): void {
     this.carsService
       .getFilteredCars(this.filterValue, this.activePage, this.pageSize)
-      .subscribe(({list, isLastPage}) => {
+      .subscribe(({ list, isLastPage }) => {
+        console.log('List cars: ', [...this.cars]);
         this.cars = [...this.cars, ...list];
         this.isLoading = false;
         this.isLastPage = isLastPage;
-        console.log(this.cars);
+        console.log('LIST: ', list);
       });
-
   }
 
   loadMore(): void {

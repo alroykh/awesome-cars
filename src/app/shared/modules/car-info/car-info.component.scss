@@ -5,12 +5,10 @@
 }
 
 .car-image-div {
-
   flex: 1 1 50%;
   margin: 0 10px 0 0;
 
   .car-img {
-    // width: 100%;
     max-width: 600px;
     min-width: 600px
   }
@@ -18,8 +16,6 @@
 
 .car-info-div {
   flex: 1 1 50%;
-  // min-width: 550px;
-  // min-width: 45%;
   margin: 0 0 0 10px;
   display: flex;
   flex-wrap: wrap;
@@ -35,7 +31,6 @@
 
     .ud-div {
       flex: 0 1 20%;
-      // background-color: green;
       display: flex;
       justify-content: flex-end;
 
@@ -65,7 +60,6 @@
       list-style-type: none;
       padding: 0;
 
-      // padding-inline-start: 0px;
       li {
 
         margin-top: 15px;
@@ -76,7 +70,6 @@
         }
       }
     }
-
   }
 
   .description-div {
@@ -87,7 +80,6 @@
     font-size: 16px;
     line-height: 1.5;
   }
-
 }
 
 .back-button {
@@ -97,22 +89,20 @@
     margin: 0 auto;
     display: block;
   }
-
 }
 
-.loading{
+.loading {
   margin: 100px auto;
 }
 
-
-.edit-form-container{
+.edit-form-container {
   width: 50%;
-  .app-car-form{
+
+  .app-car-form {
     ::ng-deep {
-      mat-form-field:not(.textarea-container){
+      mat-form-field:not(.textarea-container) {
         width: 80%;
       }
     }
   }
 }
-

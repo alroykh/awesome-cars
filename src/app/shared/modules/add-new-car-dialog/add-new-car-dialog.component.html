@@ -9,13 +9,5 @@
       <app-car-form (formData)="formData($event)"></app-car-form>
     </div>
   
-    <div mat-dialog-actions class="actions-div">
-      <button mat-button [disabled]="!addNewCarData?.isFormValid || isSaving" (click)="saveAction()">
-        Save
-      </button>
-      <button mat-button (click)="closeDialog()" mat-flat-button color="warn">
-        Cancel
-      </button>
-    </div>
   </div>
   

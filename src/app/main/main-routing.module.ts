@@ -25,8 +25,13 @@ const routes: Routes = [
       {
         path: 'cars/:id',
         component: CarInfoComponent,
+        data: { isEdit: false },
       },
-      { path: 'cars/:id/edit', component: CarInfoComponent },
+      {
+        path: 'cars/:id/edit',
+        component: CarInfoComponent,
+        data: { isEdit: true },
+      },
       {
         path: 'dealers',
         component: DealersComponent,

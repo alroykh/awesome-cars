@@ -11,9 +11,9 @@ import { getUniqueId } from 'src/app/helpers/get-unique-id.helper';
   styleUrls: ['./add-new-car-dialog.component.scss'],
 })
 export class AddNewCarDialogComponent implements OnInit {
-  addNewCarData: FormDataOutput;
+  // addNewCarData: FormDataOutput;
   cars: CarItem[];
-  isSaving = false;
+  // isSaving = false;
 
   constructor(
     private dialogRef: MatDialogRef<AddNewCarDialogComponent>,
@@ -25,24 +25,27 @@ export class AddNewCarDialogComponent implements OnInit {
 
   formData(data: FormDataOutput): void {
     // this.editFormData = { ...data, data: { ...data.data, id: this.car.id } };
-    this.addNewCarData = data;
-  }
-
-  saveAction(): void {
-    if (
-      !this.addNewCarData ||
-      !this.addNewCarData.isFormValid ||
-      !this.addNewCarData.data
-    ) {
+    // this.addNewCarData = data;
+    if (!data) {
       return;
     }
-    this.isSaving = true;
-    const newCar: CarItem = { ...this.addNewCarData.data, id: getUniqueId() };
-    this.carService.addCar(newCar).subscribe(() => {
-      this.dialogRef.close({
-        event: 'close',
-        data: newCar,
-      });
+
+    if (data.action === 'save') {
+      this.saveAction(data.data);
+    } else if (data.action === 'cancel') {
+      this.closeDialog();
+    }
+  }
+
+  saveAction(data: CarItem): void {
+    if (!data) {
+      return;
+    }
+    // this.isSaving = true;
+    const newCar: CarItem = { ...data, id: getUniqueId() };
+    this.dialogRef.close({
+      event: 'close',
+      data: newCar,
     });
   }
 

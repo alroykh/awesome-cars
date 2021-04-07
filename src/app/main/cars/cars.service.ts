@@ -76,6 +76,7 @@ export class CarsService {
     page: number,
     size: number = 8
   ): Observable<any> {
+
     return forkJoin([
       this.getCarsByParams({ model: value }),
       this.getCarsByParams({ brand: value }),
@@ -189,7 +190,9 @@ export class CarsService {
         return cars.map((car) => {
           return {
             ...car,
-            dealerName: res.get(car.brand) ? res.get(car.brand).name : car.brand,
+            dealerName: res.get(car.brand)
+              ? res.get(car.brand).name
+              : car.brand,
           };
         });
       }),

@@ -1,3 +1,4 @@
+import { forkJoin } from 'rxjs';
 import { Component, OnInit, Input } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
@@ -11,6 +12,7 @@ import { MyDealersComponent } from '../my-dealers/my-dealers.component';
 // import { CarDialogComponent } from 'src/app/shared/modules/car-dialog/car-dialog.component';
 import { DealerItem } from 'src/app/shared/modules/dealer-item/dealer-item.interface';
 import { AddNewCarDialogComponent } from 'src/app/shared/modules/add-new-car-dialog/add-new-car-dialog.component';
+import { map, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-home',
@@ -31,7 +33,9 @@ export class HomeComponent implements OnInit {
   passedData: DealerItem;
   passedCar: CarItem;
 
-  isLoading = false;
+  isLikedLoading = false;
+  isCarsLoading = false;
+  isDealersLoading = false;
 
   constructor(
     private carsService: CarsService,
@@ -40,31 +44,57 @@ export class HomeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.isLoading = true;
+    // this.isLoading = true;
     this.getCars();
-    this.getNewAddedDealers();
     this.getNewAddedCars();
+    this.getNewAddedDealers();
+    // this.getData();
   }
+
+  // getData(): void {
+  //   forkJoin([
+  //     this.carsService.getCarsByParams({ liked: true }),
+  //     this.carsService.getAllCars(),
+  //     this.dealerService.getDealers(),
+  //   ])
+  //     .pipe(
+  //       tap(([likedCars,  cars, dealers]: [Array<CarItem>, Array<CarItem>, Array<DealerItem>])=>{
+  //         this.cars = likedCars;
+  //         this.newAddedCars = cars.filter((car) => car.newItem);
+  //         this.newAddedDealers = dealers.filter((dealer) => dealer.newRecord);
+  //         this.isLoading = false;
+  //       })
+  //     )
+  //     .subscribe();
+  // }
 
   getCars(): void {
+    this.isLikedLoading = true;
     this.carsService.getCarsByParams({ liked: true }).subscribe((cars) => {
       this.cars = cars;
-    });
-  }
-
-  getNewAddedDealers(): void {
-    this.dealerService.getDealers().subscribe((dealers) => {
-      this.newAddedDealers = dealers.filter((dealer) => dealer.newRecord);
-      this.isLoading = false;
+      this.isLikedLoading = false;
     });
   }
 
   getNewAddedCars(): void {
+    this.isCarsLoading = true;
+
     this.carsService.getAllCars().subscribe((cars) => {
       this.newAddedCars = cars.filter((car) => car.newItem);
-      this.isLoading = false;
+      this.isCarsLoading = false;
     });
   }
+
+  getNewAddedDealers(): void {
+    this.isDealersLoading = true;
+
+    this.dealerService.getDealers().subscribe((dealers) => {
+      this.newAddedDealers = dealers.filter((dealer) => dealer.newRecord);
+      this.isDealersLoading = false;
+    });
+  }
+
+  
 
   openDealerDialog(): void {
     const dialogRef = this.dialog.open(DealerDialogComponent, {
