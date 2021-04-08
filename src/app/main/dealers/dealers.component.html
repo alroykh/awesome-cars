@@ -11,8 +11,6 @@
     </div>
   </div>
 
-  <!-- <mat-spinner class="loading"></mat-spinner> -->
-
   <div [hidden]="loading">
     <table mat-table [dataSource]="dataSource" matSort>
       <ng-container matColumnDef="name">
@@ -84,11 +82,9 @@
     </div>
   </div>
 
-
   <mat-progress-bar
     *ngIf="loading"
     class="app-progress-bar"
     mode="indeterminate"
   ></mat-progress-bar>
-
 </div>

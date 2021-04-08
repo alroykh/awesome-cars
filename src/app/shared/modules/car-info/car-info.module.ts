@@ -1,14 +1,16 @@
-import { CarFormModule } from './../car-form/car-form.module';
-import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import { CommonModule } from '@angular/common';
-import { CarsService } from 'src/app/main/cars/cars.service';
-import { MatButtonModule } from '@angular/material/button';
 import { NgModule } from '@angular/core';
-import { CarInfoComponent } from './car-info.component';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatIconModule } from '@angular/material/icon';
+
+import { CarsService } from 'src/app/main/cars/cars.service';
+import { CarFormModule } from './../car-form/car-form.module';
 import { RouterModule } from '@angular/router';
+import { CarInfoComponent } from './car-info.component';
 
 @NgModule({
   declarations: [CarInfoComponent],
@@ -24,6 +26,6 @@ import { RouterModule } from '@angular/router';
   ],
   exports: [CarInfoComponent],
   entryComponents: [],
-  providers: [CarsService,]
+  providers: [CarsService],
 })
 export class CarInfoModule {}

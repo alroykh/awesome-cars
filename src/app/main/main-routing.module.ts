@@ -7,7 +7,6 @@ import { CarsComponent } from './cars/cars.component';
 import { CarInfoComponent } from './../shared/modules/car-info/car-info.component';
 import { DealersComponent } from './dealers/dealers.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-// import { CarEditComponent } from '../shared/modules/car-edit/car-edit.component';
 
 const routes: Routes = [
   {

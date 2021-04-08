@@ -39,24 +39,22 @@
     </div>
     <div class="details-div">
       <ul class="details-list">
-        <li>
+        <li *ngIf="car?.brand">
           Dealer: <span>{{ car?.dealerName || car?.brand }}</span>
         </li>
         <li *ngIf="car?.class">
           Class: <span>{{ car?.class }}</span>
         </li>
-        <li *ngIf="!car?.class">Class: <span>unknown</span></li>
         <li *ngIf="car?.year">
           Year: <span>{{ car?.year }}</span>
         </li>
-        <li *ngIf="!car?.year">Year: <span>unknown</span></li>
-        <li>
+        <li *ngIf="car?.color">
           Color: <span>{{ car?.color }}</span>
         </li>
-        <li>
+        <li *ngIf="car?.category">
           Category: <span>{{ car?.category }}</span>
         </li>
-        <li>
+        <li *ngIf="car?.wikilink">
           Wikipedia link:
           <a href="{{ car?.wikilink }}"
             ><span>{{ car?.wikilink }}</span></a
@@ -68,15 +66,13 @@
     <div class="description-div" *ngIf="car?.description">
       {{ car?.description }}
     </div>
-    <div class="description-div" *ngIf="!car?.description">
-      No description yet...
-    </div>
   </div>
 
   <div *ngIf="isEdit" class="edit-form-container">
     <app-car-form
       [passedCar]="car"
-      (formData)="formData($event)"
+      (saveCarData)="saveCarData($event)"
+      (cancelCar)="cancelAction()"
       class="app-car-form"
     ></app-car-form>
   </div>

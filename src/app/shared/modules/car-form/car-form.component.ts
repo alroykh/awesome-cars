@@ -13,11 +13,6 @@ import { DealersService } from 'src/app/main/dealers/dealers.service';
 import { CarItem } from '../car-item/car-item.interface';
 import { DealerItem } from '../dealer-item/dealer-item.interface';
 
-export interface FormDataOutput {
-  action: 'save' | 'cancel';
-  data: CarItem;
-}
-
 @Component({
   selector: 'app-car-form',
   templateUrl: './car-form.component.html',
@@ -26,13 +21,14 @@ export interface FormDataOutput {
 export class CarFormComponent implements OnInit, OnDestroy {
   @Input() passedCar: CarItem = null;
   @Output()
-  formData: EventEmitter<FormDataOutput> = new EventEmitter<FormDataOutput>();
+  saveCarData: EventEmitter<CarItem> = new EventEmitter<CarItem>();
+  @Output() cancelCar: EventEmitter<any> = new EventEmitter();
   myForm: FormGroup;
   showError = false;
   dealers: DealerItem[] = [];
   dealers$: Observable<DealerItem[]>;
   isSaving = false;
-  isWorking = true;
+  isAlive = true;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -46,7 +42,7 @@ export class CarFormComponent implements OnInit, OnDestroy {
 
     this.myForm.controls.dealer.valueChanges
       .pipe(
-        takeWhile(() => this.isWorking),
+        takeWhile(() => this.isAlive),
         debounceTime(400),
         tap((value) => {
           this.showError =
@@ -100,38 +96,25 @@ export class CarFormComponent implements OnInit, OnDestroy {
     );
   }
 
-  private emitFormData(action: 'save' | 'cancel'): void {
+  public saveAction(): void {
     const selectedDealer = this.dealers.find(
       (el) =>
         el.name.toLowerCase() === (this.myForm.value.dealer || '').toLowerCase()
     );
+    const updatedCar = {
+      ...this.myForm.getRawValue(),
+      brand: selectedDealer ? selectedDealer.id : null,
+      id: this.passedCar ? this.passedCar.id : null,
+      newItem: this.passedCar ? this.passedCar.newItem : true,
+      registrationDate: this.passedCar
+        ? this.passedCar.registrationDate
+        : new Date(),
+    };
 
-    this.formData.emit({
-      action: action,
-      data:
-        action === 'cancel'
-          ? null
-          : {
-              ...this.myForm.getRawValue(),
-              brand: selectedDealer ? selectedDealer.id : null,
-              id: this.passedCar ? this.passedCar.id : null,
-              newItem: this.passedCar && !this.passedCar.newItem ? false : true,
-              registrationDate: this.passedCar
-                ? this.passedCar.registrationDate
-                : new Date(),
-            },
-    });
-  }
-
-  saveAction(): void {
-    this.emitFormData('save');
-  }
-
-  cancelAction(): void {
-    this.emitFormData('cancel');
+    this.saveCarData.emit(updatedCar);
   }
 
   ngOnDestroy(): void {
-    this.isWorking = false;
+    this.isAlive = false;
   }
 }

@@ -1,16 +1,7 @@
-import {
-  Component,
-  OnInit,
-  Output,
-  EventEmitter,
-  OnDestroy,
-  Input,
-  OnChanges,
-  SimpleChanges,
-} from '@angular/core';
-// import { RouterModule } from '@angular/router';
+import { Component, Output, EventEmitter, Input } from '@angular/core';
+import { OnChanges, OnInit, OnDestroy, SimpleChanges } from '@angular/core';
 import { Observable, Subject, Subscription } from 'rxjs';
-import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, takeWhile } from 'rxjs/operators';
 
 import { CarsService } from './../cars/cars.service';
 import { CarItem } from './../../shared/modules/car-item/car-item.interface';
@@ -30,6 +21,7 @@ export class CarsFilterComponent implements OnInit, OnDestroy, OnChanges {
   private searchTerms = new Subject<string>();
 
   private filterSubsription: Subscription;
+  private isAlive = true;
 
   public constructor(private carsService: CarsService) {}
 
@@ -37,28 +29,30 @@ export class CarsFilterComponent implements OnInit, OnDestroy, OnChanges {
     this.searchTerms.next(term);
   }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.filterSubsription = this.searchTerms
-      .pipe(debounceTime(300), distinctUntilChanged())
+      .pipe(
+        debounceTime(300),
+        takeWhile(() => (this.isAlive = true)),
+        distinctUntilChanged()
+      )
       .subscribe((term: string) => {
         this.filterValue.emit(term);
       });
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
+  public ngOnChanges(changes: SimpleChanges): void {
     if (changes.val && changes.val.firstChange) {
       this.value = this.val;
     }
   }
-  
-  resetValue(): void {
+
+  public resetValue(): void {
     this.value = '';
     this.filterValue.emit(this.value);
   }
 
-  ngOnDestroy(): void {
-    if (this.filterSubsription) {
-      this.filterSubsription.unsubscribe();
-    }
+  public ngOnDestroy(): void {
+    this.isAlive = false;
   }
 }

@@ -27,6 +27,9 @@
           ><p matLine class="dealer-name">
             <strong>{{ newC.model }}</strong>
           </p>
+          <p matLine class="dealer-name">
+            <strong>{{ newC?.dealer }}</strong>
+          </p>
           <div matLine class="dealer-details">
             <span>
               {{ newC.registrationDate | date: "d/M/YYYY" }}

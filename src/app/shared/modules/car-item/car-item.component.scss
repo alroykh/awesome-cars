@@ -10,7 +10,7 @@
 .mat-icon {
   font-size: 30px;
   position: absolute;
-  right: 25px;
+  right: 5px;
   color: rgb(163, 27, 27);
 }
 
@@ -22,13 +22,19 @@
     padding: 0;
     margin-top: -15px;
   }
+
+  .mat-card-header{
+    .mat-card-header-text{
+      margin: 0 16px 0 0;
+    }
+  }
 }
 
 .mat-card {
   align-self: center;
   margin: 0 auto;
 
-  mat-card-header {
+  .mat-card-header {
     height: 45px;
     position: relative;
     top: -5px;

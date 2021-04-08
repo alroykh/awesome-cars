@@ -1,9 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
-// import { FormControl } from '@angular/forms';
-// import { concat, forkJoin } from 'rxjs';
-// import { map } from 'rxjs/operators';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { takeWhile } from 'rxjs/operators';
 
 import { MatTabChangeEvent } from '@angular/material/tabs';
+
 import { CarsService } from './cars.service';
 import { CarItem } from './../../shared/modules/car-item/car-item.interface';
 
@@ -12,7 +11,7 @@ import { CarItem } from './../../shared/modules/car-item/car-item.interface';
   templateUrl: './cars.component.html',
   styleUrls: ['./cars.component.scss'],
 })
-export class CarsComponent implements OnInit {
+export class CarsComponent implements OnInit, OnDestroy {
   @Input() car?: CarItem;
 
   cars: CarItem[] = new Array<CarItem>();
@@ -21,7 +20,7 @@ export class CarsComponent implements OnInit {
 
   carsCategoryView = false;
   carsCategories: Set<string> = new Set();
-  // selectedCarByCategory: {[key: string]: CarItem} = {};
+  isAlive = true;
 
   allCars: CarItem[] = [];
   carsByCategory: CarItem[] = new Array<CarItem>();
@@ -46,6 +45,7 @@ export class CarsComponent implements OnInit {
   getCars(): void {
     this.carsService
       .getCars(this.activePage, this.pageSize)
+      .pipe(takeWhile(() => (this.isAlive = true)))
       .subscribe(({ list, isLastPage }) => {
         this.cars = [...this.cars, ...list];
         this.isLoading = false;
@@ -54,7 +54,9 @@ export class CarsComponent implements OnInit {
   }
 
   getCategories(): void {
-    this.carsService.getCategorizedCars().subscribe((cars: CarItem[]) => {
+    this.carsService.getCategorizedCars()
+    .pipe(takeWhile(() => (this.isAlive = true)))
+    .subscribe((cars: CarItem[]) => {
       this.allCars = cars;
       cars.forEach((item) => {
         if (item.category != null) {
@@ -89,6 +91,7 @@ export class CarsComponent implements OnInit {
   getFilteredCars(): void {
     this.carsService
       .getFilteredCars(this.filterValue, this.activePage, this.pageSize)
+      .pipe(takeWhile(() => (this.isAlive = true)))
       .subscribe(({ list, isLastPage }) => {
         this.cars = [...this.cars, ...list];
         this.isLoading = false;
@@ -109,7 +112,7 @@ export class CarsComponent implements OnInit {
     this.selectedCar = car;
   }
 
-  // getCarById(id: number) {
-  //   return this.cars.find(p => +p.id === id);
-  // }
+  ngOnDestroy(): void {
+    this.isAlive = false;
+  }
 }

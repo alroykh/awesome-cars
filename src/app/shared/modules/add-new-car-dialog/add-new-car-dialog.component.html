@@ -1,13 +1,14 @@
 <div class="car-dialog-container">
-    <div class="title-div">
-      <h1 mat-dialog-title>
-        <strong>Add Car</strong>
-      </h1>
-    </div>
-  
-    <div class="mat-dialog-content" class="content-div">
-      <app-car-form (formData)="formData($event)"></app-car-form>
-    </div>
-  
+  <div class="title-div">
+    <h1 mat-dialog-title>
+      <strong>Add Car</strong>
+    </h1>
   </div>
-  
+
+  <div class="mat-dialog-content" class="content-div">
+    <app-car-form
+      (saveCarData)="saveCarData($event)"
+      (cancelCar)="closeDialog()"
+    ></app-car-form>
+  </div>
+</div>

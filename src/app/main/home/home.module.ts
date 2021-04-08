@@ -8,10 +8,9 @@ import { MatIconModule } from '@angular/material/icon';
 
 import { CarItemModule } from 'src/app/shared/modules/car-item/car-item.module';
 import { DealersModule } from '../dealers/dealers.module';
-import { MyDealersModule } from '../my-dealers/my-dealers.module';
-import { HomeComponent } from './home.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { AddNewCarDialogModule } from 'src/app/shared/modules/add-new-car-dialog/add-new-car-dialog.module';
+import { HomeComponent } from './home.component';
 
 @NgModule({
   declarations: [HomeComponent],
@@ -20,7 +19,6 @@ import { AddNewCarDialogModule } from 'src/app/shared/modules/add-new-car-dialog
     MatButtonModule,
     CarItemModule,
     DealersModule,
-    MyDealersModule,
     MatListModule,
     MatTreeModule,
     MatIconModule,

@@ -1,12 +1,5 @@
-import {
-  Component,
-  OnInit,
-  Input,
-  OnChanges,
-  Output,
-  EventEmitter,
-  SimpleChanges,
-} from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { OnInit, OnChanges, SimpleChanges } from '@angular/core';
 
 import { CarItem } from './../car-item/car-item.interface';
 
@@ -25,6 +18,5 @@ export class CarDetailsComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {}
 
-  // tslint:disable-next-line:typedef
-  ngOnChanges(changes: SimpleChanges) {}
+  ngOnChanges(changes: SimpleChanges): void {}
 }

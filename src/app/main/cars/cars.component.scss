@@ -12,12 +12,7 @@
   padding: 0;
 }
 
-// .filter-div {
-//   position: relative;
-//   top: -70px;
-// }
-
-.filter-input{
+.filter-input {
   position: relative;
   top: 15px;
 }
@@ -28,12 +23,9 @@
   right: 10px;
 }
 
-
 .cars-container {
   z-index: 1;
 }
-
-.example-card {}
 
 .car-card {
   z-index: 1;
@@ -46,14 +38,12 @@
 
 .ng-star-inserted {
   flex: 0 1 21.5%;
-  // align-self: center;
   margin: 15px 0;
 }
 
-.loading{
+.loading {
   margin: 100px auto;
 }
-
 
 .mat-tab-group {
   position: absolute;
@@ -61,42 +51,24 @@
   top: 0px;
 }
 
-mat-selection-list{
-  .option-car{
+mat-selection-list {
+  .option-car {
     font-size: 14px;
     line-height: 1.2;
     padding: 0;
     height: 40px;
-    // .mat-list-option{
-    //   div{
-    //     div{
-    //       padding-right: 0;
-    //     }
-    //   }
-    // }
-    .mat-list-item-content{
+
+    .mat-list-item-content {
       padding: 0;
     }
 
-    .no-cars-message{
-
+    .no-cars-message {
     }
-    
-    
   }
 }
 
-
-// .cars-category-container {
-//   position: absolute;
-//   top: -40px;
-// }
-
-.body-of-mat-tab{
-  // background-color: green;
+.body-of-mat-tab {
   display: flex;
-  // position: absolute;
-  // top: 10px;
   margin-top: 0;
 }
 
@@ -105,17 +77,14 @@ mat-selection-list{
 }
 
 .mat-list-option {
-  // background-color: green;
   margin: 0;
   padding: 0;
 }
 
-.no-cars-message{
-  text-align: center; 
+.no-cars-message {
+  text-align: center;
 }
 
-.button-load-more-section{
-  text-align: center; 
+.button-load-more-section {
+  text-align: center;
 }
-
-

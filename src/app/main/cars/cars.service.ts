@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { forkJoin, Observable, of } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { catchError, map, mapTo, switchMap, tap } from 'rxjs/operators';
+import { catchError, map, switchMap, tap } from 'rxjs/operators';
 
 import { CarItem } from 'src/app/shared/modules/car-item/car-item.interface';
 import { DealersService } from '../dealers/dealers.service';
@@ -22,7 +22,7 @@ export interface CarsTrimmed {
 export class CarsService {
   cars: CarItem[] = new Array<CarItem>();
 
-  private carsUrl = 'api/cars'; // url to web api
+  private carsUrl = 'api/cars'; 
   private httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
   };
@@ -35,16 +35,12 @@ export class CarsService {
   // tslint:disable-next-line:typedef
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: Error): Observable<T> => {
-      console.error(error);
-
       this.log(`${operation} failed: ${error.message}`);
-
       return of(result as T);
     };
   }
 
-  private log(message: string): void {
-  }
+  private log(message: string): void {}
 
   public updateCar(car: CarItem): Observable<any> {
     return this.http.put(this.carsUrl, car, this.httpOptions).pipe(
@@ -75,7 +71,6 @@ export class CarsService {
     page: number,
     size: number = 8
   ): Observable<any> {
-
     return forkJoin([
       this.getCarsByParams({ model: value }),
       this.getCarsByParams({ brand: value }),
@@ -147,7 +142,6 @@ export class CarsService {
   }
 
   deleteCar(car: CarItem): Observable<CarItem> {
-    // const id: string = typeof car === 'string' ? car : car.id;
     const url = `${this.carsUrl}/${car.id}`;
 
     return this.http.delete<CarItem>(url, this.httpOptions).pipe(

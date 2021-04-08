@@ -94,7 +94,12 @@
       >
         Save
       </button>
-      <button mat-button (click)="cancelAction()" mat-flat-button color="warn">
+      <button
+        mat-button
+        (click)="cancelCar.emit()"
+        mat-flat-button
+        color="warn"
+      >
         Cancel
       </button>
     </div>

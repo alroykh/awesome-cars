@@ -1,24 +1,28 @@
-import { DealersService } from 'src/app/main/dealers/dealers.service';
-import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { CarItem } from '../car-item/car-item.interface';
-import { CarsService } from 'src/app/main/cars/cars.service';
-import { finalize, switchMap } from 'rxjs/operators';
+import { finalize, switchMap, takeWhile } from 'rxjs/operators';
+
 import { MatDialog } from '@angular/material/dialog';
-import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
-// import { Subscription } from 'rxjs';
-// import { Location } from '@angular/common';
-// import { CarDialogComponent } from '../car-dialog/car-dialog.component';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
+import { CarsService } from 'src/app/main/cars/cars.service';
+import { DealersService } from 'src/app/main/dealers/dealers.service';
+import { CarItem } from '../car-item/car-item.interface';
 import { DealerItem } from '../dealer-item/dealer-item.interface';
-import { FormDataOutput } from '../car-form/car-form.component';
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-car-info',
   templateUrl: './car-info.component.html',
   styleUrls: ['./car-info.component.scss'],
 })
-export class CarInfoComponent implements OnInit, OnChanges {
+export class CarInfoComponent implements OnInit, OnChanges, OnDestroy {
   car: CarItem;
   cars: Array<CarItem>;
   dealer: DealerItem;
@@ -29,10 +33,7 @@ export class CarInfoComponent implements OnInit, OnChanges {
   action: boolean;
   myForm: FormGroup;
   showError = false;
-
-  // sub: Subscription;
-  // editFormData: FormDataOutput;
-  // @ViewChild('dialog') template: TemplateRef<HTMLElement>;
+  isAlive = true;
 
   constructor(
     private route: ActivatedRoute,
@@ -46,12 +47,13 @@ export class CarInfoComponent implements OnInit, OnChanges {
   ngOnInit() {
     this.isLoading = true;
 
-    this.route.data.subscribe((res) => {
+    this.route.data.pipe(takeWhile(() => this.isAlive)).subscribe((res) => {
       this.isEdit = res.isEdit;
     });
 
     this.route.paramMap
       .pipe(
+        takeWhile(() => this.isAlive),
         switchMap((params: ParamMap) => {
           this.id = params.get('id');
           return this.carsService
@@ -77,12 +79,15 @@ export class CarInfoComponent implements OnInit, OnChanges {
         message: 'Are you sure, you want to remove ' + car.model + ' car?',
       },
     });
-    confirmDialog.afterClosed().subscribe((result) => {
-      if (result === true) {
-        this.carsService.deleteCar(car).subscribe();
-        this.onBack();
-      }
-    });
+    confirmDialog
+      .afterClosed()
+      .pipe(takeWhile(() => this.isAlive))
+      .subscribe((result) => {
+        if (result === true) {
+          this.carsService.deleteCar(car).subscribe();
+          this.onBack();
+        }
+      });
   }
 
   onBack(): void {
@@ -93,31 +98,25 @@ export class CarInfoComponent implements OnInit, OnChanges {
     this.router.navigate(['/cars', `${this.id}`, 'edit']);
   }
 
-  formData(data: FormDataOutput): void {
-    if (!data) {
-      return;
-    }
-
-    if (data.action === 'save') {
-      this.saveAction(data.data);
-    } else if (data.action === 'cancel') {
-      this.cancelAction();
-    }
+  saveCarData(data: CarItem): void {
+    this.saveAction(data);
   }
 
   saveAction(data: CarItem): void {
-    if (!data) {
-      return;
-    }
-
-    this.carsService.updateCar(data).subscribe(() => {
-      this.router.navigate(['cars/', `${this.id}`]);
-      this.car = data;
-    });
+    this.carsService
+      .updateCar(data)
+      .pipe(takeWhile(() => this.isAlive))
+      .subscribe(() => {
+        this.router.navigate(['cars/', `${this.id}`]);
+        this.car = data;
+      });
   }
 
   cancelAction(): void {
-    // this.isEdit = false;
     this.router.navigate(['cars/', `${this.id}`]);
+  }
+
+  ngOnDestroy(): void {
+    this.isAlive = false;
   }
 }

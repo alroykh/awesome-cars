@@ -1,29 +1,22 @@
-import {
-  AfterViewInit,
-  Component,
-  ViewChild,
-  OnInit,
-  Input,
-} from '@angular/core';
+import { Component, ViewChild, OnInit, OnDestroy } from '@angular/core';
+import { finalize, takeWhile } from 'rxjs/operators';
 
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 
+import { DealersService } from './dealers.service';
+import { DealerItem } from 'src/app/shared/modules/dealer-item/dealer-item.interface';
 import { ConfirmDialogComponent } from './../../shared/modules/confirm-dialog/confirm-dialog.component';
 import { DealerDialogComponent } from './../../shared/modules/dealer-dialog/dealer-dialog.component';
-import { DealersService } from './dealers.service';
-import { finalize } from 'rxjs/operators';
-import { DealerItem } from 'src/app/shared/modules/dealer-item/dealer-item.interface';
 
 @Component({
   selector: 'app-dealers',
   templateUrl: './dealers.component.html',
   styleUrls: ['./dealers.component.scss'],
 })
-export class DealersComponent implements OnInit {
-  // @Input(newDealersList) = new DealerItem;
+export class DealersComponent implements OnInit, OnDestroy {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
@@ -41,7 +34,7 @@ export class DealersComponent implements OnInit {
   action: boolean;
 
   loading = false;
-
+  isAlive = true;
   passedData: DealerItem;
 
   constructor(
@@ -53,7 +46,10 @@ export class DealersComponent implements OnInit {
     this.loading = true;
     this.dealerService
       .getDealers()
-      .pipe(finalize(() => (this.loading = false)))
+      .pipe(
+        takeWhile(() => (this.isAlive = true)),
+        finalize(() => (this.loading = false))
+      )
       .subscribe((dealers) => {
         this.dealers = dealers;
         this.dataSource = new MatTableDataSource(this.dealers);
@@ -64,12 +60,15 @@ export class DealersComponent implements OnInit {
   }
 
   updateTable(): void {
-    this.dealerService.getDealers().subscribe((dealers) => {
-      this.dealers = dealers;
-      this.dataSource = new MatTableDataSource(this.dealers);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-    });
+    this.dealerService
+      .getDealers()
+      .pipe(takeWhile(() => (this.isAlive = true)))
+      .subscribe((dealers) => {
+        this.dealers = dealers;
+        this.dataSource = new MatTableDataSource(this.dealers);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      });
   }
 
   filterDealers(event: Event): void {
@@ -87,15 +86,18 @@ export class DealersComponent implements OnInit {
       data: obj,
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      this.passedData = result.data;
-      if (result.data.newRecord === true) {
-        this.dealerService.addDealer(this.passedData).subscribe();
-      } else if (result.data.newRecord === false) {
-        this.dealerService.updateDealer(this.passedData).subscribe();
-      }
-      this.updateTable();
-    });
+    dialogRef
+      .afterClosed()
+      .pipe(takeWhile(() => (this.isAlive = true)))
+      .subscribe((result) => {
+        this.passedData = result.data;
+        if (result.data.newRecord === true) {
+          this.dealerService.addDealer(this.passedData).subscribe();
+        } else if (result.data.newRecord === false) {
+          this.dealerService.updateDealer(this.passedData).subscribe();
+        }
+        this.updateTable();
+      });
   }
 
   deleteDealer(dealer: DealerItem): void {
@@ -105,15 +107,18 @@ export class DealersComponent implements OnInit {
         message: 'Are you sure, you want to remove ' + dealer.name + ' dealer?',
       },
     });
-    confirmDialog.afterClosed().subscribe((result) => {
-      if (result === true) {
-        this.dealerService.deleteDealer(dealer).subscribe();
-        this.updateTable();
-      }
-    });
+    confirmDialog
+      .afterClosed()
+      .pipe(takeWhile(() => (this.isAlive = true)))
+      .subscribe((result) => {
+        if (result === true) {
+          this.dealerService.deleteDealer(dealer).subscribe();
+          this.updateTable();
+        }
+      });
   }
 
-  // pushNewDealerToTheList(dealer:  DealerItem): void {
-  //   this.newAddedDealers.push(dealer);
-  // }
+  ngOnDestroy(): void {
+    this.isAlive = false;
+  }
 }
