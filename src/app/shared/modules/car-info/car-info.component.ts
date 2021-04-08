@@ -53,7 +53,6 @@ export class CarInfoComponent implements OnInit, OnChanges {
     this.route.paramMap
       .pipe(
         switchMap((params: ParamMap) => {
-          // console.log(params);
           this.id = params.get('id');
           return this.carsService
             .getCarById(params.get('id'))

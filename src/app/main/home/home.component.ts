@@ -44,29 +44,10 @@ export class HomeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // this.isLoading = true;
     this.getCars();
     this.getNewAddedCars();
     this.getNewAddedDealers();
-    // this.getData();
   }
-
-  // getData(): void {
-  //   forkJoin([
-  //     this.carsService.getCarsByParams({ liked: true }),
-  //     this.carsService.getAllCars(),
-  //     this.dealerService.getDealers(),
-  //   ])
-  //     .pipe(
-  //       tap(([likedCars,  cars, dealers]: [Array<CarItem>, Array<CarItem>, Array<DealerItem>])=>{
-  //         this.cars = likedCars;
-  //         this.newAddedCars = cars.filter((car) => car.newItem);
-  //         this.newAddedDealers = dealers.filter((dealer) => dealer.newRecord);
-  //         this.isLoading = false;
-  //       })
-  //     )
-  //     .subscribe();
-  // }
 
   getCars(): void {
     this.isLikedLoading = true;

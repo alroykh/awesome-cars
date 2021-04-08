@@ -39,7 +39,6 @@ export class DealersService {
   }
 
   private log(message: string): void {
-    console.log(message);
   }
 
   getDealers(): Observable<DealerItem[]> {

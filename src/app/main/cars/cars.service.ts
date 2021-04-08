@@ -44,7 +44,6 @@ export class CarsService {
   }
 
   private log(message: string): void {
-    console.log(message);
   }
 
   public updateCar(car: CarItem): Observable<any> {
@@ -93,7 +92,6 @@ export class CarsService {
         for (const val of uniqueCarsMap.values()) {
           uniqueCars.push(val);
         }
-        console.log(uniqueCars);
         return uniqueCars;
       }),
       switchMap((cars: CarItem[]) => this.getCarsWithMarka(cars)),

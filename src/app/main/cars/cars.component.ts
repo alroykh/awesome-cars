@@ -83,7 +83,6 @@ export class CarsComponent implements OnInit {
     this.filterValue = value.trim();
     this.activePage = 1;
     this.cars = [];
-    console.log('List cars before: ', [...this.cars]);
     this.getFilteredCars();
   }
 
@@ -91,11 +90,9 @@ export class CarsComponent implements OnInit {
     this.carsService
       .getFilteredCars(this.filterValue, this.activePage, this.pageSize)
       .subscribe(({ list, isLastPage }) => {
-        console.log('List cars: ', [...this.cars]);
         this.cars = [...this.cars, ...list];
         this.isLoading = false;
         this.isLastPage = isLastPage;
-        console.log('LIST: ', list);
       });
   }
 

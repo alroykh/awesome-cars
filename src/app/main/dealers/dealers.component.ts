@@ -88,7 +88,6 @@ export class DealersComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      console.log(result);
       this.passedData = result.data;
       if (result.data.newRecord === true) {
         this.dealerService.addDealer(this.passedData).subscribe();
@@ -97,7 +96,6 @@ export class DealersComponent implements OnInit {
       }
       this.updateTable();
     });
-    console.log(this.dealers);
   }
 
   deleteDealer(dealer: DealerItem): void {

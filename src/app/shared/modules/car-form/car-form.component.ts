@@ -55,7 +55,6 @@ export class CarFormComponent implements OnInit, OnDestroy {
             !this.dealers.find(
               (el) => el.name.toLowerCase() === value.toString().toLowerCase()
             );
-          console.log(value);
         })
       )
       .subscribe();
@@ -99,13 +98,6 @@ export class CarFormComponent implements OnInit, OnDestroy {
         this.dealers = dealers;
       })
     );
-    // .subscribe(
-    //   (res) => {
-    //     this.dealers = res;
-    //     // console.log('Dealers:', this.dealers);
-    //   },
-    //   (error) => console.log(error)
-    // );
   }
 
   private emitFormData(action: 'save' | 'cancel'): void {
@@ -123,14 +115,12 @@ export class CarFormComponent implements OnInit, OnDestroy {
               ...this.myForm.getRawValue(),
               brand: selectedDealer ? selectedDealer.id : null,
               id: this.passedCar ? this.passedCar.id : null,
-              newItem: this.passedCar ? false : true,
+              newItem: this.passedCar && !this.passedCar.newItem ? false : true,
               registrationDate: this.passedCar
                 ? this.passedCar.registrationDate
                 : new Date(),
             },
     });
-
-    console.log(this.formData.emit);
   }
 
   saveAction(): void {
