@@ -2,7 +2,7 @@ import { FormControl } from '@angular/forms';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import { catchError, map, switchMap, tap } from 'rxjs/operators';
 
 import { DealerItem } from 'src/app/shared/modules/dealer-item/dealer-item.interface';
 
@@ -77,4 +77,21 @@ export class DealersService {
       catchError(this.handleError<DealerItem>(`getDealer id = ${id}`))
     );
   }
+
+  public updateDealerCarsAmount(
+    id: string,
+    isIncrement: boolean = true
+  ): Observable<any> {
+    return this.getDealerById(id).pipe(
+      switchMap((dealer: DealerItem) =>
+        this.updateDealer({
+          ...dealer,
+          amountOfCars: isIncrement
+            ? dealer.amountOfCars + 1
+            : dealer.amountOfCars - 1,
+        })
+      )
+    );
+  }
+
 }

@@ -1,4 +1,11 @@
-import { Component, ViewChild, OnInit, OnDestroy } from '@angular/core';
+import {
+  Component,
+  ViewChild,
+  OnInit,
+  OnDestroy,
+  OnChanges,
+  SimpleChanges,
+} from '@angular/core';
 import { finalize, takeWhile } from 'rxjs/operators';
 
 import { MatPaginator } from '@angular/material/paginator';
@@ -16,7 +23,7 @@ import { DealerDialogComponent } from './../../shared/modules/dealer-dialog/deal
   templateUrl: './dealers.component.html',
   styleUrls: ['./dealers.component.scss'],
 })
-export class DealersComponent implements OnInit, OnDestroy {
+export class DealersComponent implements OnChanges, OnInit, OnDestroy {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
@@ -41,6 +48,9 @@ export class DealersComponent implements OnInit, OnDestroy {
     private dealerService: DealersService,
     public dialog: MatDialog
   ) {}
+  ngOnChanges(changes: SimpleChanges): void {
+    throw new Error('Method not implemented.');
+  }
 
   ngOnInit(): void {
     this.loading = true;
@@ -53,7 +63,6 @@ export class DealersComponent implements OnInit, OnDestroy {
       .subscribe((dealers) => {
         this.dealers = dealers;
         this.dataSource = new MatTableDataSource(this.dealers);
-        //
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       });

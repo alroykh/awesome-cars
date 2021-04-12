@@ -30,7 +30,7 @@ export class CarsComponent implements OnInit, OnDestroy {
   isLoading = false;
 
   public filterValue = '';
-  isLastPage = false;
+  public isLastPage = false;
   private activePage = 1;
   private pageSize = 8;
 

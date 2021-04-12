@@ -20,7 +20,7 @@ import { ConfirmDialogComponent } from './shared/modules/confirm-dialog/confirm-
     HttpClientModule,
     HttpClientInMemoryWebApiModule.forRoot(InMemoryDataService, {
       dataEncapsulation: false,
-      delay: 1000
+      delay: 500
     }),
     AppRoutingModule,
     BrowserAnimationsModule,

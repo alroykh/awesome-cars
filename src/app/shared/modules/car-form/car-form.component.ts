@@ -97,6 +97,7 @@ export class CarFormComponent implements OnInit, OnDestroy {
   }
 
   public saveAction(): void {
+    this.isSaving = true;
     const selectedDealer = this.dealers.find(
       (el) =>
         el.name.toLowerCase() === (this.myForm.value.dealer || '').toLowerCase()

@@ -22,7 +22,7 @@ export interface CarsTrimmed {
 export class CarsService {
   cars: CarItem[] = new Array<CarItem>();
 
-  private carsUrl = 'api/cars'; 
+  private carsUrl = 'api/cars';
   private httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
   };
@@ -42,9 +42,25 @@ export class CarsService {
 
   private log(message: string): void {}
 
+  
   public updateCar(car: CarItem): Observable<any> {
-    return this.http.put(this.carsUrl, car, this.httpOptions).pipe(
-      tap((_) => this.log(`update car id=${car.id}`)),
+    let carBeforeUpdate: CarItem;
+
+    return this.getCarById(car.id).pipe(
+      tap((currentCar: CarItem) => {
+        carBeforeUpdate = currentCar;
+      }),
+      switchMap(() => this.http.put(this.carsUrl, car, this.httpOptions)),
+      switchMap(() => {
+        if (carBeforeUpdate.brand === car.brand) {
+          return of(null);
+        }
+
+        return forkJoin([
+          this.dealersService.updateDealerCarsAmount(car.brand, true),
+          this.dealersService.updateDealerCarsAmount(carBeforeUpdate.brand, false),
+        ]);
+      }),
       catchError(this.handleError<any>('updateCar'))
     );
   }
@@ -145,26 +161,14 @@ export class CarsService {
     const url = `${this.carsUrl}/${car.id}`;
 
     return this.http.delete<CarItem>(url, this.httpOptions).pipe(
-      switchMap(() => this.dealersService.getDealerById(car.brand)),
-      switchMap((dealer: DealerItem) =>
-        this.dealersService.updateDealer({
-          ...dealer,
-          amountOfCars: dealer.amountOfCars - 1,
-        })
-      ),
+      switchMap(() => this.dealersService.updateDealerCarsAmount(car.brand, false)),
       catchError(this.handleError<CarItem>('deleteCar'))
     );
   }
 
   addCar(car: CarItem): Observable<void> {
     return this.http.post<CarItem>(this.carsUrl, car, this.httpOptions).pipe(
-      switchMap(() => this.dealersService.getDealerById(car.brand)),
-      switchMap((dealer: DealerItem) =>
-        this.dealersService.updateDealer({
-          ...dealer,
-          amountOfCars: dealer.amountOfCars + 1,
-        })
-      ),
+      switchMap(() => this.dealersService.updateDealerCarsAmount(car.brand, true)),
       catchError(this.handleError<CarItem>('addCar'))
     );
   }
