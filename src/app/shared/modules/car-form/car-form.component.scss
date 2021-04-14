@@ -8,6 +8,7 @@
 
   mat-form-field {
     width: 100%;
+    
   }
 
   .actions-div {
@@ -20,4 +21,8 @@
       }
     }
   }
+}
+
+.mat-hint{
+  color: red;
 }

@@ -1,10 +1,16 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { takeWhile } from 'rxjs/operators';
+import { debounceTime, takeWhile } from 'rxjs/operators';
 
 import { MatTabChangeEvent } from '@angular/material/tabs';
 
 import { CarsService } from './cars.service';
 import { CarItem } from './../../shared/modules/car-item/car-item.interface';
+import { FormControl } from '@angular/forms';
+
+export interface CarsTrimmed {
+  list: CarItem[];
+  isLastPage: boolean;
+}
 
 @Component({
   selector: 'app-cars',
@@ -28,43 +34,60 @@ export class CarsComponent implements OnInit, OnDestroy {
   selectedCategory: CarItem[] = new Array<CarItem>();
 
   isLoading = false;
-
+  valueFilter: string;
   public filterValue = '';
   public isLastPage = false;
   private activePage = 1;
   private pageSize = 8;
 
+  public filterFieldControl: FormControl = new FormControl();
+
+  filteredCars: CarItem[] = new Array<CarItem>();
+
   constructor(private carsService: CarsService) {}
 
   ngOnInit(): void {
     this.isLoading = true;
-    this.getCars();
+    this.carsService.getAllCars().subscribe((res) => {
+      this.cars = res;
+      this.setFilteredCars(
+        this.getTrimmedCars(this.cars, this.activePage, this.pageSize)
+      );
+    });
     this.getCategories();
+    this.handleFilter();
   }
 
-  getCars(): void {
-    this.carsService
-      .getCars(this.activePage, this.pageSize)
-      .pipe(takeWhile(() => (this.isAlive = true)))
-      .subscribe(({ list, isLastPage }) => {
-        this.cars = [...this.cars, ...list];
-        this.isLoading = false;
-        this.isLastPage = isLastPage;
-      });
+  setFilteredCars({ list, isLastPage }: CarsTrimmed): void {
+    this.filteredCars = [...this.filteredCars, ...list];
+    this.isLoading = false;
+    this.isLastPage = isLastPage;
   }
+
+  // getCars(): void {
+  //   this.carsService
+  //     .getCars(this.activePage, this.pageSize)
+  //     .pipe(takeWhile(() => (this.isAlive = true)))
+  //     .subscribe(({ list, isLastPage }) => {
+  //       this.cars = [...this.cars, ...list];
+  //       this.isLoading = false;
+  //       this.isLastPage = isLastPage;
+  //     });
+  // }
 
   getCategories(): void {
-    this.carsService.getCategorizedCars()
-    .pipe(takeWhile(() => (this.isAlive = true)))
-    .subscribe((cars: CarItem[]) => {
-      this.allCars = cars;
-      cars.forEach((item) => {
-        if (item.category != null) {
-          this.carsCategories.add(item.category.toLowerCase());
-        }
+    this.carsService
+      .getCategorizedCars()
+      .pipe(takeWhile(() => (this.isAlive = true)))
+      .subscribe((cars: CarItem[]) => {
+        this.allCars = cars;
+        cars.forEach((item) => {
+          if (item.category != null) {
+            this.carsCategories.add(item.category.toLowerCase());
+          }
+        });
+        this.carsCategories.add('other');
       });
-      this.carsCategories.add('other');
-    });
   }
 
   getCarsByCategory(category: string): CarItem[] {
@@ -80,32 +103,101 @@ export class CarsComponent implements OnInit, OnDestroy {
     );
   }
 
-  filterCars(value: string): void {
-    this.isLoading = true;
-    this.filterValue = value.trim();
-    this.activePage = 1;
-    this.cars = [];
-    this.getFilteredCars();
+  private getTrimmedCars(
+    carList: CarItem[],
+    page: number,
+    size: number = 8
+  ): CarsTrimmed {
+    const startIndex = page === 1 ? 0 : (page - 1) * size;
+    const endIndex = startIndex + size;
+    const carsTrimmed = {
+      list: carList.slice(startIndex, startIndex + size),
+      isLastPage: carList.length - 1 <= endIndex,
+    };
+    return carsTrimmed;
   }
 
-  getFilteredCars(): void {
-    this.carsService
-      .getFilteredCars(this.filterValue, this.activePage, this.pageSize)
-      .pipe(takeWhile(() => (this.isAlive = true)))
-      .subscribe(({ list, isLastPage }) => {
-        this.cars = [...this.cars, ...list];
-        this.isLoading = false;
-        this.isLastPage = isLastPage;
+  handleFilter(): void {
+    this.filterFieldControl.valueChanges
+      .pipe(
+        takeWhile(() => this.isAlive),
+        debounceTime(1500)
+      )
+      // tslint:disable-next-line: deprecation
+      .subscribe((value) => {
+        this.activePage = 1;
+        this.isLastPage = false;
+        this.isLoading = true;
+        this.filteredCars = [];
+        if (!value || !value.trim()) {
+          this.setFilteredCars(
+            this.getTrimmedCars(this.cars, this.activePage, this.pageSize)
+          );
+        } else {
+          const filteredCars = this.cars.filter(
+            (car) =>
+              car.dealerName.toLowerCase().includes(value) ||
+              car.model.toLowerCase().includes(value)
+          );
+          this.setFilteredCars(
+            this.getTrimmedCars(filteredCars, this.activePage, this.pageSize)
+          );
+        }
       });
   }
 
+  // filterCars(value: string): void {
+  //   this.isLoading = true;
+  //   this.filterValue = value.trim();
+  //   this.activePage = 1;
+  //   this.cars = [];
+  //   this.getFilteredCars();
+  // }
+
+  // getFilteredCars(): void {
+  //   this.carsService
+  //     .getFilteredCars(this.filterValue, this.activePage, this.pageSize)
+  //     .pipe(takeWhile(() => (this.isAlive = true)))
+  //     .subscribe(({ list, isLastPage }) => {
+  //       this.cars = [...this.cars, ...list];
+  //       this.isLoading = false;
+  //       this.isLastPage = isLastPage;
+  //     });
+  // }
+
+  public resetValue(): void {
+    this.filterFieldControl.reset();
+  }
+
+  // working
+  // loadMore(): void {
+  //   this.activePage += 1;
+  //   if (!!this.filterValue.trim()) {
+  //     this.getFilteredCars();
+  //   } else {
+  //     this.getCars();
+  //   }
+  // }
+
   loadMore(): void {
     this.activePage += 1;
-    if (!!this.filterValue.trim()) {
-      this.getFilteredCars();
-    } else {
-      this.getCars();
-    }
+    this.isLoading = true;
+    // if (!!this.filterValue.trim()) {
+    //   this.filterCars();
+    // } else {
+    // this.getCars();
+    // }
+    const filterValue = (this.filterFieldControl.value || '').trim();
+    const carsList = !filterValue
+      ? this.cars
+      : this.cars.filter(
+          (car) =>
+            car.dealerName.toLowerCase().includes(filterValue) ||
+            car.model.toLowerCase().includes(filterValue)
+        );
+    this.setFilteredCars(
+      this.getTrimmedCars(carsList, this.activePage, this.pageSize)
+    );
   }
 
   selectCar(car: CarItem, category?): void {

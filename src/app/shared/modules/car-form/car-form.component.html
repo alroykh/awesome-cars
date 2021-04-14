@@ -29,7 +29,7 @@
     >
       Dealer is required
     </mat-error>
-    <mat-hint *ngIf="showError">
+    <mat-hint *ngIf="showError" class="error-message">
       You have to use dealer that is already exist
     </mat-hint>
     <mat-autocomplete
@@ -89,7 +89,7 @@
     <div class="btn-wrapper">
       <button
         mat-button
-        [disabled]="myForm.invalid || isSaving"
+        [disabled]="myForm.invalid || isSaving || showError"
         (click)="saveAction()"
       >
         Save

@@ -19,14 +19,17 @@
   margin: 0 0 0 10px;
   display: flex;
   flex-wrap: wrap;
+  align-self: flex-start;
 
   .header-div {
     flex: 0 1 100%;
     display: flex;
     flex-wrap: wrap;
+    height: 40px;
 
     .name-div {
       flex: 0 1 80%;
+      
     }
 
     .ud-div {

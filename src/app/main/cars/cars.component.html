@@ -1,10 +1,37 @@
 <section class="cars-settings">
-  <app-cars-filter
+  <!-- working code -->
+  <!-- <app-cars-filter
     [val]="filterValue"
     *ngIf="!carsCategoryView"
     (filterValue)="filterCars($event)"
     class="filter-input"
-  ></app-cars-filter>
+  ></app-cars-filter> -->
+
+  <div class="filter-container">
+    <form *ngIf="!carsCategoryView">
+      <mat-form-field class="filter-input">
+        <mat-label>Filter</mat-label>
+        <input
+          
+          matInput
+          placeholder="Enter brand or model"
+          type="text"
+          [formControl]="filterFieldControl"
+          name="filter"
+        />
+        <button
+          mat-button
+          *ngIf="filterFieldControl"
+          matSuffix
+          mat-icon-button
+          aria-label=""
+          (click)="resetValue()"
+        >
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+    </form>
+  </div>
 
   <div class="toggle-div">
     <mat-slide-toggle
@@ -17,12 +44,11 @@
 </section>
 
 <section *ngIf="!carsCategoryView" class="cars-container">
-  
   <mat-spinner *ngIf="isLoading" class="loading"></mat-spinner>
 
   <div class="car-card">
     <app-car-item
-      *ngFor="let car of cars"
+      *ngFor="let car of filteredCars"
       [car]="car"
       [smallView]="false"
     ></app-car-item>
