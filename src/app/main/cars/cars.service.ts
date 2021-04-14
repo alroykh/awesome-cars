@@ -82,33 +82,6 @@ export class CarsService {
       );
   }
 
-  // public getFilteredCars(
-  //   value: string | number,
-  //   page: number,
-  //   size: number = 8
-  // ): Observable<any> {
-  //   return forkJoin([
-  //     this.getCarsByParams({ model: value }),
-  //     this.getCarsByParams({ brand: value }),
-  //   ]).pipe(
-  //     map(([carsByModel, carsByBrand]: Array<CarItem[]>) => {
-  //       const uniqueCars = [];
-  //       const unitedArray: CarItem[] = [...carsByModel, ...carsByBrand];
-  //       const uniqueCarsMap = new Map<string, CarItem>();
-
-  //       unitedArray.forEach((item: CarItem) => {
-  //         uniqueCarsMap.set(item.id, item);
-  //       });
-
-  //       for (const val of uniqueCarsMap.values()) {
-  //         uniqueCars.push(val);
-  //       }
-  //       return uniqueCars;
-  //     }),
-  //     switchMap((cars: CarItem[]) => this.getCarsWithMarka(cars)),
-  //     map((res: CarItem[]) => this.getTrimmedCars(res, page, size))
-  //   );
-  // }
 
   getAllCars(): Observable<CarItem[]> {
     return this.http.get<CarItem[]>(this.carsUrl).pipe(
@@ -117,13 +90,7 @@ export class CarsService {
     );
   }
 
-  // public getCars(page: number, size: number = 8): Observable<any> {
-  //   return this.http.get<CarItem[]>(this.carsUrl).pipe(
-  //     catchError(this.handleError<CarItem[]>('getCars', [])),
-  //     switchMap((cars: CarItem[]) => this.getCarsWithMarka(cars)),
-  //     map((res: CarItem[]) => this.getTrimmedCars(res, page, size))
-  //   );
-  // }
+ 
 
   public getCategorizedCars(): Observable<CarItem[]> {
     return this.http.get<CarItem[]>(this.carsUrl).pipe(
@@ -132,19 +99,6 @@ export class CarsService {
     );
   }
 
-  // private getTrimmedCars(
-  //   carList: CarItem[],
-  //   page: number,
-  //   size: number = 8
-  // ): CarsTrimmed {
-  //   const startIndex = page === 1 ? 0 : (page - 1) * size;
-  //   const endIndex = startIndex + size;
-  //   const carsTrimmed = {
-  //     list: carList.slice(startIndex, startIndex + size),
-  //     isLastPage: carList.length - 1 <= endIndex,
-  //   };
-  //   return carsTrimmed;
-  // }
 
   getCarById(id: string): Observable<CarItem> {
     const url = `${this.carsUrl}/${id}`;

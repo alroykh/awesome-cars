@@ -16,11 +16,10 @@ import { CarItemModule } from 'src/app/shared/modules/car-item/car-item.module';
 import { CarCategoryModule } from 'src/app/shared/modules/car-category/car-category.module';
 import { CarDetailsModule } from 'src/app/shared/modules/car-details/car-details.module';
 import { CarInfoModule } from './../../shared/modules/car-info/car-info.module';
-import { CarsFilterComponent } from '../cars-filter/cars-filter.component';
 import { CarsComponent } from './cars.component';
 
 @NgModule({
-  declarations: [CarsComponent, CarsFilterComponent],
+  declarations: [CarsComponent],
   imports: [
     CommonModule,
     FormsModule,

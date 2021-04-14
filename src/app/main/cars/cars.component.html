@@ -1,18 +1,10 @@
 <section class="cars-settings">
-  <!-- working code -->
-  <!-- <app-cars-filter
-    [val]="filterValue"
-    *ngIf="!carsCategoryView"
-    (filterValue)="filterCars($event)"
-    class="filter-input"
-  ></app-cars-filter> -->
 
   <div class="filter-container">
     <form *ngIf="!carsCategoryView">
       <mat-form-field class="filter-input">
         <mat-label>Filter</mat-label>
         <input
-          
           matInput
           placeholder="Enter brand or model"
           type="text"
@@ -54,7 +46,7 @@
     ></app-car-item>
   </div>
 
-  <div *ngIf="!cars.length && !isLoading" class="no-cars-message">
+  <div *ngIf="!filteredCars.length && !isLoading" class="no-cars-message">
     <h2>There is no cars with such name</h2>
   </div>
 </section>

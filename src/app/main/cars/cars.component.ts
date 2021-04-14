@@ -64,17 +64,6 @@ export class CarsComponent implements OnInit, OnDestroy {
     this.isLastPage = isLastPage;
   }
 
-  // getCars(): void {
-  //   this.carsService
-  //     .getCars(this.activePage, this.pageSize)
-  //     .pipe(takeWhile(() => (this.isAlive = true)))
-  //     .subscribe(({ list, isLastPage }) => {
-  //       this.cars = [...this.cars, ...list];
-  //       this.isLoading = false;
-  //       this.isLastPage = isLastPage;
-  //     });
-  // }
-
   getCategories(): void {
     this.carsService
       .getCategorizedCars()
@@ -146,47 +135,13 @@ export class CarsComponent implements OnInit, OnDestroy {
       });
   }
 
-  // filterCars(value: string): void {
-  //   this.isLoading = true;
-  //   this.filterValue = value.trim();
-  //   this.activePage = 1;
-  //   this.cars = [];
-  //   this.getFilteredCars();
-  // }
-
-  // getFilteredCars(): void {
-  //   this.carsService
-  //     .getFilteredCars(this.filterValue, this.activePage, this.pageSize)
-  //     .pipe(takeWhile(() => (this.isAlive = true)))
-  //     .subscribe(({ list, isLastPage }) => {
-  //       this.cars = [...this.cars, ...list];
-  //       this.isLoading = false;
-  //       this.isLastPage = isLastPage;
-  //     });
-  // }
-
   public resetValue(): void {
     this.filterFieldControl.reset();
   }
 
-  // working
-  // loadMore(): void {
-  //   this.activePage += 1;
-  //   if (!!this.filterValue.trim()) {
-  //     this.getFilteredCars();
-  //   } else {
-  //     this.getCars();
-  //   }
-  // }
-
   loadMore(): void {
     this.activePage += 1;
     this.isLoading = true;
-    // if (!!this.filterValue.trim()) {
-    //   this.filterCars();
-    // } else {
-    // this.getCars();
-    // }
     const filterValue = (this.filterFieldControl.value || '').trim();
     const carsList = !filterValue
       ? this.cars
