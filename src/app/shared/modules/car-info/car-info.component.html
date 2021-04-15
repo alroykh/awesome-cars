@@ -1,0 +1,87 @@
+<div class="car-info-container" *ngIf="!isLoading">
+  <div class="car-image-div" *ngIf="car?.image">
+    <img class="car-img" [src]="car?.image" alt="car-img" />
+  </div>
+
+  <div class="car-image-div" *ngIf="!car?.image">
+    <img
+      class="car-img"
+      src="../../../../assets/images/mock-image.jpg"
+      alt="selected-car-img"
+    />
+  </div>
+
+  <div class="car-info-div" *ngIf="!isEdit">
+    <div class="header-div">
+      <div class="name-div">
+        <h2>{{ car?.model }}</h2>
+      </div>
+      <div class="ud-div">
+        <button class="edit-car-button" (click)="onEdit()">
+          <mat-icon
+            aria-hidden="false"
+            class="edit-icon"
+            aria-label="Edit car icon"
+            >edit</mat-icon
+          >
+        </button>
+
+        <button class="delete-car-button">
+          <mat-icon
+            aria-hidden="false"
+            class="delete-icon"
+            aria-label="Delete car icon"
+            (click)="deleteCar(car)"
+            >delete</mat-icon
+          >
+        </button>
+      </div>
+    </div>
+    <div class="details-div">
+      <ul class="details-list">
+        <li *ngIf="car?.brand">
+          Dealer: <span>{{ car?.dealerName || car?.brand }}</span>
+        </li>
+        <li *ngIf="car?.class">
+          Class: <span>{{ car?.class }}</span>
+        </li>
+        <li *ngIf="car?.year">
+          Year: <span>{{ car?.year }}</span>
+        </li>
+        <li *ngIf="car?.color">
+          Color: <span>{{ car?.color }}</span>
+        </li>
+        <li *ngIf="car?.category">
+          Category: <span>{{ car?.category }}</span>
+        </li>
+        <li *ngIf="car?.wikilink">
+          Wikipedia link:
+          <a href="{{ car?.wikilink }}"
+            ><span>{{ car?.wikilink }}</span></a
+          >
+        </li>
+      </ul>
+    </div>
+
+    <div class="description-div" *ngIf="car?.description">
+      {{ car?.description }}
+    </div>
+  </div>
+
+  <div *ngIf="isEdit" class="edit-form-container">
+    <app-car-form
+      [passedCar]="car"
+      (saveCarData)="saveCarData($event)"
+      (cancelCar)="cancelAction()"
+      class="app-car-form"
+    ></app-car-form>
+  </div>
+</div>
+
+<div class="back-button" *ngIf="!isLoading">
+  <button mat-raised-button color="primary" (click)="onBack()">
+    Back to cars
+  </button>
+</div>
+
+<mat-spinner *ngIf="isLoading" class="loading"></mat-spinner>

@@ -1,1 +1,37 @@
-<p>car-details works!</p>
+<div class="car-detail-container">
+  <div class="selected-car" *ngIf="car">
+    <img
+      *ngIf="car.image"
+      ngDefaultControl
+      class="selected-car-img"
+      [src]="car.image"
+      alt="selected-car-img"
+    />
+    <img
+      *ngIf="!car.image"
+      ngDefaultControl
+      class="selected-car-img"
+      src="../../../../assets/images/mock-image.jpg"
+      alt="selected-car-img"
+    />
+  </div>
+  <div class="selected-car-details-container" *ngIf="car">
+    <h2>{{ car.model }}</h2>
+    <ul class="car-details">
+      <li>
+        Dealer: <span>{{ car.dealerName || car.brand }}</span>
+      </li>
+      <li *ngIf="car.class">
+        Class: <span>{{ car.class | titlecase }}</span>
+      </li>
+      <li *ngIf="!car.class">Class: <span>unknown</span></li>
+      <li *ngIf="car.year">
+        Year: <span>{{ car.year }}</span>
+      </li>
+      <li *ngIf="!car.year">Year: <span>unknown</span></li>
+      <li>
+        Color: <span>{{ car.color }}</span>
+      </li>
+    </ul>
+  </div>
+</div>

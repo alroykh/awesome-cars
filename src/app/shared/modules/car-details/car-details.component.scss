@@ -1,0 +1,34 @@
+.car-detail-container {
+  display: flex;
+  margin-left: 20px;
+  margin-top: 10px;
+  width: 650px;
+}
+
+.selected-car {
+  width: 500px;
+
+  .selected-car-img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+  }
+}
+
+.selected-car-details-container {
+  margin-left: 15px;
+
+  .car-details {
+    list-style-type: none;
+    padding: 0;
+
+    li {
+      margin-top: 15px;
+      font-size: 16px;
+
+      span {
+        font-weight: bold;
+      }
+    }
+  }
+}

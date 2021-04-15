@@ -1,17 +1,30 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-// import { CarsSectionComponent } from './components/cars-section/cars-section.component';
+import { NgModule } from '@angular/core';
+
+import { MatButtonModule } from '@angular/material/button';
+import { MatListModule } from '@angular/material/list';
+import { MatTreeModule } from '@angular/material/tree';
+import { MatIconModule } from '@angular/material/icon';
+
+import { CarItemModule } from 'src/app/shared/modules/car-item/car-item.module';
+import { DealersModule } from '../dealers/dealers.module';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { AddNewCarDialogModule } from 'src/app/shared/modules/add-new-car-dialog/add-new-car-dialog.module';
 import { HomeComponent } from './home.component';
 
 @NgModule({
-  declarations: [
-    // CarsSectionComponent
-  ],
+  declarations: [HomeComponent],
   imports: [
-    CommonModule
+    CommonModule,
+    MatButtonModule,
+    CarItemModule,
+    DealersModule,
+    MatListModule,
+    MatTreeModule,
+    MatIconModule,
+    MatProgressSpinnerModule,
+    AddNewCarDialogModule,
   ],
-  exports: [
-    // HomeComponent
-  ]
+  exports: [],
 })
-export class HomeModule { }
+export class HomeModule {}

@@ -1,12 +1,103 @@
-<p>cars doesn't work properly!</p>
+<section class="cars-settings">
 
+  <div class="filter-container">
+    <form *ngIf="!carsCategoryView">
+      <mat-form-field class="filter-input">
+        <mat-label>Filter</mat-label>
+        <input
+          matInput
+          placeholder="Enter brand or model"
+          type="text"
+          [formControl]="filterFieldControl"
+          name="filter"
+        />
+        <button
+          mat-button
+          *ngIf="filterFieldControl"
+          matSuffix
+          mat-icon-button
+          aria-label=""
+          (click)="resetValue()"
+        >
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+    </form>
+  </div>
 
- <h3> {{ carItem.brand | uppercase }} {{ carItem.model }} </h3>
-<img src="{{carItem.image}}"> 
+  <div class="toggle-div">
+    <mat-slide-toggle
+      [(ngModel)]="carsCategoryView"
+      color="primary"
+      [ngModelOptions]="{ standalone: true }"
+      >View by category</mat-slide-toggle
+    >
+  </div>
+</section>
 
-<!-- <h2>My Cars</h2>
-<ul> 
-    <li *ngFor='let car of cars'>
-        <span> {{ carItem.id }} </span> 
-    </li>
-</ul> -->
+<section *ngIf="!carsCategoryView" class="cars-container">
+  <mat-spinner *ngIf="isLoading" class="loading"></mat-spinner>
+
+  <div class="car-card">
+    <app-car-item
+      *ngFor="let car of filteredCars"
+      [car]="car"
+      [smallView]="false"
+    ></app-car-item>
+  </div>
+
+  <div *ngIf="!filteredCars.length && !isLoading" class="no-cars-message">
+    <h2>There is no cars with such name</h2>
+  </div>
+</section>
+
+<section *ngIf="carsCategoryView">
+  <mat-tab-group
+    mat-align-tabs="start"
+    animationDuration="0ms"
+    class="car-list-and-details-container"
+    (selectedTabChange)="tabChanged($event)"
+  >
+    <mat-tab
+      *ngFor="let category of carsCategories"
+      label="{{ category | titlecase }}"
+    >
+      <ng-template matTabContent>
+        <div class="body-of-mat-tab">
+          <mat-selection-list #categoryCars [multiple]="false" class="">
+            <mat-list-option
+              *ngFor="let car of getCarsByCategory(category); let i = index"
+              [value]="car"
+              [selected]="car && i === 0"
+              (click)="selectCar(car, category)"
+              class="option-car"
+            >
+              <span
+                ><strong>{{ car.dealerName || car.brand }}</strong></span
+              >
+              <p>
+                <span>{{ car.model }}</span>
+              </p>
+            </mat-list-option>
+          </mat-selection-list>
+
+          <app-car-details
+            class="car-details-app"
+            [car]="selectedCar ? selectedCar : getCarsByCategory(category)[0]"
+          ></app-car-details>
+        </div>
+      </ng-template>
+    </mat-tab>
+  </mat-tab-group>
+</section>
+
+<section class="button-load-more-section">
+  <button
+    mat-raised-button
+    *ngIf="!isLastPage && !carsCategoryView && !isLoading"
+    color="primary"
+    (click)="loadMore()"
+  >
+    Load more cars
+  </button>
+</section>

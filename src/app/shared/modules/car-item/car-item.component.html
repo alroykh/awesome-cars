@@ -1,1 +1,40 @@
-<p>car-item works!</p>
+<mat-card
+  *ngIf="car"
+  [ngClass]="{ 'small-view': smallView }"
+  class="example-card"
+>
+  <mat-card-header>
+    <mat-card-title>{{ car.model }}</mat-card-title>
+    <mat-card-subtitle>{{ car.dealerName || car.brand }}</mat-card-subtitle>
+
+    <div *ngIf="!smallView">
+      <mat-icon aria-label="Like icon">
+        {{ !car.liked ? "favorite_border" : "favorite" }}
+      </mat-icon>
+    </div>
+  </mat-card-header>
+  <img
+    mat-card-image
+    *ngIf="car.image"
+    [src]="car.image"
+    alt="Photo of the {{ car.brand }} {{ car.model }} car"
+  />
+  <img
+    mat-card-image
+    *ngIf="!car.image"
+    src="../../../../assets/images/mock-image.jpg"
+    alt="Photo of the {{ car.brand }} {{ car.model }} car"
+  />
+
+  <mat-card-actions *ngIf="!smallView" class="cars-actions">
+    <button mat-button color="accent" (click)="doLikeToggle()">
+      {{ car.liked ? "Dislike" : "Like" }}
+    </button>
+
+    <a
+      ><button mat-button color="primary" [routerLink]="['/cars', car.id]">
+        Details
+      </button></a
+    >
+  </mat-card-actions>
+</mat-card>

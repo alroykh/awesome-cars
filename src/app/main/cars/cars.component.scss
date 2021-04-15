@@ -1,0 +1,93 @@
+.cars-settings {
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  box-sizing: border-box;
+  height: 50px;
+  z-index: 2;
+}
+
+.mat-form-field-appearance-legacy[_ngcontent-ait-c116],
+.mat-form-field-infix[_ngcontent-ait-c116] {
+  padding: 0;
+}
+
+
+.filter-input {
+  position: relative;
+  top: -35px;
+  // background-color: green;
+  // height: 10px;
+}
+
+.toggle-div {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.cars-container {
+  z-index: 1;
+}
+
+.car-card {
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-content: space-evenly;
+  margin-top: -20px;
+}
+
+.ng-star-inserted {
+  flex: 0 1 21.5%;
+  margin: 15px 0;
+}
+
+.loading {
+  margin: 100px auto;
+}
+
+.mat-tab-group {
+  position: absolute;
+  left: 30px;
+  top: 0px;
+}
+
+mat-selection-list {
+  .option-car {
+    font-size: 14px;
+    line-height: 1.2;
+    padding: 0;
+    height: 40px;
+
+    .mat-list-item-content {
+      padding: 0;
+    }
+
+    .no-cars-message {
+    }
+  }
+}
+
+.body-of-mat-tab {
+  display: flex;
+  margin-top: 0;
+}
+
+.mat-selection-list {
+  width: 250px;
+}
+
+.mat-list-option {
+  margin: 0;
+  padding: 0;
+}
+
+.no-cars-message {
+  text-align: center;
+}
+
+.button-load-more-section {
+  text-align: center;
+}

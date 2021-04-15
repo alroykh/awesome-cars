@@ -1,0 +1,52 @@
+.dealers-container {
+  margin: 20px;
+
+  .dealer-settings {
+    display: flex;
+    justify-content: space-between;
+
+    .mat-form-field {
+      width: 300px;
+    }
+  }
+}
+
+.mat-raised-button {
+  background-color: #572757;
+}
+
+table {
+  width: 100%;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+td,
+th {
+  width: 22%;
+}
+
+.edit-dealer-button,
+.delete-dealer-button {
+  background-color: white;
+  border: none;
+  cursor: pointer;
+  outline: none;
+}
+
+.delete-icon {
+  color: #F44336;
+}
+
+.edit-icon {
+  color: #3848A0;
+}
+
+.loading {
+  position: absolute;
+  top: 85px;
+  right: 50%;
+}

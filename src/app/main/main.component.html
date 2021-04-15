@@ -1,62 +1,51 @@
 <app-header></app-header>
 
-
 <mat-sidenav-container class="sidenav-container">
-    <mat-sidenav mode="side" opened class="sidenav-menu">
+  <mat-sidenav mode="side" opened class="sidenav-menu">
+    <div class="nav-button-container">
+      <button
+        mat-button
+        class="nav-button-text"
+        routerLink="/home"
+        routerLinkActive="activebutton"
+      >
+        <mat-icon class="nav-icon" aria-label="Home icon" [inline]="true"
+          >home</mat-icon
+        >
+        <p>Home</p>
+      </button>
+    </div>
 
-        <div class="nav-button-container">
-            <button mat-button class="nav-button-text" routerLink="/home">
-                <mat-icon class="nav-icon" aria-label="Home icon" [inline]="true">home</mat-icon>
-                <p>Home</p>
-            </button>               
-        </div>
+    <div class="nav-button-container">
+      <button
+        mat-button
+        class="nav-button-text"
+        routerLink="/cars"
+        routerLinkActive="activebutton"
+      >
+        <mat-icon class="nav-icon" aria-label="Car icon" [inline]="true"
+          >directions_car</mat-icon
+        >
+        <p>Cars</p>
+      </button>
+    </div>
 
-        <div class="nav-button-container">
-            <button mat-button class="nav-button-text" routerLink="/cars">
-                <mat-icon class="nav-icon" aria-label="Car icon" [inline]="true">directions_car</mat-icon>
-                <p>Cars</p>
-            </button>               
-        </div>
+    <div class="nav-button-container">
+      <button
+        mat-button
+        class="nav-button-text"
+        routerLink="/dealers"
+        routerLinkActive="activebutton"
+      >
+        <mat-icon class="nav-icon" aria-label="Star icon" [inline]="true"
+          >stars</mat-icon
+        >
+        <p>Dealers</p>
+      </button>
+    </div>
+  </mat-sidenav>
 
-        <div class="nav-button-container">
-            <button mat-button class="nav-button-text" routerLink="/dealers">
-                <mat-icon class="nav-icon" aria-label="Star icon" [inline]="true">stars</mat-icon>
-                <p>Dealers</p>
-            </button>               
-        </div>
-
-
-        <!-- <mat-button-toggle-group class="sidenav-menu" name="fontStyle" aria-label="Font Style">
-            <mat-button-toggle class="nav-button-text" value="bold">
-                <mat-icon class="nav-icon" aria-label="Home icon" [inline]="true">home</mat-icon>
-                <p>Home</p>
-            </mat-button-toggle>
-            <mat-button-toggle value="italic">Italic</mat-button-toggle>
-            <mat-button-toggle value="underline">Underline</mat-button-toggle>
-        </mat-button-toggle-group> -->
-
-        <!-- <div class="icon">
-            <a href="#" class="nav-button">
-                <mat-icon aria-label="Example directions_car icon">directions_car</mat-icon>
-            </a>
-        </div>
-
-        <div class="icon">
-            <a href="#" class="nav-button">
-                <mat-icon aria-label="Example stars icon">stars</mat-icon>
-            </a>
-        </div> -->
-    </mat-sidenav>
-
-    <mat-sidenav-content>
-
-        <router-outlet></router-outlet>
-
-    </mat-sidenav-content>
-
-  </mat-sidenav-container>
-  
-
-
-
-
+  <mat-sidenav-content>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

@@ -1,1 +1,90 @@
-<p>dealers shows up!</p>
+<div class="dealers-container">
+  <div class="dealer-settings">
+    <mat-form-field>
+      <mat-label>Filter</mat-label>
+      <input matInput (keyup)="filterDealers($event)" #input />
+    </mat-form-field>
+    <div>
+      <button mat-raised-button color="primary" (click)="openDealerDialog()">
+        Add Dealer
+      </button>
+    </div>
+  </div>
+
+  <div [hidden]="loading">
+    <table mat-table [dataSource]="dataSource" matSort>
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+        <td mat-cell *matCellDef="let dealer">{{ dealer.name }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="amountOfCars">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          Amount of cars
+        </th>
+        <td mat-cell *matCellDef="let dealer">{{ dealer.amountOfCars }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="headquarters">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Headquarter</th>
+        <td mat-cell *matCellDef="let dealer">{{ dealer.headquarters }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="country">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Country</th>
+        <td mat-cell *matCellDef="let dealer">{{ dealer.country }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="foundedIn">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Founded in</th>
+        <td mat-cell *matCellDef="let dealer">
+          {{ dealer.foundedIn }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="editDealer">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let dealer">
+          <button class="edit-dealer-button" (click)="openDealerDialog(dealer)">
+            <mat-icon
+              aria-hidden="false"
+              class="edit-icon"
+              aria-label="Edit dealer icon"
+              >edit</mat-icon
+            >
+          </button>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="deleteDealer">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let dealer">
+          <button class="delete-dealer-button" (click)="deleteDealer(dealer)">
+            <mat-icon
+              aria-hidden="false"
+              class="delete-icon"
+              aria-label="Delete dealer icon"
+              >delete</mat-icon
+            >
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" colspan="10">This dealer does not exist</td>
+      </tr>
+    </table>
+    <div>
+      <mat-paginator [pageSizeOptions]="[10, 25, 100]"></mat-paginator>
+    </div>
+  </div>
+
+  <mat-progress-bar
+    *ngIf="loading"
+    class="app-progress-bar"
+    mode="indeterminate"
+  ></mat-progress-bar>
+</div>
