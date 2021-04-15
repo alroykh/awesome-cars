@@ -6,7 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { CarsService } from '../cars/cars.service';
 import { DealersService } from '../dealers/dealers.service';
 import { CarItem } from '../../shared/modules/car-item/car-item.interface';
-import { DealerItem } from 'src/app/shared/modules/dealer-item/dealer-item.interface';
+import { DealerItem } from 'src/app/main/dealers/dealer-item.interface';
 import { DealerDialogComponent } from '../../shared/modules/dealer-dialog/dealer-dialog.component';
 import { AddNewCarDialogComponent } from 'src/app/shared/modules/add-new-car-dialog/add-new-car-dialog.component';
 

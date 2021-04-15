@@ -22,15 +22,12 @@ export class CarsComponent implements OnInit, OnDestroy {
 
   cars: CarItem[] = new Array<CarItem>();
   selectedCar: CarItem;
-  // defaultCar: CarItem | null;
   carsCategoryView = false;
   carsCategories: Set<string> = new Set();
   isAlive = true;
   allCars: CarItem[] = [];
   carsByCategory: CarItem[] = new Array<CarItem>();
-  // selectedCategory: CarItem[] = new Array<CarItem>();
   isLoading = false;
-  // valueFilter: string;
   public filterValue = '';
   public isLastPage = false;
   private activePage = 1;
@@ -42,6 +39,7 @@ export class CarsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.isLoading = true;
+    // tslint:disable-next-line: deprecation
     this.carsService.getAllCars().subscribe((res) => {
       this.cars = res;
       this.setFilteredCars(
@@ -62,9 +60,11 @@ export class CarsComponent implements OnInit, OnDestroy {
     this.carsService
       .getCategorizedCars()
       .pipe(takeWhile(() => (this.isAlive = true)))
+      // tslint:disable-next-line: deprecation
       .subscribe((cars: CarItem[]) => {
         this.allCars = cars;
         cars.forEach((item) => {
+          // tslint:disable-next-line:no-unused-expression
           item.category && this.carsCategories.add(item.category.toLowerCase());
         });
         this.carsCategories.add('other');
@@ -78,9 +78,9 @@ export class CarsComponent implements OnInit, OnDestroy {
     return this.carsByCategory;
   }
 
-  tabChanged(evt: MatTabChangeEvent): void {
+  tabChanged(event: MatTabChangeEvent): void {
     this.selectCar(
-      (this.getCarsByCategory(evt.tab.textLabel.toLowerCase()) || [])[0]
+      (this.getCarsByCategory(event.tab.textLabel.toLowerCase()) || [])[0]
     );
   }
 

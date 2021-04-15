@@ -4,7 +4,7 @@ import { takeWhile } from 'rxjs/operators';
 
 import { CarsService } from 'src/app/main/cars/cars.service';
 import { DealersService } from 'src/app/main/dealers/dealers.service';
-import { DealerItem } from '../dealer-item/dealer-item.interface';
+import { DealerItem } from '../../../main/dealers/dealer-item.interface';
 import { CarItem } from './car-item.interface';
 
 @Component({

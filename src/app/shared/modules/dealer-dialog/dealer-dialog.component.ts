@@ -5,7 +5,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { takeWhile } from 'rxjs/operators';
 
 import { DealersService } from 'src/app/main/dealers/dealers.service';
-import { DealerItem, initDealer } from '../dealer-item/dealer-item.interface';
+import { DealerItem, initDealer } from '../../../main/dealers/dealer-item.interface';
 
 @Component({
   selector: 'app-dealer-dialog',

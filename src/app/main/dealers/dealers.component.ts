@@ -14,7 +14,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 
 import { DealersService } from './dealers.service';
-import { DealerItem } from 'src/app/shared/modules/dealer-item/dealer-item.interface';
+import { DealerItem } from 'src/app/main/dealers/dealer-item.interface';
 import { ConfirmDialogComponent } from './../../shared/modules/confirm-dialog/confirm-dialog.component';
 import { DealerDialogComponent } from './../../shared/modules/dealer-dialog/dealer-dialog.component';
 
@@ -82,7 +82,7 @@ export class DealersComponent implements OnChanges, OnInit, OnDestroy {
   filterDealers(event: Event): void {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
-
+    // tslint:disable-next-line:no-unused-expression
     this.dataSource.paginator && this.dataSource.paginator.firstPage();
   }
 

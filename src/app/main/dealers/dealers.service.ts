@@ -2,9 +2,9 @@ import { FormControl } from '@angular/forms';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { catchError, map, switchMap, tap } from 'rxjs/operators';
+import { catchError, switchMap, tap } from 'rxjs/operators';
 
-import { DealerItem } from 'src/app/shared/modules/dealer-item/dealer-item.interface';
+import { DealerItem } from 'src/app/main/dealers/dealer-item.interface';
 
 export interface DealerParams {
   [key: string]: any;
@@ -17,7 +17,6 @@ export class DealersService {
   filterControl = new FormControl();
   dealers: DealerItem[] = new Array<DealerItem>();
   newDealers: DealerItem[] = new Array<DealerItem>();
-
   private dealersUrl = 'api/dealers'; // url to web api
   private httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -25,10 +24,11 @@ export class DealersService {
 
   constructor(private http: HttpClient) {}
 
+  // tslint:disable-next-line:typedef
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       // TODO: send the error to remote logging infrastructure
-      console.error(error); // log to console instead
+      console.error(error);
 
       // TODO: better job of transforming error for user consumption
       this.log(`${operation} failed: ${error.message}`);

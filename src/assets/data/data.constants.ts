@@ -1,5 +1,5 @@
 import { CarItem } from '../../app/shared/modules/car-item/car-item.interface';
-import { DealerItem } from '../../app/shared/modules/dealer-item/dealer-item.interface';
+import { DealerItem } from '../../app/main/dealers/dealer-item.interface';
 
 export const CARS: CarItem[] = [
   // {

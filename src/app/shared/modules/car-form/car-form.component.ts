@@ -11,7 +11,7 @@ import { Observable } from 'rxjs';
 import { tap, debounceTime, takeWhile } from 'rxjs/operators';
 import { DealersService } from 'src/app/main/dealers/dealers.service';
 import { CarItem } from '../car-item/car-item.interface';
-import { DealerItem } from '../dealer-item/dealer-item.interface';
+import { DealerItem } from '../../../main/dealers/dealer-item.interface';
 
 @Component({
   selector: 'app-car-form',
