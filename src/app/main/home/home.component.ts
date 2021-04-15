@@ -24,11 +24,9 @@ export class HomeComponent implements OnInit, OnDestroy {
   isAlive = true;
   newAddedDealers: Array<DealerItem> = new Array<DealerItem>();
   newAddedCars: Array<CarItem> = new Array<CarItem>();
-
   carsCategoryView = false;
   passedData: DealerItem;
   passedCar: CarItem;
-
   isLikedLoading = false;
   isCarsLoading = false;
   isDealersLoading = false;

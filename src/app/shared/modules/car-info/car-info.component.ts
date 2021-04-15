@@ -62,11 +62,7 @@ export class CarInfoComponent implements OnInit, OnChanges, OnDestroy {
         })
       )
       .subscribe((p) => {
-        if (p.image === undefined) {
-          p.image = null;
-        }
-
-        this.car = p;
+        this.car = p.image ? p : { ...p, image: null };
       });
   }
 
@@ -83,7 +79,7 @@ export class CarInfoComponent implements OnInit, OnChanges, OnDestroy {
       .afterClosed()
       .pipe(takeWhile(() => this.isAlive))
       .subscribe((result) => {
-        if (result === true) {
+        if (result) {
           this.carsService.deleteCar(car).subscribe();
           this.onBack();
         }

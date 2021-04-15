@@ -77,7 +77,7 @@ export class CarsService {
     return this.http
       .get<CarItem[]>(`${this.carsUrl}`, { params })
       .pipe(
-        switchMap((cars: CarItem[]) => this.getCarsWithMarka(cars)),
+        switchMap((cars: CarItem[]) => this.getCarsWithDealerName(cars)),
         catchError(this.handleError<CarItem[]>(`Get cars by parameters`, []))
       );
   }
@@ -85,7 +85,7 @@ export class CarsService {
 
   getAllCars(): Observable<CarItem[]> {
     return this.http.get<CarItem[]>(this.carsUrl).pipe(
-      switchMap((cars: CarItem[]) => this.getCarsWithMarka(cars)),
+      switchMap((cars: CarItem[]) => this.getCarsWithDealerName(cars)),
       catchError(this.handleError<CarItem[]>('getCars', []))
     );
   }
@@ -94,7 +94,7 @@ export class CarsService {
 
   public getCategorizedCars(): Observable<CarItem[]> {
     return this.http.get<CarItem[]>(this.carsUrl).pipe(
-      switchMap((cars: CarItem[]) => this.getCarsWithMarka(cars)),
+      switchMap((cars: CarItem[]) => this.getCarsWithDealerName(cars)),
       catchError(this.handleError<CarItem[]>('getCars', []))
     );
   }
@@ -105,7 +105,7 @@ export class CarsService {
 
     return this.http.get<CarItem>(url).pipe(
       tap((_) => this.log(`fetched car id=${id}`)),
-      switchMap((car: CarItem) => this.getCarsWithMarka([car])),
+      switchMap((car: CarItem) => this.getCarsWithDealerName([car])),
       map((res: CarItem[]) => res[0]),
       catchError(this.handleError<CarItem>(`getCat id = ${id}`))
     );
@@ -127,7 +127,7 @@ export class CarsService {
     );
   }
 
-  getCarsWithMarka(cars: CarItem[]): Observable<CarItem[]> {
+  getCarsWithDealerName(cars: CarItem[]): Observable<CarItem[]> {
     return this.dealersService.getDealers().pipe(
       map((dealers: DealerItem[]) => {
         const dealersMap: Map<string, DealerItem> = new Map();
@@ -144,6 +144,7 @@ export class CarsService {
               ? res.get(car.brand).name
               : car.brand,
           };
+
         });
       }),
       catchError((err) => of([]))

@@ -19,7 +19,6 @@ export class CarItemComponent implements OnInit, OnDestroy {
   @Input() smallView = false;
   @Input() dealer: DealerItem;
   cars: Array<CarItem> = new Array<CarItem>();
-
   carName = '';
   isAlive = true;
 

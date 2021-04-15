@@ -22,26 +22,20 @@ export class CarsComponent implements OnInit, OnDestroy {
 
   cars: CarItem[] = new Array<CarItem>();
   selectedCar: CarItem;
-  defaultCar: CarItem | null;
-
+  // defaultCar: CarItem | null;
   carsCategoryView = false;
   carsCategories: Set<string> = new Set();
   isAlive = true;
-
   allCars: CarItem[] = [];
   carsByCategory: CarItem[] = new Array<CarItem>();
-
-  selectedCategory: CarItem[] = new Array<CarItem>();
-
+  // selectedCategory: CarItem[] = new Array<CarItem>();
   isLoading = false;
-  valueFilter: string;
+  // valueFilter: string;
   public filterValue = '';
   public isLastPage = false;
   private activePage = 1;
   private pageSize = 8;
-
   public filterFieldControl: FormControl = new FormControl();
-
   filteredCars: CarItem[] = new Array<CarItem>();
 
   constructor(private carsService: CarsService) {}
@@ -71,9 +65,7 @@ export class CarsComponent implements OnInit, OnDestroy {
       .subscribe((cars: CarItem[]) => {
         this.allCars = cars;
         cars.forEach((item) => {
-          if (item.category != null) {
-            this.carsCategories.add(item.category.toLowerCase());
-          }
+          item.category && this.carsCategories.add(item.category.toLowerCase());
         });
         this.carsCategories.add('other');
       });
@@ -125,8 +117,8 @@ export class CarsComponent implements OnInit, OnDestroy {
         } else {
           const filteredCars = this.cars.filter(
             (car) =>
-              car.dealerName.toLowerCase().includes(value) ||
-              car.model.toLowerCase().includes(value)
+              car.dealerName.toLowerCase().includes(value.toLowerCase()) ||
+              car.model.toLowerCase().includes(value.toLowerCase())
           );
           this.setFilteredCars(
             this.getTrimmedCars(filteredCars, this.activePage, this.pageSize)

@@ -39,7 +39,6 @@ export class DealersComponent implements OnChanges, OnInit, OnDestroy {
   dataSource: MatTableDataSource<DealerItem>;
   dealers: DealerItem[];
   action: boolean;
-
   loading = false;
   isAlive = true;
   passedData: DealerItem;
@@ -84,9 +83,7 @@ export class DealersComponent implements OnChanges, OnInit, OnDestroy {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
 
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
+    this.dataSource.paginator && this.dataSource.paginator.firstPage();
   }
 
   openDealerDialog(obj = null): void {
@@ -100,7 +97,7 @@ export class DealersComponent implements OnChanges, OnInit, OnDestroy {
       .pipe(takeWhile(() => (this.isAlive = true)))
       .subscribe((result) => {
         this.passedData = result.data;
-        if (result.data.newRecord === true) {
+        if (result.data.newRecord) {
           this.dealerService.addDealer(this.passedData).subscribe();
         } else if (result.data.newRecord === false) {
           this.dealerService.updateDealer(this.passedData).subscribe();
@@ -120,7 +117,7 @@ export class DealersComponent implements OnChanges, OnInit, OnDestroy {
       .afterClosed()
       .pipe(takeWhile(() => (this.isAlive = true)))
       .subscribe((result) => {
-        if (result === true) {
+        if (result) {
           this.dealerService.deleteDealer(dealer).subscribe();
           this.updateTable();
         }
